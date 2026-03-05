@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Home",
+    "northTour": "North Tour",
+    "southTour": "South Tour",
+    "internationalTour": "International Tour",
+    "thailand": "Thailand",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Authentic India & World Travel",
+    "subtitle": "Travel crafted by people who care",
+    "description": "Experience the real India with local experts and authentic cultural immersions.",
+    "cta": "Explore Tours"
+  },
+  "tours": {
+    "title": "Popular Tours",
+    "subtitle": "Handpicked experiences for unforgettable journeys",
+    "goldenTriangle": {
+      "title": "Golden Triangle Tour",
+      "duration": "4 days",
+      "locations": "Delhi, Jaipur, Agra",
+      "description": "Explore India's iconic cities: Delhi, Jaipur, and Agra with private transport and guides.",
+      "itinerary": {
+        "day1": "Delhi: Qutub Minar, Lotus Temple, Humayun's Tomb, India Gate",
+        "day2": "Jaipur: Amber Fort, Jal Mahal, Hawa Mahal, City Palace, Jantar Mantar",
+        "day3": "Agra: Taj Mahal (sunrise), Agra Fort",
+        "day4": "Departure or extension"
+      },
+      "includes": [
+        "Private air-conditioned car",
+        "Certified local guides",
+        "Hotel pick-up and drop-off",
+        "Mineral water during journeys",
+        "All applicable taxes"
+      ]
+    },
+    "delhiDay": {
+      "title": "Delhi Day Tour",
+      "duration": "1 day",
+      "locations": "Delhi",
+      "description": "Discover Delhi's rich history and culture in one full day with expert local guides.",
+      "itinerary": {
+        "highlights": "Qutub Minar, Lotus Temple, Humayun's Tomb, India Gate, Red Fort"
+      },
+      "includes": [
+        "Private transport",
+        "Expert guide",
+        "Entry fees",
+        "Lunch"
+      ]
+    },
+    "jaipurDay": {
+      "title": "Jaipur Day Tour",
+      "duration": "1 day",
+      "locations": "Jaipur",
+      "description": "Experience the Pink City with visits to Amber Fort, City Palace, and vibrant markets.",
+      "itinerary": {
+        "highlights": "Amber Fort, Jal Mahal, Hawa Mahal, City Palace, Jantar Mantar, local markets"
+      },
+      "includes": [
+        "Private transport",
+        "Expert guide",
+        "Entry fees",
+        "Lunch"
+      ]
+    },
+    "agraDay": {
+      "title": "Agra Day Tour",
+      "duration": "1 day",
+      "locations": "Agra",
+      "description": "Visit the Taj Mahal and Mughal monuments with sunrise viewing and expert narration.",
+      "itinerary": {
+        "highlights": "Taj Mahal (sunrise), Agra Fort, Fatehpur Sikri (optional)"
+      },
+      "includes": [
+        "Private transport",
+        "Expert guide",
+        "Entry fees",
+        "Lunch"
+      ]
+    },
+    "viewDetails": "View Details",
+    "customizeTour": "Customize Your Tour"
+  },
+  "contact": {
+    "title": "Ready to Start Your Journey?",
+    "subtitle": "Get in touch for personalized travel planning and special offers.",
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "WhatsApp/Phone",
+      "message": "Message",
+      "messagePlaceholder": "Tell us about your travel preferences, group size, or any special requirements...",
+      "submit": "Send Message",
+      "success": "Thanks! We will get back to you shortly."
+    },
+    "validation": {
+      "nameRequired": "Please enter your full name.",
+      "emailRequired": "Please enter your email.",
+      "emailInvalid": "Enter a valid email.",
+      "phoneRequired": "Please enter your phone number.",
+      "phoneInvalid": "Enter a valid phone/WhatsApp number."
+    }
+  },
+  "footer": {
+    "brand": "Your gateway to India's wonders. We specialize in creating unforgettable travel experiences across the Golden Triangle and beyond.",
+    "links": "Quick Links",
+    "contact": "Contact",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "copyright": "All rights reserved.",
+    "privacy": "Privacy",
+    "terms": "Terms"
+  },
+  "features": {
+    "privateTransport": "✓ Private Transport",
+    "expertGuide": "✓ Expert Guide",
+    "mealsIncluded": "✓ Meals Included"
+  }
+}

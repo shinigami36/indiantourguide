@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "홈",
+    "northTour": "North Tour",
+    "southTour": "South Tour",
+    "internationalTour": "International Tour",
+    "thailand": "Thailand",
+    "contact": "연락처"
+  },
+  "hero": {
+    "title": "진정한 인도와 세계 여행",
+    "subtitle": "마음을 담아 만든 여행",
+    "description": "현지 전문가와 진정한 문화 체험으로 진정한 인도를 경험하세요.",
+    "cta": "투어 탐색"
+  },
+  "tours": {
+    "title": "인기 투어",
+    "subtitle": "잊지 못할 여행을 위한 엄선된 경험",
+    "goldenTriangle": {
+      "title": "황금 삼각 투어",
+      "duration": "4일",
+      "locations": "델리, 자이푸르, 아그라",
+      "description": "인도의 상징적인 도시 탐험: 델리, 자이푸르, 아그라를 개인 교통편과 가이드와 함께.",
+      "itinerary": {
+        "day1": "델리: 쿠툽 미나르, 로터스 사원, 후마윤 무덤, 인디아 게이트",
+        "day2": "자이푸르: 앰버 포트, 잘 마할, 하와 마할, 시티 팰리스, 잔타르 만타르",
+        "day3": "아그라: 타지마할 (일출), 아그라 포트",
+        "day4": "출발 또는 연장"
+      },
+      "includes": [
+        "개인 에어컨 차량",
+        "인증된 현지 가이드",
+        "호텔 픽업 및 드롭오프",
+        "여행 중 미네랄 워터",
+        "모든 적용 세금"
+      ]
+    },
+    "delhiDay": {
+      "title": "델리 당일 투어",
+      "duration": "1일",
+      "locations": "델리",
+      "description": "전문 현지 가이드와 함께 델리의 풍부한 역사와 문화를 하루 만에 발견하세요.",
+      "itinerary": {
+        "highlights": "쿠툽 미나르, 로터스 사원, 후마윤 무덤, 인디아 게이트, 레드 포트"
+      },
+      "includes": [
+        "개인 교통편",
+        "전문 가이드",
+        "입장료",
+        "점심"
+      ]
+    },
+    "jaipurDay": {
+      "title": "자이푸르 당일 투어",
+      "duration": "1일",
+      "locations": "자이푸르",
+      "description": "앰버 포트, 시티 팰리스, 활기찬 시장 방문을 통해 핑크 시티를 경험하세요.",
+      "itinerary": {
+        "highlights": "앰버 포트, 잘 마할, 하와 마할, 시티 팰리스, 잔타르 만타르, 현지 시장"
+      },
+      "includes": [
+        "개인 교통편",
+        "전문 가이드",
+        "입장료",
+        "점심"
+      ]
+    },
+    "agraDay": {
+      "title": "아그라 당일 투어",
+      "duration": "1일",
+      "locations": "아그라",
+      "description": "일출 관람과 전문 해설로 타지마할과 무굴 기념물을 방문하세요.",
+      "itinerary": {
+        "highlights": "타지마할 (일출), 아그라 포트, 파테푸르 시크리 (선택사항)"
+      },
+      "includes": [
+        "개인 교통편",
+        "전문 가이드",
+        "입장료",
+        "점심"
+      ]
+    },
+    "viewDetails": "세부 정보 보기",
+    "customizeTour": "투어 맞춤 설정"
+  },
+  "contact": {
+    "title": "여행을 시작할 준비가 되셨나요?",
+    "subtitle": "개인 맞춤 여행 계획과 특별 제안에 대해 문의하세요.",
+    "form": {
+      "name": "전체 이름",
+      "email": "이메일",
+      "phone": "WhatsApp/전화",
+      "message": "메시지",
+      "messagePlaceholder": "여행 선호사항, 그룹 규모 또는 특별 요구사항에 대해 알려주세요...",
+      "submit": "메시지 보내기",
+      "success": "감사합니다! 곧 연락드리겠습니다."
+    },
+    "validation": {
+      "nameRequired": "전체 이름을 입력하세요.",
+      "emailRequired": "이메일을 입력하세요.",
+      "emailInvalid": "유효한 이메일을 입력하세요.",
+      "phoneRequired": "전화번호를 입력하세요.",
+      "phoneInvalid": "유효한 전화/WhatsApp 번호를 입력하세요."
+    }
+  },
+  "footer": {
+    "brand": "인도의 경이로움으로 향하는 관문. 우리는 황금 삼각과 그 너머에서 잊지 못할 여행 경험을 만드는 데 전문화되어 있습니다.",
+    "links": "빠른 링크",
+    "contact": "연락처",
+    "phone": "전화",
+    "email": "이메일",
+    "address": "주소",
+    "copyright": "모든 권리 보유.",
+    "privacy": "개인정보 보호",
+    "terms": "약관"
+  },
+  "features": {
+    "privateTransport": "✓ 개인 교통편",
+    "expertGuide": "✓ 전문 가이드",
+    "mealsIncluded": "✓ 식사 포함"
+  }
+}

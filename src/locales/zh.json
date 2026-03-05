@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "主页",
+    "northTour": "North Tour",
+    "southTour": "South Tour",
+    "internationalTour": "International Tour",
+    "thailand": "Thailand",
+    "contact": "联系我们"
+  },
+  "hero": {
+    "title": "真实的印度和世界旅行",
+    "subtitle": "用心打造的旅行",
+    "description": "与当地专家一起体验真实的印度和真实的传统文化沉浸。",
+    "cta": "探索旅游"
+  },
+  "tours": {
+    "title": "热门旅游",
+    "subtitle": "为难忘旅程精心挑选的体验",
+    "goldenTriangle": {
+      "title": "黄金三角旅游",
+      "duration": "4天",
+      "locations": "德里、斋浦尔、阿格拉",
+      "description": "探索印度的标志性城市：德里、斋浦尔和阿格拉，提供私人交通和导游。",
+      "itinerary": {
+        "day1": "德里: 库特布塔、莲花寺、胡马雍陵、印度门",
+        "day2": "斋浦尔: 琥珀堡、贾尔宫、风宫、城市宫殿、詹塔尔·曼塔尔",
+        "day3": "阿格拉: 泰姬陵 (日出)、阿格拉堡",
+        "day4": "出发或延长"
+      },
+      "includes": [
+        "私人空调车",
+        "认证当地导游",
+        "酒店接送",
+        "旅途中的矿泉水",
+        "所有适用税费"
+      ]
+    },
+    "delhiDay": {
+      "title": "德里一日游",
+      "duration": "1天",
+      "locations": "德里",
+      "description": "在一天内与经验丰富的当地导游一起发现德里丰富的历史和文化。",
+      "itinerary": {
+        "highlights": "库特布塔、莲花寺、胡马雍陵、印度门、红堡"
+      },
+      "includes": [
+        "私人交通",
+        "专家导游",
+        "门票",
+        "午餐"
+      ]
+    },
+    "jaipurDay": {
+      "title": "斋浦尔一日游",
+      "duration": "1天",
+      "locations": "斋浦尔",
+      "description": "体验粉红之城，参观琥珀堡、城市宫殿和充满活力的市场。",
+      "itinerary": {
+        "highlights": "琥珀堡、贾尔宫、风宫、城市宫殿、詹塔尔·曼塔尔、当地市场"
+      },
+      "includes": [
+        "私人交通",
+        "专家导游",
+        "门票",
+        "午餐"
+      ]
+    },
+    "agraDay": {
+      "title": "阿格拉一日游",
+      "duration": "1天",
+      "locations": "阿格拉",
+      "description": "参观泰姬陵和莫卧儿纪念碑，欣赏日出和专家讲解。",
+      "itinerary": {
+        "highlights": "泰姬陵 (日出)、阿格拉堡、法泰普尔西格里 (可选)"
+      },
+      "includes": [
+        "私人交通",
+        "专家导游",
+        "门票",
+        "午餐"
+      ]
+    },
+    "viewDetails": "查看详情",
+    "customizeTour": "定制旅游"
+  },
+  "contact": {
+    "title": "准备开始您的旅程？",
+    "subtitle": "联系我们获取个性化旅行规划和特别优惠。",
+    "form": {
+      "name": "全名",
+      "email": "电子邮件",
+      "phone": "WhatsApp/电话",
+      "message": "消息",
+      "messagePlaceholder": "告诉我们您的旅行偏好、团体规模或任何特殊要求...",
+      "submit": "发送消息",
+      "success": "谢谢！我们会尽快回复您。"
+    },
+    "validation": {
+      "nameRequired": "请输入您的全名。",
+      "emailRequired": "请输入您的电子邮件。",
+      "emailInvalid": "请输入有效的电子邮件。",
+      "phoneRequired": "请输入您的电话号码。",
+      "phoneInvalid": "请输入有效的电话/WhatsApp号码。"
+    }
+  },
+  "footer": {
+    "brand": "通往印度奇迹的大门。我们专注于在黄金三角及其以外地区创造难忘的旅行体验。",
+    "links": "快速链接",
+    "contact": "联系我们",
+    "phone": "电话",
+    "email": "电子邮件",
+    "address": "地址",
+    "copyright": "版权所有。",
+    "privacy": "隐私",
+    "terms": "条款"
+  },
+  "features": {
+    "privateTransport": "✓ 私人交通",
+    "expertGuide": "✓ 专家导游",
+    "mealsIncluded": "✓ 包含餐食"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "northTour": "North Tour",
+    "southTour": "South Tour",
+    "internationalTour": "International Tour",
+    "thailand": "Thailand",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title": "Authentische Indien- und Weltreisen",
+    "subtitle": "Reisen, die von Menschen gemacht werden, die sich kümmern",
+    "description": "Erleben Sie das echte Indien mit lokalen Experten und authentischen kulturellen Immersionen.",
+    "cta": "Touren Entdecken"
+  },
+  "tours": {
+    "title": "Beliebte Touren",
+    "subtitle": "Handverlesene Erlebnisse für unvergessliche Reisen",
+    "goldenTriangle": {
+      "title": "Goldenes Dreieck Tour",
+      "duration": "4 Tage",
+      "locations": "Delhi, Jaipur, Agra",
+      "description": "Entdecken Sie Indiens ikonische Städte: Delhi, Jaipur und Agra mit privatem Transport und Führern.",
+      "itinerary": {
+        "day1": "Delhi: Qutub Minar, Lotus Tempel, Humayun's Grab, India Gate",
+        "day2": "Jaipur: Amber Fort, Jal Mahal, Hawa Mahal, City Palace, Jantar Mantar",
+        "day3": "Agra: Taj Mahal (Sonnenaufgang), Agra Fort",
+        "day4": "Abreise oder Verlängerung"
+      },
+      "includes": [
+        "Privater klimatisierter Wagen",
+        "Zertifizierte lokale Führer",
+        "Hotel Abholung und Rückgabe",
+        "Mineralwasser während der Fahrten",
+        "Alle anwendbaren Steuern"
+      ]
+    },
+    "delhiDay": {
+      "title": "Delhi Tagesausflug",
+      "duration": "1 Tag",
+      "locations": "Delhi",
+      "description": "Entdecken Sie Delhis reiche Geschichte und Kultur an einem vollen Tag mit erfahrenen lokalen Führern."
+    },
+    "jaipurDay": {
+      "title": "Jaipur Tagesausflug",
+      "duration": "1 Tag",
+      "locations": "Jaipur",
+      "description": "Erleben Sie die Pink City mit Besuchen des Amber Forts, City Palace und lebendiger Märkte."
+    },
+    "agraDay": {
+      "title": "Agra Tagesausflug",
+      "duration": "1 Tag",
+      "locations": "Agra",
+      "description": "Besuchen Sie das Taj Mahal und Mogul-Denkmäler mit Sonnenaufgang-Betrachtung und fachkundiger Erzählung."
+    },
+    "viewDetails": "Details Ansehen",
+    "customizeTour": "Tour Anpassen"
+  },
+  "contact": {
+    "title": "Bereit für Ihre Reise?",
+    "subtitle": "Kontaktieren Sie uns für personalisierte Reiseplanung und Sonderangebote.",
+    "form": {
+      "name": "Vollständiger Name",
+      "email": "E-Mail",
+      "phone": "WhatsApp/Telefon",
+      "message": "Nachricht",
+      "messagePlaceholder": "Erzählen Sie uns von Ihren Reisepräferenzen, Gruppengröße oder besonderen Anforderungen...",
+      "submit": "Nachricht Senden",
+      "success": "Vielen Dank! Wir melden uns bald bei Ihnen."
+    },
+    "validation": {
+      "nameRequired": "Bitte geben Sie Ihren vollständigen Namen ein.",
+      "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+      "emailInvalid": "Geben Sie eine gültige E-Mail-Adresse ein.",
+      "phoneRequired": "Bitte geben Sie Ihre Telefonnummer ein.",
+      "phoneInvalid": "Geben Sie eine gültige Telefon/WhatsApp-Nummer ein."
+    }
+  },
+  "footer": {
+    "brand": "Ihr Tor zu Indiens Wundern. Wir spezialisieren uns auf die Schaffung unvergesslicher Reiseerlebnisse im Goldenen Dreieck und darüber hinaus.",
+    "links": "Schnelllinks",
+    "contact": "Kontakt",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "address": "Adresse",
+    "copyright": "Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "Bedingungen"
+  },
+  "features": {
+    "privateTransport": "✓ Privater Transport",
+    "expertGuide": "✓ Expertenführer",
+    "mealsIncluded": "✓ Mahlzeiten Inklusive"
+  }
+}

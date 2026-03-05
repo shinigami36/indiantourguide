@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "northTour": "North Tour",
+    "southTour": "South Tour",
+    "internationalTour": "International Tour",
+    "thailand": "Thailand",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Voyages Authentiques en Inde et dans le Monde",
+    "subtitle": "Voyages conçus par des personnes qui se soucient",
+    "description": "Découvrez la vraie Inde avec des experts locaux et des immersions culturelles authentiques.",
+    "cta": "Explorer les Circuits"
+  },
+  "tours": {
+    "title": "Circuits Populaires",
+    "subtitle": "Expériences sélectionnées pour des voyages inoubliables",
+    "goldenTriangle": {
+      "title": "Circuit du Triangle d'Or",
+      "duration": "4 jours",
+      "locations": "Delhi, Jaipur, Agra",
+      "description": "Explorez les villes emblématiques de l'Inde : Delhi, Jaipur et Agra avec transport privé et guides.",
+      "itinerary": {
+        "day1": "Delhi : Qutub Minar, Temple du Lotus, Tombeau d'Humayun, Porte de l'Inde",
+        "day2": "Jaipur : Fort d'Amber, Jal Mahal, Hawa Mahal, Palais de la Ville, Jantar Mantar",
+        "day3": "Agra : Taj Mahal (lever du soleil), Fort d'Agra",
+        "day4": "Départ ou prolongation"
+      },
+      "includes": [
+        "Voiture privée climatisée",
+        "Guides locaux certifiés",
+        "Prise en charge et retour à l'hôtel",
+        "Eau minérale pendant les voyages",
+        "Tous les taxes applicables"
+      ]
+    },
+    "delhiDay": {
+      "title": "Excursion d'une Journée à Delhi",
+      "duration": "1 jour",
+      "locations": "Delhi",
+      "description": "Découvrez la riche histoire et culture de Delhi en une journée complète avec des guides locaux experts."
+    },
+    "jaipurDay": {
+      "title": "Excursion d'une Journée à Jaipur",
+      "duration": "1 jour",
+      "locations": "Jaipur",
+      "description": "Découvrez la Ville Rose avec des visites du Fort d'Amber, Palais de la Ville et marchés animés."
+    },
+    "agraDay": {
+      "title": "Excursion d'une Journée à Agra",
+      "duration": "1 jour",
+      "locations": "Agra",
+      "description": "Visitez le Taj Mahal et les monuments moghols avec observation du lever du soleil et narration experte."
+    },
+    "viewDetails": "Voir les Détails",
+    "customizeTour": "Personnaliser le Circuit"
+  },
+  "contact": {
+    "title": "Prêt à Commencer Votre Voyage ?",
+    "subtitle": "Contactez-nous pour une planification de voyage personnalisée et des offres spéciales.",
+    "form": {
+      "name": "Nom Complet",
+      "email": "E-mail",
+      "phone": "WhatsApp/Téléphone",
+      "message": "Message",
+      "messagePlaceholder": "Parlez-nous de vos préférences de voyage, taille du groupe ou exigences spéciales...",
+      "submit": "Envoyer le Message",
+      "success": "Merci ! Nous vous recontacterons bientôt."
+    },
+    "validation": {
+      "nameRequired": "Veuillez saisir votre nom complet.",
+      "emailRequired": "Veuillez saisir votre e-mail.",
+      "emailInvalid": "Saisissez un e-mail valide.",
+      "phoneRequired": "Veuillez saisir votre numéro de téléphone.",
+      "phoneInvalid": "Saisissez un numéro de téléphone/WhatsApp valide."
+    }
+  },
+  "footer": {
+    "brand": "Votre porte d'entrée vers les merveilles de l'Inde. Nous nous spécialisons dans la création d'expériences de voyage inoubliables à travers le Triangle d'Or et au-delà.",
+    "links": "Liens Rapides",
+    "contact": "Contact",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "address": "Adresse",
+    "copyright": "Tous droits réservés.",
+    "privacy": "Confidentialité",
+    "terms": "Conditions"
+  },
+  "features": {
+    "privateTransport": "✓ Transport Privé",
+    "expertGuide": "✓ Guide Expert",
+    "mealsIncluded": "✓ Repas Inclus"
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "northTour": "North Tour",
+    "southTour": "South Tour",
+    "internationalTour": "International Tour",
+    "thailand": "Thailand",
+    "contact": "お問い合わせ"
+  },
+  "hero": {
+    "title": "本物のインドと世界旅行",
+    "subtitle": "心を込めて作られた旅行",
+    "description": "地元の専門家と本物の文化的没入で本物のインドを体験。",
+    "cta": "ツアーを探索"
+  },
+  "tours": {
+    "title": "人気のツアー",
+    "subtitle": "忘れられない旅のための厳選された体験",
+    "goldenTriangle": {
+      "title": "黄金の三角ツアー",
+      "duration": "4日間",
+      "locations": "デリー、ジャイプール、アグラ",
+      "description": "インドの象徴的な都市を探索：デリー、ジャイプール、アグラをプライベート交通とガイドで。",
+      "itinerary": {
+        "day1": "デリー: クトゥブ・ミナール、ロータス寺院、フマユーンの墓、インド門",
+        "day2": "ジャイプール: アンバー城、ジャル・マハル、ハワー・マハル、市の宮殿、ジャンタル・マンタル",
+        "day3": "アグラ: タージ・マハル (日の出)、アグラ城",
+        "day4": "出発または延長"
+      },
+      "includes": [
+        "プライベートエアコン車",
+        "認定された地元ガイド",
+        "ホテルピックアップとドロップオフ",
+        "旅行中のミネラルウォーター",
+        "すべての適用税"
+      ]
+    },
+    "delhiDay": {
+      "title": "デリー日帰りツアー",
+      "duration": "1日",
+      "locations": "デリー",
+      "description": "デリーの豊かな歴史と文化を地元の専門ガイドと一緒に1日で発見。",
+      "itinerary": {
+        "highlights": "クトゥブ・ミナール、ロータス寺院、フマユーンの墓、インド門、レッド・フォート"
+      },
+      "includes": [
+        "プライベート交通",
+        "専門ガイド",
+        "入場料",
+        "ランチ"
+      ]
+    },
+    "jaipurDay": {
+      "title": "ジャイプール日帰りツアー",
+      "duration": "1日",
+      "locations": "ジャイプール",
+      "description": "アンバー城、市の宮殿、活気ある市場を訪れるピンクシティを体験。",
+      "itinerary": {
+        "highlights": "アンバー城、ジャル・マハル、ハワー・マハル、市の宮殿、ジャンタル・マンタル、地元市場"
+      },
+      "includes": [
+        "プライベート交通",
+        "専門ガイド",
+        "入場料",
+        "ランチ"
+      ]
+    },
+    "agraDay": {
+      "title": "アグラ日帰りツアー",
+      "duration": "1日",
+      "locations": "アグラ",
+      "description": "日の出観賞と専門家のナレーションでタージ・マハルとムガル記念碑を訪問。",
+      "itinerary": {
+        "highlights": "タージ・マハル (日の出)、アグラ城、ファテープル・シークリ (オプション)"
+      },
+      "includes": [
+        "プライベート交通",
+        "専門ガイド",
+        "入場料",
+        "ランチ"
+      ]
+    },
+    "viewDetails": "詳細を見る",
+    "customizeTour": "ツアーをカスタマイズ"
+  },
+  "contact": {
+    "title": "旅を始めますか？",
+    "subtitle": "パーソナライズされた旅行計画と特別オファーのためにご連絡ください。",
+    "form": {
+      "name": "フルネーム",
+      "email": "メール",
+      "phone": "WhatsApp/電話",
+      "message": "メッセージ",
+      "messagePlaceholder": "旅行の好み、グループサイズ、特別な要件についてお聞かせください...",
+      "submit": "メッセージを送る",
+      "success": "ありがとうございます！すぐにご連絡いたします。"
+    },
+    "validation": {
+      "nameRequired": "フルネームを入力してください。",
+      "emailRequired": "メールアドレスを入力してください。",
+      "emailInvalid": "有効なメールアドレスを入力してください。",
+      "phoneRequired": "電話番号を入力してください。",
+      "phoneInvalid": "有効な電話/WhatsApp番号を入力してください。"
+    }
+  },
+  "footer": {
+    "brand": "インドの驚異への入り口。私たちは黄金の三角とその先で忘れられない旅行体験を作り出すことに特化しています。",
+    "links": "クイックリンク",
+    "contact": "連絡先",
+    "phone": "電話",
+    "email": "メール",
+    "address": "住所",
+    "copyright": "全著作権所有。",
+    "privacy": "プライバシー",
+    "terms": "利用規約"
+  },
+  "features": {
+    "privateTransport": "✓ プライベート交通",
+    "expertGuide": "✓ 専門ガイド",
+    "mealsIncluded": "✓ 食事込み"
+  }
+}

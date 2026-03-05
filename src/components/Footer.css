@@ -1,0 +1,144 @@
+/* Footer Styles */
+.site-footer {
+  background: #2a261f;
+  color: #f4eee6;
+  padding-top: 2.5rem;
+  width: 100%;
+  max-width: 100vw;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-brand .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: #f4eee6;
+  margin-bottom: 1rem;
+}
+
+.footer-brand .logo img {
+  display: block;
+}
+
+.footer-brand p {
+  color: #ddd1c1;
+  line-height: 1.5;
+  margin: 1rem 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.social-links a {
+  color: #ddd1c1;
+  display: flex;
+  transition: color 200ms ease;
+}
+
+.social-links a:hover {
+  color: #06b6d4;
+}
+
+.social-links svg {
+  display: block;
+}
+
+.payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.payment-badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f4eee6;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-links h3,
+.footer-contact h3 {
+  color: #f4eee6;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+}
+
+.footer-links ul,
+.footer-contact ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-links li,
+.footer-contact li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a,
+.footer-contact a {
+  color: #ddd1c1;
+  text-decoration: none;
+  transition: color 200ms ease;
+}
+
+.footer-links a:hover,
+.footer-contact a:hover {
+  color: #06b6d4;
+}
+
+.footer-bottom {
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #b2a391;
+}
+
+.footer-bottom a {
+  color: #b2a391;
+  text-decoration: none;
+}
+
+.footer-bottom a:hover {
+  color: #06b6d4;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .site-footer {
+    padding-top: 2rem;
+  }
+}

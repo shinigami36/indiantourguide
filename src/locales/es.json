@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "northTour": "North Tour",
+    "southTour": "South Tour",
+    "internationalTour": "International Tour",
+    "thailand": "Thailand",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "title": "Viajes Auténticos por India y el Mundo",
+    "subtitle": "Viajes creados por personas que se preocupan",
+    "description": "Experimenta la India real con expertos locales e inmersiones culturales auténticas.",
+    "cta": "Explorar Excursiones"
+  },
+  "tours": {
+    "title": "Excursiones Populares",
+    "subtitle": "Experiencias seleccionadas para viajes inolvidables",
+    "goldenTriangle": {
+      "title": "Excursión del Triángulo Dorado",
+      "duration": "4 días",
+      "locations": "Delhi, Jaipur, Agra",
+      "description": "Explora las ciudades icónicas de India: Delhi, Jaipur y Agra con transporte privado y guías.",
+      "itinerary": {
+        "day1": "Delhi: Qutub Minar, Templo del Loto, Tumba de Humayun, Puerta de la India",
+        "day2": "Jaipur: Fuerte Amber, Jal Mahal, Hawa Mahal, Palacio de la Ciudad, Jantar Mantar",
+        "day3": "Agra: Taj Mahal (amanecer), Fuerte de Agra",
+        "day4": "Salida o extensión"
+      },
+      "includes": [
+        "Coche privado con aire acondicionado",
+        "Guías locales certificados",
+        "Recogida y entrega en hotel",
+        "Agua mineral durante los viajes",
+        "Todos los impuestos aplicables"
+      ]
+    },
+    "delhiDay": {
+      "title": "Excursión de un Día a Delhi",
+      "duration": "1 día",
+      "locations": "Delhi",
+      "description": "Descubre la rica historia y cultura de Delhi en un día completo con guías locales expertos.",
+      "itinerary": {
+        "highlights": "Qutub Minar, Templo del Loto, Tumba de Humayun, Puerta de la India, Fuerte Rojo"
+      },
+      "includes": [
+        "Transporte privado",
+        "Guía experto",
+        "Tarifas de entrada",
+        "Almuerzo"
+      ]
+    },
+    "jaipurDay": {
+      "title": "Excursión de un Día a Jaipur",
+      "duration": "1 día",
+      "locations": "Jaipur",
+      "description": "Experimenta la Ciudad Rosa con visitas al Fuerte Amber, Palacio de la Ciudad y mercados vibrantes.",
+      "itinerary": {
+        "highlights": "Fuerte Amber, Jal Mahal, Hawa Mahal, Palacio de la Ciudad, Jantar Mantar, mercados locales"
+      },
+      "includes": [
+        "Transporte privado",
+        "Guía experto",
+        "Tarifas de entrada",
+        "Almuerzo"
+      ]
+    },
+    "agraDay": {
+      "title": "Excursión de un Día a Agra",
+      "duration": "1 día",
+      "locations": "Agra",
+      "description": "Visita el Taj Mahal y monumentos mogoles con vistas al amanecer y narración experta.",
+      "itinerary": {
+        "highlights": "Taj Mahal (amanecer), Fuerte de Agra, Fatehpur Sikri (opcional)"
+      },
+      "includes": [
+        "Transporte privado",
+        "Guía experto",
+        "Tarifas de entrada",
+        "Almuerzo"
+      ]
+    },
+    "viewDetails": "Ver Detalles",
+    "customizeTour": "Personalizar Excursión"
+  },
+  "contact": {
+    "title": "¿Listo para Empezar tu Viaje?",
+    "subtitle": "Ponte en contacto para planificación de viajes personalizada y ofertas especiales.",
+    "form": {
+      "name": "Nombre Completo",
+      "email": "Correo Electrónico",
+      "phone": "WhatsApp/Teléfono",
+      "message": "Mensaje",
+      "messagePlaceholder": "Cuéntanos sobre tus preferencias de viaje, tamaño del grupo o cualquier requisito especial...",
+      "submit": "Enviar Mensaje",
+      "success": "¡Gracias! Nos pondremos en contacto contigo pronto."
+    },
+    "validation": {
+      "nameRequired": "Por favor ingresa tu nombre completo.",
+      "emailRequired": "Por favor ingresa tu correo electrónico.",
+      "emailInvalid": "Ingresa un correo electrónico válido.",
+      "phoneRequired": "Por favor ingresa tu número de teléfono.",
+      "phoneInvalid": "Ingresa un número de teléfono/WhatsApp válido."
+    }
+  },
+  "footer": {
+    "brand": "Tu puerta de entrada a las maravillas de India. Nos especializamos en crear experiencias de viaje inolvidables a través del Triángulo Dorado y más allá.",
+    "links": "Enlaces Rápidos",
+    "contact": "Contacto",
+    "phone": "Teléfono",
+    "email": "Correo Electrónico",
+    "address": "Dirección",
+    "copyright": "Todos los derechos reservados.",
+    "privacy": "Privacidad",
+    "terms": "Términos"
+  },
+  "features": {
+    "privateTransport": "✓ Transporte Privado",
+    "expertGuide": "✓ Guía Experto",
+    "mealsIncluded": "✓ Comidas Incluidas"
+  }
+}
