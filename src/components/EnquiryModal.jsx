@@ -1,9 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CountrySelect from './CountrySelect';
+import { postJsonWithRetry } from '../utils/api';
 import './EnquiryModal.css';
-
-const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 
 const TOUR_OPTIONS = [
   'tours.goldenTriangle.title',
@@ -108,21 +107,11 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
     if (!validateForm()) return;
     setIsSubmitting(true);
     try {
-      const res = await fetch(`${API_URL}/api/enquiry`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          tourPackages: selectedTours,
-          tourName: selectedTours.join(', '),
-        }),
+      const { res, data } = await postJsonWithRetry('/api/enquiry', {
+        ...formData,
+        tourPackages: selectedTours,
+        tourName: selectedTours.join(', '),
       });
-
-      let data = {};
-      const contentType = res.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        data = await res.json();
-      }
 
       if (res.ok && data.success) {
         setSubmitted(true);

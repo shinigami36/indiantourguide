@@ -8,6 +8,7 @@ import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import EnquiryModal from './components/EnquiryModal';
+import { warmBackend } from './utils/api';
 import './App.css';
 
 function App() {
@@ -18,6 +19,11 @@ function App() {
   // Open enquiry modal on first load
   useEffect(() => {
     setShowEnquiryModal(true);
+  }, []);
+
+  // Warm backend once to reduce first-request cold-start impact.
+  useEffect(() => {
+    warmBackend();
   }, []);
 
   // Scroll to top whenever page changes

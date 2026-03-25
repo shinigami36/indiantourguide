@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CountrySelect from './CountrySelect';
+import { postJsonWithRetry } from '../utils/api';
 import './Contact.css';
-
-const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 
 const HOTEL_OPTIONS = [
   { value: '3 Star', labelKey: 'contact.hotel.3star' },
@@ -82,17 +81,7 @@ const Contact = () => {
     setStatusMsg('');
 
     try {
-      const res = await fetch(`${API_URL}/api/enquiry`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
-
-      let data = {};
-      const contentType = res.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        data = await res.json();
-      }
+      const { res, data } = await postJsonWithRetry('/api/enquiry', formData);
 
       if (res.ok && data.success) {
         setStatus('success');
