@@ -2,9 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-const nodemailer = require('nodemailer');
 const axios = require('axios');
 const rateLimit = require('express-rate-limit');
+const { Resend } = require('resend');
 const { decryptSecret } = require('../tools/decrypt-secret');
 
 const app = express();
@@ -79,18 +79,8 @@ const escapeHtml = (value) => String(value)
 
 const sanitizeBoolean = (value) => value === true || value === 'true' || value === 1 || value === '1';
 
-const gmailAppPassword = resolveSecret(process.env.GMAIL_APP_PASSWORD, process.env.GMAIL_APP_PASSWORD_ENC, 'GMAIL_APP_PASSWORD_ENC');
-
-// ─── Email transporter (Gmail SMTP) ──────────────────────────────────────────
-const transporter = process.env.GMAIL_USER && gmailAppPassword
-  ? nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: gmailAppPassword,
-      },
-    })
-  : null;
+// ─── Resend email client ──────────────────────────────────────────────────────
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 // ─── Validation ──────────────────────────────────────────────────────────────
 function validateEnquiry({ name, email, phone, startDate, endDate, hotelCategory, noHotelRequired }) {
@@ -141,7 +131,7 @@ function formatHotelPreference(hotelCategory, noHotelRequired) {
 
 // ─── Send Email ───────────────────────────────────────────────────────────────
 async function sendEmail({ name, email, phone, country, startDate, endDate, noHotelRequired, hotelCategory, adults, children, message, tourName, tourPackages }) {
-  if (!transporter) {
+  if (!resend) {
     throw new Error('Email credentials are not configured');
   }
 
@@ -167,34 +157,13 @@ async function sendEmail({ name, email, phone, country, startDate, endDate, noHo
   const safeChildren = escapeHtml(String(children));
   const safeMessage = escapeHtml(message || '');
 
-  const mailOptions = {
-    from: `"indiatourguide Website" <${process.env.GMAIL_USER}>`,
-    to: process.env.GMAIL_USER,
-    replyTo: email,
+  const toAddress = process.env.NOTIFY_EMAIL || process.env.GMAIL_USER || 'indiatourguide1@gmail.com';
+
+  await resend.emails.send({
+    from: 'indiatourguide <onboarding@resend.dev>',
+    to: toAddress,
+    reply_to: email,
     subject: 'New Tour Enquiry – indiatourguide.com',
-    text: [
-      'New Travel Enquiry Received',
-      '===========================',
-      '',
-      'Customer Details',
-      `  Name:           ${name}`,
-      `  Email:          ${email}`,
-      `  Phone/WhatsApp: ${phone}`,
-      ...(country ? [`  Country:        ${country}`] : []),
-      `  Travel Dates:   ${formatTravelDates(startDate, endDate)}`,
-      `  Hotel Preference: ${formatHotelPreference(hotelCategory, noHotelRequired)}`,
-      `  Adults:         ${adults}`,
-      `  Children:       ${children}`,
-      '',
-      'Interested Tours',
-      tourBullets,
-      '',
-      'Customer Message',
-      `  "${message || 'No message provided'}"`,
-      '',
-      'Source: indiatourguide.com contact form',
-      'Reply directly to this email to respond to the enquiry.',
-    ].join('\n'),
     html: `
       <div style="font-family:sans-serif;max-width:580px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
         <!-- Header -->
@@ -258,8 +227,7 @@ async function sendEmail({ name, email, phone, country, startDate, endDate, noHo
         </div>
       </div>
     `,
-  };
-  await transporter.sendMail(mailOptions);
+  });
 }
 
 // ─── Send WhatsApp via Meta Cloud API ────────────────────────────────────────
