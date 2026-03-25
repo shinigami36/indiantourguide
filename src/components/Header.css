@@ -313,30 +313,53 @@
   white-space: nowrap;
 }
 
+/* Hide mobile-only items on desktop */
+.mobile-only-nav-item {
+  display: none;
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
   .header-inner {
     position: relative;
+    min-height: 62px;
+    gap: 0.5rem;
   }
 
   .menu-toggle {
     display: inline-flex;
+    order: 3;
+    flex-shrink: 0;
+  }
+
+  /* Hide desktop-only items on mobile */
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Show mobile-only nav items */
+  .mobile-only-nav-item {
+    display: flex;
+    justify-content: center;
+    width: 100%;
   }
 
   .nav-links {
     position: fixed;
-    top: 70px;
+    top: 62px;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.98);
+    background: rgba(255, 255, 255, 0.99);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    padding: 1rem;
-    gap: 0.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 0.75rem 1rem 1.25rem;
+    gap: 0.4rem;
     list-style: none;
     display: none;
     flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-items: stretch;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    z-index: 999;
   }
 
   .nav-links.open {
@@ -351,6 +374,7 @@
     border-radius: 8px;
     width: 100%;
     justify-content: center;
+    font-size: 1rem;
   }
 
   /* Dropdown inline on mobile */
@@ -362,33 +386,67 @@
     margin-top: 0.25rem;
   }
 
+  /* Language selector inside mobile menu */
+  .mobile-nav-lang {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.65rem 2rem 0.65rem 1rem;
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  /* Contact button inside mobile menu */
+  .mobile-nav-contact-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    min-height: 46px;
+    margin-top: 0.25rem;
+  }
+
+  /* Separator line before mobile-only items */
+  .mobile-only-nav-item:first-of-type {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #e2e8f0;
+  }
+
   .header-right {
     gap: 0.5rem;
+    margin-left: auto;
   }
 
   .brand {
-    padding: 0.3rem 0.56rem 0.3rem 0.4rem;
-    gap: 0.6rem;
+    padding: 0.3rem 0.5rem 0.3rem 0.35rem;
+    gap: 0.5rem;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .brand-logo {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
   }
 
   .brand-name {
-    font-size: 1.42rem;
+    font-size: 1.3rem;
   }
 
   .brand-tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.1em;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 380px) {
+  .brand-tag {
+    display: none;
   }
 
-  .language-select {
-    font-size: 0.8rem;
-    padding: 0.4rem 1.5rem 0.4rem 0.6rem;
-    padding-right: 1.5rem;
+  .brand-name {
+    font-size: 1.15rem;
   }
 }
 

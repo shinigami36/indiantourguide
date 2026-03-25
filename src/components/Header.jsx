@@ -90,11 +90,28 @@ const Header = ({ currentPage, onNavigate }) => {
                 {t('nav.attractions', { defaultValue: 'Attractions' })}
               </button>
             </li>
+            <li className="mobile-only-nav-item">
+              <select
+                value={i18n.resolvedLanguage || 'en'}
+                onChange={(e) => { i18n.changeLanguage(e.target.value); closeMenu(); }}
+                className="language-select mobile-nav-lang"
+                aria-label="Select language"
+              >
+                {languages.map(lang => (
+                  <option key={lang.code} value={lang.code}>{lang.name}</option>
+                ))}
+              </select>
+            </li>
+            <li className="mobile-only-nav-item">
+              <button className="btn btn-primary mobile-nav-contact-btn" onClick={() => goToSection('enquiry')}>
+                {t('nav.contact')}
+              </button>
+            </li>
           </ul>
         </nav>
 
         <div className="header-right">
-          <div className="language-selector">
+          <div className="language-selector desktop-only">
             <select
               value={i18n.resolvedLanguage || 'en'}
               onChange={(e) => i18n.changeLanguage(e.target.value)}
@@ -107,7 +124,7 @@ const Header = ({ currentPage, onNavigate }) => {
             </select>
           </div>
 
-          <button className="btn btn-primary contact-btn" onClick={() => goToSection('enquiry')}>
+          <button className="btn btn-primary contact-btn desktop-only" onClick={() => goToSection('enquiry')}>
             {t('nav.contact')}
           </button>
         </div>
