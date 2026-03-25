@@ -1,16 +1,17 @@
 {
   "nav": {
     "home": "홈",
-    "northTour": "North Tour",
-    "southTour": "South Tour",
-    "internationalTour": "International Tour",
-    "thailand": "Thailand",
-    "contact": "연락처"
+    "northTour": "북부 투어",
+    "southTour": "남부 투어",
+    "internationalTour": "국제 투어",
+    "thailand": "태국",
+    "contact": "문의하기",
+    "attractions": "관광명소"
   },
   "hero": {
     "title": "진정한 인도와 세계 여행",
-    "subtitle": "마음을 담아 만든 여행",
-    "description": "현지 전문가와 진정한 문화 체험으로 진정한 인도를 경험하세요.",
+    "subtitle": "진심을 담아 만든 여행",
+    "description": "현지 전문가와 함께 진정한 인도를 경험하고 진정한 문화 체험을 즐기세요.",
     "cta": "투어 탐색"
   },
   "tours": {
@@ -20,103 +21,338 @@
       "title": "황금 삼각 투어",
       "duration": "4일",
       "locations": "델리, 자이푸르, 아그라",
-      "description": "인도의 상징적인 도시 탐험: 델리, 자이푸르, 아그라를 개인 교통편과 가이드와 함께.",
+      "description": "전용 교통수단과 가이드와 함께 인도의 대표 도시인 델리, 자이푸르, 아그라를 탐험하세요.",
       "itinerary": {
-        "day1": "델리: 쿠툽 미나르, 로터스 사원, 후마윤 무덤, 인디아 게이트",
-        "day2": "자이푸르: 앰버 포트, 잘 마할, 하와 마할, 시티 팰리스, 잔타르 만타르",
-        "day3": "아그라: 타지마할 (일출), 아그라 포트",
-        "day4": "출발 또는 연장"
+        "delhi": "쿠트브 미나르, 후마윤 묘, 인디아 게이트, 연꽃 사원",
+        "jaipur": "암베르 요새, 잘 마할, 하와 마할, 시티 팰리스, 잔타르 만타르",
+        "agra": "타지마할, 아그라 요새"
       },
       "includes": [
-        "개인 에어컨 차량",
-        "인증된 현지 가이드",
-        "호텔 픽업 및 드롭오프",
-        "여행 중 미네랄 워터",
-        "모든 적용 세금"
+        "숙박",
+        "조식, 중식, 석식",
+        "교통비 및 세금",
+        "공항/호텔 픽업 및 드롭오프",
+        "가이드",
+        "유적지 입장료",
+        "차량 내 생수"
+      ],
+      "excludes": [
+        "사진기 또는 비디오 카메라 사용료",
+        "국제 및 국내 항공편",
+        "가이드 및 기사 팁"
       ]
     },
-    "delhiDay": {
-      "title": "델리 당일 투어",
+    "agraFullDay": {
+      "title": "아그라 당일 투어",
       "duration": "1일",
-      "locations": "델리",
-      "description": "전문 현지 가이드와 함께 델리의 풍부한 역사와 문화를 하루 만에 발견하세요.",
+      "locations": "아그라",
+      "description": "일출 관람과 전문 해설과 함께 타지마할과 무굴 유적지를 방문합니다.",
       "itinerary": {
-        "highlights": "쿠툽 미나르, 로터스 사원, 후마윤 무덤, 인디아 게이트, 레드 포트"
+        "highlights": "타지마할 (일출), 아그라 요새, 파테푸르 시크리 (선택)"
       },
       "includes": [
-        "개인 교통편",
+        "전용 교통",
         "전문 가이드",
         "입장료",
-        "점심"
+        "중식"
+      ],
+      "excludes": [
+        "사진기 또는 비디오 카메라 사용료",
+        "국제 및 국내 항공편",
+        "가이드 및 기사 팁"
       ]
     },
     "jaipurDay": {
       "title": "자이푸르 당일 투어",
       "duration": "1일",
       "locations": "자이푸르",
-      "description": "앰버 포트, 시티 팰리스, 활기찬 시장 방문을 통해 핑크 시티를 경험하세요.",
+      "description": "암베르 요새, 시티 팰리스, 활기찬 시장을 방문하며 핑크 시티를 경험하세요.",
       "itinerary": {
-        "highlights": "앰버 포트, 잘 마할, 하와 마할, 시티 팰리스, 잔타르 만타르, 현지 시장"
+        "highlights": "암베르 요새, 잘 마할, 하와 마할, 시티 팰리스, 잔타르 만타르, 현지 시장"
       },
       "includes": [
-        "개인 교통편",
+        "전용 교통",
         "전문 가이드",
         "입장료",
-        "점심"
+        "중식"
+      ],
+      "excludes": [
+        "사진기 또는 비디오 카메라 사용료",
+        "국제 및 국내 항공편",
+        "가이드 및 기사 팁"
       ]
     },
-    "agraDay": {
-      "title": "아그라 당일 투어",
-      "duration": "1일",
-      "locations": "아그라",
-      "description": "일출 관람과 전문 해설로 타지마할과 무굴 기념물을 방문하세요.",
+    "delhiOldHalfDay": {
+      "title": "올드 델리 반일 투어",
+      "duration": "4-5시간",
+      "locations": "델리",
+      "description": "릭샤를 타고 향신료 시장을 방문하며 역사적인 무굴 델리를 탐험합니다.",
       "itinerary": {
-        "highlights": "타지마할 (일출), 아그라 포트, 파테푸르 시크리 (선택사항)"
+        "highlights": "자마 마스지드, 릭샤 투어, 향신료 시장, 붉은 요새 (외관), 구르드와라 방글라 사히브"
       },
       "includes": [
-        "개인 교통편",
-        "전문 가이드",
-        "입장료",
-        "점심"
+        "교통비 및 세금",
+        "가이드",
+        "차량 내 생수",
+        "공항/호텔 픽업 및 드롭오프",
+        "유적지 티켓"
+      ],
+      "excludes": [
+        "사진기 또는 비디오 카메라 사용료",
+        "국제 및 국내 항공편",
+        "가이드 및 기사 팁",
+        "조식, 중식, 석식"
       ]
     },
-    "viewDetails": "세부 정보 보기",
-    "customizeTour": "투어 맞춤 설정"
+    "delhiNewHalfDay": {
+      "title": "뉴 델리 반일 투어",
+      "duration": "4-5시간",
+      "locations": "델리",
+      "description": "현대 델리의 건축 명소와 정부 건물을 발견하세요.",
+      "itinerary": {
+        "highlights": "후마윤 묘, 쿠트브 미나르, 연꽃 사원, 인디아 게이트, 구르드와라 방글라 사히브"
+      },
+      "includes": [
+        "교통비 및 세금",
+        "가이드",
+        "차량 내 생수",
+        "공항/호텔 픽업 및 드롭오프",
+        "유적지 티켓"
+      ],
+      "excludes": [
+        "사진기 또는 비디오 카메라 사용료",
+        "국제 및 국내 항공편",
+        "가이드 및 기사 팁"
+      ]
+    },
+    "delhiFullDay": {
+      "title": "뉴 & 올드 델리 하루 투어",
+      "duration": "8-9시간",
+      "locations": "델리",
+      "description": "하루 동안 역사적인 올드 델리와 현대적인 뉴 델리를 모두 아우르는 종합 투어.",
+      "itinerary": {
+        "highlights": "올드 델리: 자마 마스지드, 붉은 요새, 향신료 시장, 릭샤 투어. 뉴 델리: 인디아 게이트, 쿠트브 미나르, 연꽃 사원, 후마윤 묘, 구르드와라 방글라 사히브"
+      },
+      "includes": [
+        "교통비 및 세금",
+        "가이드",
+        "차량 내 생수",
+        "공항/호텔 픽업 및 드롭오프",
+        "유적지 티켓",
+        "중식"
+      ],
+      "excludes": [
+        "사진기 또는 비디오 카메라 사용료",
+        "국제 및 국내 항공편",
+        "가이드 및 기사 팁",
+        "조식 및 석식"
+      ]
+    },
+    "viewDetails": "상세 보기",
+    "customizeTour": "투어 맞춤 설정",
+    "readMore": "더 보기",
+    "readLess": "접기",
+    "closeDetailsAria": "상세 팝업 닫기",
+    "highlights": "하이라이트",
+    "whatsIncluded": "포함 사항",
+    "whatsExcluded": "불포함 사항",
+    "enquireNow": "지금 문의하기",
+    "cannotFind": "원하는 상품을 찾지 못하셨나요?",
+    "goldenTriangleMumbai": {
+      "title": "뭄바이 포함 골든 트라이앵글",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Mumbai",
+      "description": "Explore India's iconic Golden Triangle along with the vibrant city of Mumbai, combining historical monuments, cultural experiences, and coastal charm.",
+      "itinerary": {
+        "delhi": "Jama Masjid, Raj Ghat, Chandni Chowk, Rickshaw Ride, Red Fort (outside), Spice Market, Humayun's Tomb, Qutub Minar, Lotus Temple, India Gate, President House, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Jal Mahal, Hawa Mahal",
+        "agra": "Taj Mahal, Agra Fort, Mehtab Bagh",
+        "mumbai": "Gateway of India, Juhu Beach, Haji Ali Sufi Shrine, Elephanta Caves"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Guide",
+        "Fresh Water in the Car",
+        "Pick up & Drop off at Airport/Hotel",
+        "Monument Tickets",
+        "Domestic Flights/Train",
+        "Breakfast / Lunch / Dinner"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography or video camera fees"
+      ]
+    },
+    "goldenTriangleVaranasi": {
+      "title": "바라나시 포함 골든 트라이앵글",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Varanasi",
+      "description": "Combine the famous Golden Triangle with the spiritual heart of India, Varanasi, experiencing history, culture, and sacred traditions.",
+      "itinerary": {
+        "delhi": "Qutub Minar, Humayun's Tomb, Lotus Temple, India Gate, Jama Masjid, Chandni Chowk, Rickshaw Ride, Spice Market, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Hawa Mahal, City Palace, Jantar Mantar",
+        "agra": "Taj Mahal (Sunrise), Agra Fort, Fatehpur Sikri",
+        "varanasi": "Evening Ganga Aarti, Morning Boat Ride on the Ganges, Buddhist site of Sarnath"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Accommodation",
+        "Guide",
+        "Fresh Water in the Car",
+        "Monument Tickets",
+        "Domestic Flight/Train",
+        "Breakfast, Lunch, Dinner",
+        "Pick up & Drop off at Airport/Hotel/Train Station"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography & videography fees"
+      ]
+    }
   },
   "contact": {
     "title": "여행을 시작할 준비가 되셨나요?",
-    "subtitle": "개인 맞춤 여행 계획과 특별 제안에 대해 문의하세요.",
+    "subtitle": "맞춤형 여행 계획 및 특별 혜택을 위해 문의하세요.",
     "form": {
-      "name": "전체 이름",
+      "name": "성명",
       "email": "이메일",
-      "phone": "WhatsApp/전화",
+      "phone": "WhatsApp/전화번호",
       "message": "메시지",
-      "messagePlaceholder": "여행 선호사항, 그룹 규모 또는 특별 요구사항에 대해 알려주세요...",
+      "messagePlaceholder": "여행 선호도, 그룹 규모 또는 특별 요구 사항에 대해 알려주세요...",
       "submit": "메시지 보내기",
-      "success": "감사합니다! 곧 연락드리겠습니다."
+      "success": "감사합니다! 곧 연락드리겠습니다.",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "you@example.com",
+      "phonePlaceholder": "+91 XXXXX XXXXX",
+      "country": "국가",
+      "hotelAccommodation": "호텔 숙박",
+      "travelers": "여행자 수",
+      "adults": "성인",
+      "children": "어린이",
+      "decreaseAdults": "성인 감소",
+      "increaseAdults": "성인 증가",
+      "decreaseChildren": "어린이 감소",
+      "increaseChildren": "어린이 증가",
+      "sending": "Sending..."
     },
     "validation": {
-      "nameRequired": "전체 이름을 입력하세요.",
-      "emailRequired": "이메일을 입력하세요.",
-      "emailInvalid": "유효한 이메일을 입력하세요.",
-      "phoneRequired": "전화번호를 입력하세요.",
-      "phoneInvalid": "유효한 전화/WhatsApp 번호를 입력하세요."
+      "nameRequired": "성명을 입력해 주세요.",
+      "emailRequired": "이메일을 입력해 주세요.",
+      "emailInvalid": "유효한 이메일을 입력해 주세요.",
+      "phoneRequired": "전화번호를 입력해 주세요.",
+      "phoneInvalid": "유효한 전화번호/WhatsApp을 입력해 주세요."
+    },
+    "hotel": {
+      "3star": "3성급",
+      "4star": "4성급",
+      "5star": "5성급"
     }
   },
   "footer": {
-    "brand": "인도의 경이로움으로 향하는 관문. 우리는 황금 삼각과 그 너머에서 잊지 못할 여행 경험을 만드는 데 전문화되어 있습니다.",
+    "brand": "인도의 경이로움으로 가는 관문. 저희는 황금 삼각지대 및 그 너머의 잊지 못할 여행 경험을 전문으로 합니다.",
     "links": "빠른 링크",
     "contact": "연락처",
     "phone": "전화",
     "email": "이메일",
     "address": "주소",
     "copyright": "모든 권리 보유.",
-    "privacy": "개인정보 보호",
-    "terms": "약관"
+    "privacy": "개인정보",
+    "terms": "이용약관",
+    "tours": "Tours",
+    "contactNow": "Contact Now",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "followOnFacebook": "Follow us on Facebook",
+    "followOnInstagram": "Follow us on Instagram"
   },
   "features": {
-    "privateTransport": "✓ 개인 교통편",
+    "privateTransport": "✓ 전용 교통",
     "expertGuide": "✓ 전문 가이드",
-    "mealsIncluded": "✓ 식사 포함"
+    "mealsIncluded": "✓ 식사 포함",
+    "monumentTickets": "✓ Monument Tickets"
+  },
+  "header": {
+    "brandTag": "Authentic India & World Travel",
+    "brandHomeAria": "indiatourguide Home"
+  },
+  "enquiry": {
+    "title": "Enquire About a Tour",
+    "subtitle": "Fill in your details and we'll get back to you shortly",
+    "send": "Send Enquiry",
+    "successTitle": "Thank you for your enquiry!",
+    "successBody": "Our travel expert will contact you shortly on WhatsApp or email.",
+    "selectTourPackages": "투어 패키지 선택...",
+    "toursSelected": "{{count}} tours selected",
+    "tourPackages": "투어 패키지",
+    "feature": {
+      "handpicked": "Handpicked tours & experiences",
+      "personalized": "Personalized itineraries",
+      "guidance": "Expert local guidance"
+    }
+  },
+  "common": {
+    "close": "Close",
+    "clear": "Clear",
+    "countrySearchPlaceholder": "국가 검색 또는 선택...",
+    "noCountriesFound": "No countries found",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "serverConnectionError": "Could not connect to the server. Please try again or contact us directly on WhatsApp.",
+    "serverConnectionErrorShort": "Could not connect to server. Please try again."
+  },
+  "topAttractions": {
+    "eyebrow": "꼭 가봐야 할 여행지",
+    "title": "인도 인기 관광명소",
+    "subtitle": "상징적인 랜드마크와 문화 명소를 만나보세요",
+    "viewAll": "모든 관광명소 보기",
+    "viewAllAria": "모든 관광명소 보기",
+    "exploreAll": "50개 이상 관광명소 탐색",
+    "scrollLeftAria": "왼쪽으로 스크롤",
+    "scrollRightAria": "오른쪽으로 스크롤"
+  },
+  "reviews": {
+    "eyebrow": "Traveler Experiences",
+    "title": "What Travelers Say About Us",
+    "subtitle": "Authentic stories from explorers who trusted us with their India journey",
+    "badgeCount": "128 Google Reviews",
+    "googleAria": "Google",
+    "scrollLeftAria": "Scroll reviews left",
+    "scrollRightAria": "Scroll reviews right"
+  },
+  "attractions": {
+    "title": "Places to Visit in India",
+    "subtitle": "Discover 50+ iconic destinations - from ancient forts and sacred temples to Himalayan valleys and tropical beaches",
+    "backHome": "Back to Home",
+    "backHomeAria": "Back to home",
+    "stats": {
+      "attractions": "Attractions",
+      "categories": "Categories",
+      "states": "States"
+    },
+    "filterByCategoryAria": "Filter by category",
+    "showing": "Showing",
+    "of": "of",
+    "results": "attractions",
+    "clearFilter": "Clear filter",
+    "close": "Close",
+    "explore": "Explore",
+    "planTrip": "Plan Trip",
+    "planTripAria": "Plan a trip to {{attraction}}",
+    "paginationAria": "Attractions pagination",
+    "previousPageAria": "Previous page",
+    "nextPageAria": "Next page",
+    "prev": "Prev",
+    "next": "Next",
+    "pageAria": "Page {{page}}",
+    "category": {
+      "all": "All Places",
+      "forts": "Forts & Palaces",
+      "temples": "Temples & Shrines",
+      "caves": "Caves & Rock-cut",
+      "landmarks": "Iconic Landmarks",
+      "nature": "Nature & Lakes",
+      "beaches": "Beaches & Islands",
+      "wildlife": "Wildlife"
+    }
   }
 }

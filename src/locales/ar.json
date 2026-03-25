@@ -1,122 +1,358 @@
 {
   "nav": {
     "home": "الرئيسية",
-    "northTour": "North Tour",
-    "southTour": "South Tour",
-    "internationalTour": "International Tour",
-    "thailand": "Thailand",
-    "contact": "اتصل بنا"
+    "northTour": "جولة الشمال",
+    "southTour": "جولة الجنوب",
+    "internationalTour": "الجولة الدولية",
+    "thailand": "تايلاند",
+    "contact": "اتصل بنا",
+    "attractions": "المعالم"
   },
   "hero": {
-    "title": "السفر الحقيقي في الهند والعالم",
-    "subtitle": "رحلات مصممة من قبل أشخاص يهتمون",
-    "description": "اختبر الهند الحقيقية مع الخبراء المحليين والغمر الثقافي الأصيل.",
+    "title": "الهند الأصيلة والسفر حول العالم",
+    "subtitle": "رحلات يصنعها أشخاص يهتمون بك",
+    "description": "اختبر الهند الحقيقية مع خبراء محليين وانغماس ثقافي أصيل.",
     "cta": "استكشف الجولات"
   },
   "tours": {
-    "title": "الجولات الشائعة",
-    "subtitle": "تجارب مختارة لرحلات لا تُنسى",
+    "title": "الجولات الشعبية",
+    "subtitle": "تجارب مختارة بعناية لرحلات لا تُنسى",
     "goldenTriangle": {
       "title": "جولة المثلث الذهبي",
       "duration": "4 أيام",
-      "locations": "دلهي، جايبور، أغرا",
-      "description": "استكشف المدن الأيقونية في الهند: دلهي، جايبور، وأغرا مع النقل الخاص والمرشدين.",
+      "locations": "دلهي، جايبور، أجرا",
+      "description": "استكشف المدن الأيقونية في الهند: دلهي وجايبور وأجرا مع وسائل نقل خاصة ومرشدين.",
       "itinerary": {
-        "day1": "دلهي: قطب مينار، معبد اللوتس، ضريح همايون، بوابة الهند",
-        "day2": "جايبور: قلعة أمبر، بحيرة جال، قصر الهواء، قصر المدينة، ينتر مانتر",
-        "day3": "أغرا: تاج محل (شروق الشمس)، قلعة أغرا",
-        "day4": "المغادرة أو التمديد"
+        "delhi": "قطب منار، ضريح همايون، بوابة الهند، معبد اللوتس",
+        "jaipur": "قلعة أمبر، جال محل، هاوا محل، قصر المدينة، جانتار مانتار",
+        "agra": "تاج محل، قلعة أجرا"
       },
       "includes": [
-        "سيارة خاصة مكيفة",
-        "مرشدون محليون معتمدون",
-        "الاستلام والتسليم من الفندق",
-        "ماء معدني أثناء الرحلات",
-        "جميع الضرائب المطبقة"
+        "الإقامة",
+        "الإفطار والغداء والعشاء",
+        "النقل والضرائب",
+        "الاستقبال والتوديع في المطار/الفندق",
+        "مرشد سياحي",
+        "رسوم دخول المعالم",
+        "مياه نظيفة في السيارة"
+      ],
+      "excludes": [
+        "رسوم استخدام الكاميرات الفوتوغرافية أو الفيديو",
+        "الرحلات الجوية الدولية والمحلية",
+        "أي إكراميات للمرشد والسائق"
       ]
     },
-    "delhiDay": {
-      "title": "جولة يوم واحد في دلهي",
+    "agraFullDay": {
+      "title": "جولة أجرا ليوم كامل",
       "duration": "يوم واحد",
-      "locations": "دلهي",
-      "description": "اكتشف التاريخ الغني والثقافة في دلهي في يوم كامل مع مرشدين محليين خبراء.",
+      "locations": "أجرا",
+      "description": "زيارة تاج محل والمعالم المغولية مع مشاهدة شروق الشمس وشرح الخبراء.",
       "itinerary": {
-        "highlights": "قطب مينار، معبد اللوتس، ضريح همايون، بوابة الهند، القلعة الحمراء"
+        "highlights": "تاج محل (شروق الشمس)، قلعة أجرا، فتحبور سيكري (اختياري)"
       },
       "includes": [
-        "النقل الخاص",
+        "وسيلة نقل خاصة",
         "مرشد خبير",
         "رسوم الدخول",
         "الغداء"
+      ],
+      "excludes": [
+        "رسوم استخدام الكاميرات الفوتوغرافية أو الفيديو",
+        "الرحلات الجوية الدولية والمحلية",
+        "أي إكراميات للمرشد والسائق"
       ]
     },
     "jaipurDay": {
-      "title": "جولة يوم واحد في جايبور",
+      "title": "جولة جايبور ليوم واحد",
       "duration": "يوم واحد",
       "locations": "جايبور",
-      "description": "اختبر المدينة الوردية مع زيارات قلعة أمبر، قصر المدينة، والأسواق النابضة بالحياة.",
+      "description": "اكتشف المدينة الوردية مع زيارات قلعة أمبر وقصر المدينة والأسواق النابضة بالحياة.",
       "itinerary": {
-        "highlights": "قلعة أمبر، بحيرة جال، قصر الهواء، قصر المدينة، ينتر مانتر، الأسواق المحلية"
+        "highlights": "قلعة أمبر، جال محل، هاوا محل، قصر المدينة، جانتار مانتار، الأسواق المحلية"
       },
       "includes": [
-        "النقل الخاص",
+        "وسيلة نقل خاصة",
         "مرشد خبير",
         "رسوم الدخول",
         "الغداء"
+      ],
+      "excludes": [
+        "رسوم استخدام الكاميرات الفوتوغرافية أو الفيديو",
+        "الرحلات الجوية الدولية والمحلية",
+        "أي إكراميات للمرشد والسائق"
       ]
     },
-    "agraDay": {
-      "title": "جولة يوم واحد في أغرا",
-      "duration": "يوم واحد",
-      "locations": "أغرا",
-      "description": "زور تاج محل والمعالم المغولية مع مشاهدة شروق الشمس والسرد الخبير.",
+    "delhiOldHalfDay": {
+      "title": "جولة نصف يوم في دلهي القديمة",
+      "duration": "4-5 ساعات",
+      "locations": "دلهي",
+      "description": "استكشف دلهي التاريخية المغولية مع ركوب العربات وأسواق التوابل.",
       "itinerary": {
-        "highlights": "تاج محل (شروق الشمس)، قلعة أغرا، فاتهبور سيكري (اختياري)"
+        "highlights": "جامع مسجد، ركوب العربة، سوق التوابل، قلعة لال (من الخارج)، جوردوارا بانغلا صاحب"
       },
       "includes": [
-        "النقل الخاص",
-        "مرشد خبير",
-        "رسوم الدخول",
+        "النقل والضرائب",
+        "مرشد سياحي",
+        "مياه نظيفة في السيارة",
+        "الاستقبال والتوديع في المطار/الفندق",
+        "تذاكر المعالم"
+      ],
+      "excludes": [
+        "رسوم استخدام الكاميرات الفوتوغرافية أو الفيديو",
+        "الرحلات الجوية الدولية والمحلية",
+        "أي إكراميات للمرشد والسائق",
+        "الإفطار والغداء والعشاء"
+      ]
+    },
+    "delhiNewHalfDay": {
+      "title": "جولة نصف يوم في دلهي الجديدة",
+      "duration": "4-5 ساعات",
+      "locations": "دلهي",
+      "description": "اكتشف الروائع المعمارية ومباني الحكومة في دلهي الحديثة.",
+      "itinerary": {
+        "highlights": "ضريح همايون، قطب منار، معبد اللوتس، بوابة الهند، جوردوارا بانغلا صاحب"
+      },
+      "includes": [
+        "النقل والضرائب",
+        "مرشد سياحي",
+        "مياه نظيفة في السيارة",
+        "الاستقبال والتوديع في المطار/الفندق",
+        "تذاكر المعالم"
+      ],
+      "excludes": [
+        "رسوم استخدام الكاميرات الفوتوغرافية أو الفيديو",
+        "الرحلات الجوية الدولية والمحلية",
+        "أي إكراميات للمرشد والسائق"
+      ]
+    },
+    "delhiFullDay": {
+      "title": "جولة دلهي الجديدة والقديمة ليوم كامل",
+      "duration": "8-9 ساعات",
+      "locations": "دلهي",
+      "description": "جولة شاملة تغطي دلهي القديمة التاريخية ودلهي الجديدة الحديثة في يوم واحد.",
+      "itinerary": {
+        "highlights": "دلهي القديمة: جامع مسجد، قلعة لال، سوق التوابل، ركوب العربة. دلهي الجديدة: بوابة الهند، قطب منار، معبد اللوتس، ضريح همايون، جوردوارا بانغلا صاحب"
+      },
+      "includes": [
+        "النقل والضرائب",
+        "مرشد سياحي",
+        "مياه نظيفة في السيارة",
+        "الاستقبال والتوديع في المطار/الفندق",
+        "تذاكر المعالم",
         "الغداء"
+      ],
+      "excludes": [
+        "رسوم استخدام الكاميرات الفوتوغرافية أو الفيديو",
+        "الرحلات الجوية الدولية والمحلية",
+        "أي إكراميات للمرشد والسائق",
+        "الإفطار والعشاء"
       ]
     },
     "viewDetails": "عرض التفاصيل",
-    "customizeTour": "تخصيص الجولة"
+    "customizeTour": "تخصيص جولتك",
+    "readMore": "اقرأ المزيد",
+    "readLess": "اقرأ أقل",
+    "closeDetailsAria": "إغلاق نافذة التفاصيل",
+    "highlights": "أبرز المعالم",
+    "whatsIncluded": "ما يشمله البرنامج",
+    "whatsExcluded": "ما لا يشمله البرنامج",
+    "enquireNow": "استفسر الآن",
+    "cannotFind": "لا تجد ما تبحث عنه؟",
+    "goldenTriangleMumbai": {
+      "title": "المثلث الذهبي مع مومباي",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Mumbai",
+      "description": "Explore India's iconic Golden Triangle along with the vibrant city of Mumbai, combining historical monuments, cultural experiences, and coastal charm.",
+      "itinerary": {
+        "delhi": "Jama Masjid, Raj Ghat, Chandni Chowk, Rickshaw Ride, Red Fort (outside), Spice Market, Humayun's Tomb, Qutub Minar, Lotus Temple, India Gate, President House, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Jal Mahal, Hawa Mahal",
+        "agra": "Taj Mahal, Agra Fort, Mehtab Bagh",
+        "mumbai": "Gateway of India, Juhu Beach, Haji Ali Sufi Shrine, Elephanta Caves"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Guide",
+        "Fresh Water in the Car",
+        "Pick up & Drop off at Airport/Hotel",
+        "Monument Tickets",
+        "Domestic Flights/Train",
+        "Breakfast / Lunch / Dinner"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography or video camera fees"
+      ]
+    },
+    "goldenTriangleVaranasi": {
+      "title": "المثلث الذهبي مع فاراناسي",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Varanasi",
+      "description": "Combine the famous Golden Triangle with the spiritual heart of India, Varanasi, experiencing history, culture, and sacred traditions.",
+      "itinerary": {
+        "delhi": "Qutub Minar, Humayun's Tomb, Lotus Temple, India Gate, Jama Masjid, Chandni Chowk, Rickshaw Ride, Spice Market, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Hawa Mahal, City Palace, Jantar Mantar",
+        "agra": "Taj Mahal (Sunrise), Agra Fort, Fatehpur Sikri",
+        "varanasi": "Evening Ganga Aarti, Morning Boat Ride on the Ganges, Buddhist site of Sarnath"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Accommodation",
+        "Guide",
+        "Fresh Water in the Car",
+        "Monument Tickets",
+        "Domestic Flight/Train",
+        "Breakfast, Lunch, Dinner",
+        "Pick up & Drop off at Airport/Hotel/Train Station"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography & videography fees"
+      ]
+    }
   },
   "contact": {
-    "title": "جاهز لبدء رحلتك؟",
-    "subtitle": "تواصل معنا للتخطيط الشخصي للسفر والعروض الخاصة.",
+    "title": "هل أنت مستعد لبدء رحلتك؟",
+    "subtitle": "تواصل معنا للحصول على تخطيط سفر مخصص وعروض خاصة.",
     "form": {
       "name": "الاسم الكامل",
       "email": "البريد الإلكتروني",
       "phone": "واتساب/الهاتف",
       "message": "الرسالة",
-      "messagePlaceholder": "أخبرنا عن تفضيلات سفرك، حجم المجموعة، أو أي متطلبات خاصة...",
+      "messagePlaceholder": "أخبرنا عن تفضيلات سفرك وحجم المجموعة أو أي متطلبات خاصة...",
       "submit": "إرسال الرسالة",
-      "success": "شكراً لك! سنعود إليك قريباً."
+      "success": "شكرًا! سنرد عليك قريبًا.",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "you@example.com",
+      "phonePlaceholder": "+91 XXXXX XXXXX",
+      "country": "الدولة",
+      "hotelAccommodation": "الإقامة الفندقية",
+      "travelers": "عدد المسافرين",
+      "adults": "البالغون",
+      "children": "الأطفال",
+      "decreaseAdults": "تقليل البالغين",
+      "increaseAdults": "زيادة البالغين",
+      "decreaseChildren": "تقليل الأطفال",
+      "increaseChildren": "زيادة الأطفال",
+      "sending": "Sending..."
     },
     "validation": {
       "nameRequired": "يرجى إدخال اسمك الكامل.",
       "emailRequired": "يرجى إدخال بريدك الإلكتروني.",
-      "emailInvalid": "أدخل بريداً إلكترونياً صالحاً.",
+      "emailInvalid": "أدخل بريدًا إلكترونيًا صالحًا.",
       "phoneRequired": "يرجى إدخال رقم هاتفك.",
-      "phoneInvalid": "أدخل رقم هاتف/واتساب صالح."
+      "phoneInvalid": "أدخل رقم هاتف/واتساب صالحًا."
+    },
+    "hotel": {
+      "3star": "3 نجوم",
+      "4star": "4 نجوم",
+      "5star": "5 نجوم"
     }
   },
   "footer": {
-    "brand": "بوابتك إلى عجائب الهند. نحن متخصصون في إنشاء تجارب سفر لا تُنسى عبر المثلث الذهبي وما بعده.",
+    "brand": "بوابتك إلى عجائب الهند. نتخصص في خلق تجارب سفر لا تُنسى عبر المثلث الذهبي وما وراءه.",
     "links": "روابط سريعة",
-    "contact": "اتصل بنا",
+    "contact": "التواصل",
     "phone": "الهاتف",
     "email": "البريد الإلكتروني",
     "address": "العنوان",
     "copyright": "جميع الحقوق محفوظة.",
     "privacy": "الخصوصية",
-    "terms": "الشروط"
+    "terms": "الشروط",
+    "tours": "Tours",
+    "contactNow": "Contact Now",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "followOnFacebook": "Follow us on Facebook",
+    "followOnInstagram": "Follow us on Instagram"
   },
   "features": {
     "privateTransport": "✓ نقل خاص",
     "expertGuide": "✓ مرشد خبير",
-    "mealsIncluded": "✓ وجبات مشمولة"
+    "mealsIncluded": "✓ الوجبات مشمولة",
+    "monumentTickets": "✓ Monument Tickets"
+  },
+  "header": {
+    "brandTag": "Authentic India & World Travel",
+    "brandHomeAria": "indiatourguide Home"
+  },
+  "enquiry": {
+    "title": "Enquire About a Tour",
+    "subtitle": "Fill in your details and we'll get back to you shortly",
+    "send": "Send Enquiry",
+    "successTitle": "Thank you for your enquiry!",
+    "successBody": "Our travel expert will contact you shortly on WhatsApp or email.",
+    "selectTourPackages": "اختر باقات الجولة...",
+    "toursSelected": "{{count}} tours selected",
+    "tourPackages": "باقة/باقات الجولة",
+    "feature": {
+      "handpicked": "Handpicked tours & experiences",
+      "personalized": "Personalized itineraries",
+      "guidance": "Expert local guidance"
+    }
+  },
+  "common": {
+    "close": "Close",
+    "clear": "Clear",
+    "countrySearchPlaceholder": "ابحث أو اختر الدولة...",
+    "noCountriesFound": "No countries found",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "serverConnectionError": "Could not connect to the server. Please try again or contact us directly on WhatsApp.",
+    "serverConnectionErrorShort": "Could not connect to server. Please try again."
+  },
+  "topAttractions": {
+    "eyebrow": "وجهات لا تفوت",
+    "title": "أفضل المعالم في الهند",
+    "subtitle": "معالم أيقونية وعجائب ثقافية بانتظارك",
+    "viewAll": "عرض جميع المعالم",
+    "viewAllAria": "عرض جميع المعالم",
+    "exploreAll": "استكشف أكثر من 50 معلمًا",
+    "scrollLeftAria": "التمرير لليسار",
+    "scrollRightAria": "التمرير لليمين"
+  },
+  "reviews": {
+    "eyebrow": "Traveler Experiences",
+    "title": "What Travelers Say About Us",
+    "subtitle": "Authentic stories from explorers who trusted us with their India journey",
+    "badgeCount": "128 Google Reviews",
+    "googleAria": "Google",
+    "scrollLeftAria": "Scroll reviews left",
+    "scrollRightAria": "Scroll reviews right"
+  },
+  "attractions": {
+    "title": "Places to Visit in India",
+    "subtitle": "Discover 50+ iconic destinations - from ancient forts and sacred temples to Himalayan valleys and tropical beaches",
+    "backHome": "Back to Home",
+    "backHomeAria": "Back to home",
+    "stats": {
+      "attractions": "Attractions",
+      "categories": "Categories",
+      "states": "States"
+    },
+    "filterByCategoryAria": "Filter by category",
+    "showing": "Showing",
+    "of": "of",
+    "results": "attractions",
+    "clearFilter": "Clear filter",
+    "close": "Close",
+    "explore": "Explore",
+    "planTrip": "Plan Trip",
+    "planTripAria": "Plan a trip to {{attraction}}",
+    "paginationAria": "Attractions pagination",
+    "previousPageAria": "Previous page",
+    "nextPageAria": "Next page",
+    "prev": "Prev",
+    "next": "Next",
+    "pageAria": "Page {{page}}",
+    "category": {
+      "all": "All Places",
+      "forts": "Forts & Palaces",
+      "temples": "Temples & Shrines",
+      "caves": "Caves & Rock-cut",
+      "landmarks": "Iconic Landmarks",
+      "nature": "Nature & Lakes",
+      "beaches": "Beaches & Islands",
+      "wildlife": "Wildlife"
+    }
   }
 }

@@ -1,0 +1,225 @@
+/* Reviews Section */
+.reviews-section {
+  padding: 5rem 0;
+  background: #f8fafc;
+}
+
+/* Header */
+.reviews-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.reviews-header-text {
+  flex: 1;
+  min-width: 220px;
+}
+
+/* Overall rating badge */
+.reviews-badge {
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.1rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  min-width: 160px;
+}
+
+.reviews-badge-rating {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.reviews-badge-score {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.reviews-badge-max {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.reviews-badge-count {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin: 0 0 0.5rem;
+}
+
+.reviews-google-logo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* Slider wrapper + arrows */
+.reviews-wrapper {
+  position: relative;
+}
+
+.review-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #374151;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, color 0.2s;
+  padding: 0;
+}
+
+.review-arrow:hover {
+  background: #0ea5e9;
+  border-color: #0ea5e9;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35);
+}
+
+.review-arrow-left  { left: -22px; }
+.review-arrow-right { right: -22px; }
+
+/* Scroll track */
+.reviews-scroll {
+  display: flex;
+  gap: 1.1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.reviews-scroll::-webkit-scrollbar        { height: 4px; }
+.reviews-scroll::-webkit-scrollbar-track  { background: transparent; }
+.reviews-scroll::-webkit-scrollbar-thumb  { background: #cbd5e1; border-radius: 4px; }
+
+/* Review card */
+.review-card {
+  flex-shrink: 0;
+  width: 310px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.review-card:hover {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
+}
+
+/* Card top row */
+.review-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+}
+
+.review-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.03em;
+}
+
+.review-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.review-name {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.review-country {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* Stars */
+.review-stars {
+  display: flex;
+  gap: 2px;
+}
+
+/* Review body */
+.review-text {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.65;
+  margin: 0;
+  flex: 1;
+}
+
+.review-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .reviews-section {
+    padding: 3.5rem 0;
+  }
+
+  .reviews-header {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .reviews-badge {
+    align-self: flex-start;
+  }
+
+  .review-card {
+    width: 270px;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Hide arrows on mobile — swipe/scroll works natively */
+  .review-arrow {
+    display: none;
+  }
+}

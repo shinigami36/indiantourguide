@@ -1,17 +1,18 @@
 {
   "nav": {
     "home": "Startseite",
-    "northTour": "North Tour",
-    "southTour": "South Tour",
-    "internationalTour": "International Tour",
+    "northTour": "Nordtour",
+    "southTour": "Südtour",
+    "internationalTour": "Internationale Tour",
     "thailand": "Thailand",
-    "contact": "Kontakt"
+    "contact": "Kontakt",
+    "attractions": "Sehenswurdigkeiten"
   },
   "hero": {
-    "title": "Authentische Indien- und Weltreisen",
-    "subtitle": "Reisen, die von Menschen gemacht werden, die sich kümmern",
-    "description": "Erleben Sie das echte Indien mit lokalen Experten und authentischen kulturellen Immersionen.",
-    "cta": "Touren Entdecken"
+    "title": "Authentisches Indien & Weltreisen",
+    "subtitle": "Reisen gestaltet von Menschen, denen es wichtig ist",
+    "description": "Erleben Sie das echte Indien mit lokalen Experten und authentischen Kulturerlebnissen.",
+    "cta": "Touren entdecken"
   },
   "tours": {
     "title": "Beliebte Touren",
@@ -20,64 +21,235 @@
       "title": "Goldenes Dreieck Tour",
       "duration": "4 Tage",
       "locations": "Delhi, Jaipur, Agra",
-      "description": "Entdecken Sie Indiens ikonische Städte: Delhi, Jaipur und Agra mit privatem Transport und Führern.",
+      "description": "Erkunden Sie Indiens ikonische Städte: Delhi, Jaipur und Agra mit Privattransport und Guides.",
       "itinerary": {
-        "day1": "Delhi: Qutub Minar, Lotus Tempel, Humayun's Grab, India Gate",
-        "day2": "Jaipur: Amber Fort, Jal Mahal, Hawa Mahal, City Palace, Jantar Mantar",
-        "day3": "Agra: Taj Mahal (Sonnenaufgang), Agra Fort",
-        "day4": "Abreise oder Verlängerung"
+        "delhi": "Qutub Minar, Humayuns Grab, India Gate, Lotustempel",
+        "jaipur": "Amber Fort, Jal Mahal, Hawa Mahal, Stadtpalast, Jantar Mantar",
+        "agra": "Taj Mahal, Agra Fort"
       },
       "includes": [
-        "Privater klimatisierter Wagen",
-        "Zertifizierte lokale Führer",
-        "Hotel Abholung und Rückgabe",
-        "Mineralwasser während der Fahrten",
-        "Alle anwendbaren Steuern"
+        "Unterkunft",
+        "Frühstück, Mittagessen, Abendessen",
+        "Transport & Steuern",
+        "Abholung & Rückgabe am Flughafen/Hotel",
+        "Reiseführer",
+        "Eintrittsgelder zu Sehenswürdigkeiten",
+        "Frisches Wasser im Auto"
+      ],
+      "excludes": [
+        "Gebühren für Foto- oder Videokameras",
+        "Internationale und lokale Flüge",
+        "Trinkgelder für Guide & Fahrer"
       ]
     },
-    "delhiDay": {
-      "title": "Delhi Tagesausflug",
-      "duration": "1 Tag",
-      "locations": "Delhi",
-      "description": "Entdecken Sie Delhis reiche Geschichte und Kultur an einem vollen Tag mit erfahrenen lokalen Führern."
-    },
-    "jaipurDay": {
-      "title": "Jaipur Tagesausflug",
-      "duration": "1 Tag",
-      "locations": "Jaipur",
-      "description": "Erleben Sie die Pink City mit Besuchen des Amber Forts, City Palace und lebendiger Märkte."
-    },
-    "agraDay": {
-      "title": "Agra Tagesausflug",
+    "agraFullDay": {
+      "title": "Ganztägige Agra-Tour",
       "duration": "1 Tag",
       "locations": "Agra",
-      "description": "Besuchen Sie das Taj Mahal und Mogul-Denkmäler mit Sonnenaufgang-Betrachtung und fachkundiger Erzählung."
+      "description": "Besuchen Sie das Taj Mahal und Mughal-Denkmäler mit Sonnenaufgangsbesichtigung und Expertenführung.",
+      "itinerary": {
+        "highlights": "Taj Mahal (Sonnenaufgang), Agra Fort, Fatehpur Sikri (optional)"
+      },
+      "includes": [
+        "Privater Transport",
+        "Expertenführer",
+        "Eintrittsgelder",
+        "Mittagessen"
+      ],
+      "excludes": [
+        "Gebühren für Foto- oder Videokameras",
+        "Internationale und lokale Flüge",
+        "Trinkgelder für Guide & Fahrer"
+      ]
     },
-    "viewDetails": "Details Ansehen",
-    "customizeTour": "Tour Anpassen"
+    "jaipurDay": {
+      "title": "Jaipur Tagestour",
+      "duration": "1 Tag",
+      "locations": "Jaipur",
+      "description": "Erleben Sie die Rosenstadt mit Besuchen des Amber Forts, Stadtpalastes und lebhafter Märkte.",
+      "itinerary": {
+        "highlights": "Amber Fort, Jal Mahal, Hawa Mahal, Stadtpalast, Jantar Mantar, lokale Märkte"
+      },
+      "includes": [
+        "Privater Transport",
+        "Expertenführer",
+        "Eintrittsgelder",
+        "Mittagessen"
+      ],
+      "excludes": [
+        "Gebühren für Foto- oder Videokameras",
+        "Internationale und lokale Flüge",
+        "Trinkgelder für Guide & Fahrer"
+      ]
+    },
+    "delhiOldHalfDay": {
+      "title": "Halbtägige Alt-Delhi Tour",
+      "duration": "4-5 Stunden",
+      "locations": "Delhi",
+      "description": "Erkunden Sie das historische Mughal-Delhi mit Rikschafahrten und Gewürzmärkten.",
+      "itinerary": {
+        "highlights": "Jama Masjid, Rikschafahrt, Gewürzmarkt, Rotes Fort (von außen), Gurdwara Bangla Sahib"
+      },
+      "includes": [
+        "Transport & Steuern",
+        "Reiseführer",
+        "Frisches Wasser im Auto",
+        "Abholung & Rückgabe am Flughafen/Hotel",
+        "Monument-Tickets"
+      ],
+      "excludes": [
+        "Gebühren für Foto- oder Videokameras",
+        "Internationale und lokale Flüge",
+        "Trinkgelder für Guide & Fahrer",
+        "Frühstück, Mittagessen, Abendessen"
+      ]
+    },
+    "delhiNewHalfDay": {
+      "title": "Halbtägige Neu-Delhi Tour",
+      "duration": "4-5 Stunden",
+      "locations": "Delhi",
+      "description": "Entdecken Sie Delhis architektonische Wunderwerke und Regierungsgebäude.",
+      "itinerary": {
+        "highlights": "Humayuns Grab, Qutub Minar, Lotustempel, India Gate, Gurdwara Bangla Sahib"
+      },
+      "includes": [
+        "Transport & Steuern",
+        "Reiseführer",
+        "Frisches Wasser im Auto",
+        "Abholung & Rückgabe am Flughafen/Hotel",
+        "Monument-Tickets"
+      ],
+      "excludes": [
+        "Gebühren für Foto- oder Videokameras",
+        "Internationale und lokale Flüge",
+        "Trinkgelder für Guide & Fahrer"
+      ]
+    },
+    "delhiFullDay": {
+      "title": "Ganztägige Neu- & Alt-Delhi Tour",
+      "duration": "8-9 Stunden",
+      "locations": "Delhi",
+      "description": "Umfassende Tour durch das historische Alt-Delhi und das moderne Neu-Delhi an einem vollen Tag.",
+      "itinerary": {
+        "highlights": "Alt-Delhi: Jama Masjid, Rotes Fort, Gewürzmarkt, Rikschafahrt. Neu-Delhi: India Gate, Qutub Minar, Lotustempel, Humayuns Grab, Gurdwara Bangla Sahib"
+      },
+      "includes": [
+        "Transport & Steuern",
+        "Reiseführer",
+        "Frisches Wasser im Auto",
+        "Abholung & Rückgabe am Flughafen/Hotel",
+        "Monument-Tickets",
+        "Mittagessen"
+      ],
+      "excludes": [
+        "Gebühren für Foto- oder Videokameras",
+        "Internationale und lokale Flüge",
+        "Trinkgelder für Guide & Fahrer",
+        "Frühstück und Abendessen"
+      ]
+    },
+    "viewDetails": "Details anzeigen",
+    "customizeTour": "Tour anpassen",
+    "readMore": "Mehr lesen",
+    "readLess": "Weniger lesen",
+    "closeDetailsAria": "Details-Popup schließen",
+    "highlights": "Highlights",
+    "whatsIncluded": "Was ist enthalten",
+    "whatsExcluded": "Was ist nicht enthalten",
+    "enquireNow": "Jetzt anfragen",
+    "cannotFind": "Nicht gefunden, wonach Sie suchen?",
+    "goldenTriangleMumbai": {
+      "title": "Goldenes Dreieck mit Mumbai",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Mumbai",
+      "description": "Explore India's iconic Golden Triangle along with the vibrant city of Mumbai, combining historical monuments, cultural experiences, and coastal charm.",
+      "itinerary": {
+        "delhi": "Jama Masjid, Raj Ghat, Chandni Chowk, Rickshaw Ride, Red Fort (outside), Spice Market, Humayun's Tomb, Qutub Minar, Lotus Temple, India Gate, President House, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Jal Mahal, Hawa Mahal",
+        "agra": "Taj Mahal, Agra Fort, Mehtab Bagh",
+        "mumbai": "Gateway of India, Juhu Beach, Haji Ali Sufi Shrine, Elephanta Caves"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Guide",
+        "Fresh Water in the Car",
+        "Pick up & Drop off at Airport/Hotel",
+        "Monument Tickets",
+        "Domestic Flights/Train",
+        "Breakfast / Lunch / Dinner"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography or video camera fees"
+      ]
+    },
+    "goldenTriangleVaranasi": {
+      "title": "Goldenes Dreieck mit Varanasi",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Varanasi",
+      "description": "Combine the famous Golden Triangle with the spiritual heart of India, Varanasi, experiencing history, culture, and sacred traditions.",
+      "itinerary": {
+        "delhi": "Qutub Minar, Humayun's Tomb, Lotus Temple, India Gate, Jama Masjid, Chandni Chowk, Rickshaw Ride, Spice Market, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Hawa Mahal, City Palace, Jantar Mantar",
+        "agra": "Taj Mahal (Sunrise), Agra Fort, Fatehpur Sikri",
+        "varanasi": "Evening Ganga Aarti, Morning Boat Ride on the Ganges, Buddhist site of Sarnath"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Accommodation",
+        "Guide",
+        "Fresh Water in the Car",
+        "Monument Tickets",
+        "Domestic Flight/Train",
+        "Breakfast, Lunch, Dinner",
+        "Pick up & Drop off at Airport/Hotel/Train Station"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography & videography fees"
+      ]
+    }
   },
   "contact": {
     "title": "Bereit für Ihre Reise?",
-    "subtitle": "Kontaktieren Sie uns für personalisierte Reiseplanung und Sonderangebote.",
+    "subtitle": "Kontaktieren Sie uns für individuelle Reiseplanung und Sonderangebote.",
     "form": {
       "name": "Vollständiger Name",
       "email": "E-Mail",
       "phone": "WhatsApp/Telefon",
       "message": "Nachricht",
-      "messagePlaceholder": "Erzählen Sie uns von Ihren Reisepräferenzen, Gruppengröße oder besonderen Anforderungen...",
-      "submit": "Nachricht Senden",
-      "success": "Vielen Dank! Wir melden uns bald bei Ihnen."
+      "messagePlaceholder": "Erzählen Sie uns von Ihren Reisewünschen, Gruppengroesse oder besonderen Anforderungen...",
+      "submit": "Nachricht senden",
+      "success": "Danke! Wir melden uns bald bei Ihnen.",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "you@example.com",
+      "phonePlaceholder": "+91 XXXXX XXXXX",
+      "country": "Land",
+      "hotelAccommodation": "Hotelunterkunft",
+      "travelers": "Anzahl der Reisenden",
+      "adults": "Erwachsene",
+      "children": "Kinder",
+      "decreaseAdults": "Erwachsene verringern",
+      "increaseAdults": "Erwachsene erhöhen",
+      "decreaseChildren": "Kinder verringern",
+      "increaseChildren": "Kinder erhöhen",
+      "sending": "Sending..."
     },
     "validation": {
       "nameRequired": "Bitte geben Sie Ihren vollständigen Namen ein.",
-      "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
-      "emailInvalid": "Geben Sie eine gültige E-Mail-Adresse ein.",
+      "emailRequired": "Bitte geben Sie Ihre E-Mail ein.",
+      "emailInvalid": "Geben Sie eine gültige E-Mail ein.",
       "phoneRequired": "Bitte geben Sie Ihre Telefonnummer ein.",
-      "phoneInvalid": "Geben Sie eine gültige Telefon/WhatsApp-Nummer ein."
+      "phoneInvalid": "Geben Sie eine gültige Telefon-/WhatsApp-Nummer ein."
+    },
+    "hotel": {
+      "3star": "3 Sterne",
+      "4star": "4 Sterne",
+      "5star": "5 Sterne"
     }
   },
   "footer": {
-    "brand": "Ihr Tor zu Indiens Wundern. Wir spezialisieren uns auf die Schaffung unvergesslicher Reiseerlebnisse im Goldenen Dreieck und darüber hinaus.",
+    "brand": "Ihr Tor zu Indiens Wundern. Wir sind spezialisiert auf unvergessliche Reiseerlebnisse entlang des Goldenen Dreiecks und darüber hinaus.",
     "links": "Schnelllinks",
     "contact": "Kontakt",
     "phone": "Telefon",
@@ -85,11 +257,102 @@
     "address": "Adresse",
     "copyright": "Alle Rechte vorbehalten.",
     "privacy": "Datenschutz",
-    "terms": "Bedingungen"
+    "terms": "Nutzungsbedingungen",
+    "tours": "Tours",
+    "contactNow": "Contact Now",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "followOnFacebook": "Follow us on Facebook",
+    "followOnInstagram": "Follow us on Instagram"
   },
   "features": {
     "privateTransport": "✓ Privater Transport",
     "expertGuide": "✓ Expertenführer",
-    "mealsIncluded": "✓ Mahlzeiten Inklusive"
+    "mealsIncluded": "✓ Mahlzeiten inklusive",
+    "monumentTickets": "✓ Monument Tickets"
+  },
+  "header": {
+    "brandTag": "Authentic India & World Travel",
+    "brandHomeAria": "indiatourguide Home"
+  },
+  "enquiry": {
+    "title": "Enquire About a Tour",
+    "subtitle": "Fill in your details and we'll get back to you shortly",
+    "send": "Send Enquiry",
+    "successTitle": "Thank you for your enquiry!",
+    "successBody": "Our travel expert will contact you shortly on WhatsApp or email.",
+    "selectTourPackages": "Tourpakete auswählen...",
+    "toursSelected": "{{count}} tours selected",
+    "tourPackages": "Tourpaket(e)",
+    "feature": {
+      "handpicked": "Handpicked tours & experiences",
+      "personalized": "Personalized itineraries",
+      "guidance": "Expert local guidance"
+    }
+  },
+  "common": {
+    "close": "Close",
+    "clear": "Clear",
+    "countrySearchPlaceholder": "Land suchen oder auswählen...",
+    "noCountriesFound": "No countries found",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "serverConnectionError": "Could not connect to the server. Please try again or contact us directly on WhatsApp.",
+    "serverConnectionErrorShort": "Could not connect to server. Please try again."
+  },
+  "topAttractions": {
+    "eyebrow": "Unbedingt sehenswerte Ziele",
+    "title": "Top-Sehenswürdigkeiten in Indien",
+    "subtitle": "Ikonische Wahrzeichen und kulturelle Wunder, die entdeckt werden wollen",
+    "viewAll": "Alle Sehenswürdigkeiten anzeigen",
+    "viewAllAria": "Alle Sehenswürdigkeiten anzeigen",
+    "exploreAll": "50+ Sehenswürdigkeiten entdecken",
+    "scrollLeftAria": "Nach links scrollen",
+    "scrollRightAria": "Nach rechts scrollen"
+  },
+  "reviews": {
+    "eyebrow": "Traveler Experiences",
+    "title": "What Travelers Say About Us",
+    "subtitle": "Authentic stories from explorers who trusted us with their India journey",
+    "badgeCount": "128 Google Reviews",
+    "googleAria": "Google",
+    "scrollLeftAria": "Scroll reviews left",
+    "scrollRightAria": "Scroll reviews right"
+  },
+  "attractions": {
+    "title": "Places to Visit in India",
+    "subtitle": "Discover 50+ iconic destinations - from ancient forts and sacred temples to Himalayan valleys and tropical beaches",
+    "backHome": "Back to Home",
+    "backHomeAria": "Back to home",
+    "stats": {
+      "attractions": "Attractions",
+      "categories": "Categories",
+      "states": "States"
+    },
+    "filterByCategoryAria": "Filter by category",
+    "showing": "Showing",
+    "of": "of",
+    "results": "attractions",
+    "clearFilter": "Clear filter",
+    "close": "Close",
+    "explore": "Explore",
+    "planTrip": "Plan Trip",
+    "planTripAria": "Plan a trip to {{attraction}}",
+    "paginationAria": "Attractions pagination",
+    "previousPageAria": "Previous page",
+    "nextPageAria": "Next page",
+    "prev": "Prev",
+    "next": "Next",
+    "pageAria": "Page {{page}}",
+    "category": {
+      "all": "All Places",
+      "forts": "Forts & Palaces",
+      "temples": "Temples & Shrines",
+      "caves": "Caves & Rock-cut",
+      "landmarks": "Iconic Landmarks",
+      "nature": "Nature & Lakes",
+      "beaches": "Beaches & Islands",
+      "wildlife": "Wildlife"
+    }
   }
 }

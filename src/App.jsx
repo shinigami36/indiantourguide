@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Tours from './components/Tours';
-import Gallery from './components/Gallery';
+import TopAttractions from './components/TopAttractions';
+import Attractions from './components/Attractions';
+import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import EnquiryModal from './components/EnquiryModal';
@@ -10,25 +12,66 @@ import './App.css';
 
 function App() {
   const [showEnquiryModal, setShowEnquiryModal] = useState(false);
+  const [initialTour, setInitialTour] = useState(null);
+  const [currentPage, setCurrentPage] = useState('home');
 
+  // Open enquiry modal on first load
   useEffect(() => {
-    // Show modal when page loads
     setShowEnquiryModal(true);
+  }, []);
+
+  // Scroll to top whenever page changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
+  // Keep browser tab title aligned with current page context
+  useEffect(() => {
+    document.title = currentPage === 'attractions'
+      ? 'Attractions | IndiaTourGuide'
+      : 'IndiaTourGuide | Private India & World Tours';
+  }, [currentPage]);
+
+  const handleEnquireTour = useCallback((tourName) => {
+    setInitialTour(tourName);
+    setShowEnquiryModal(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setShowEnquiryModal(false);
+    setInitialTour(null);
   }, []);
 
   return (
     <div className="App">
-      <Header />
+      <Header currentPage={currentPage} onNavigate={setCurrentPage} />
       <main>
-        <Hero />
-        <Tours onOpenEnquiry={() => setShowEnquiryModal(true)} />
-        <Gallery />
-        <Contact />
+        {currentPage === 'attractions' ? (
+          <Attractions
+            onEnquireTour={handleEnquireTour}
+            onNavigateHome={() => setCurrentPage('home')}
+          />
+        ) : (
+          <>
+            <Hero
+              onOpenEnquiry={() => setShowEnquiryModal(true)}
+              onScrollToTours={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
+            />
+            <Tours
+              onOpenEnquiry={() => setShowEnquiryModal(true)}
+              onEnquireTour={handleEnquireTour}
+            />
+            <TopAttractions onNavigateAttractions={() => setCurrentPage('attractions')} />
+            <Reviews />
+            <Contact />
+          </>
+        )}
       </main>
-      <Footer />
-      <EnquiryModal 
-        isOpen={showEnquiryModal} 
-        onClose={() => setShowEnquiryModal(false)} 
+      <Footer onNavigate={setCurrentPage} />
+      <EnquiryModal
+        isOpen={showEnquiryModal}
+        onClose={handleCloseModal}
+        initialTour={initialTour}
       />
     </div>
   );

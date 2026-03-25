@@ -1,99 +1,239 @@
 {
   "nav": {
-    "home": "主页",
-    "northTour": "North Tour",
-    "southTour": "South Tour",
-    "internationalTour": "International Tour",
-    "thailand": "Thailand",
-    "contact": "联系我们"
+    "home": "首页",
+    "northTour": "北部游",
+    "southTour": "南部游",
+    "internationalTour": "国际游",
+    "thailand": "泰国",
+    "contact": "联系我们",
+    "attractions": "景点"
   },
   "hero": {
-    "title": "真实的印度和世界旅行",
-    "subtitle": "用心打造的旅行",
-    "description": "与当地专家一起体验真实的印度和真实的传统文化沉浸。",
+    "title": "真实印度与世界旅行",
+    "subtitle": "由真正关心旅行的人精心打造",
+    "description": "与当地专家一起体验真实的印度，沉浸于真实的文化体验中。",
     "cta": "探索旅游"
   },
   "tours": {
     "title": "热门旅游",
     "subtitle": "为难忘旅程精心挑选的体验",
     "goldenTriangle": {
-      "title": "黄金三角旅游",
+      "title": "金三角旅游",
       "duration": "4天",
       "locations": "德里、斋浦尔、阿格拉",
-      "description": "探索印度的标志性城市：德里、斋浦尔和阿格拉，提供私人交通和导游。",
+      "description": "探索印度标志性城市：德里、斋浦尔和阿格拉，享有私人交通和专业导游。",
       "itinerary": {
-        "day1": "德里: 库特布塔、莲花寺、胡马雍陵、印度门",
-        "day2": "斋浦尔: 琥珀堡、贾尔宫、风宫、城市宫殿、詹塔尔·曼塔尔",
-        "day3": "阿格拉: 泰姬陵 (日出)、阿格拉堡",
-        "day4": "出发或延长"
+        "delhi": "顾特卜塔、胡马雍陵、印度门、莲花寺",
+        "jaipur": "琥珀堡、水宫、风之宫殿、城市宫殿、简塔尔曼塔尔",
+        "agra": "泰姬陵、阿格拉堡"
       },
       "includes": [
-        "私人空调车",
-        "认证当地导游",
-        "酒店接送",
-        "旅途中的矿泉水",
-        "所有适用税费"
+        "住宿",
+        "早餐、午餐、晚餐",
+        "交通及税费",
+        "机场/酒店接送",
+        "导游",
+        "景点入场费",
+        "车内矿泉水"
+      ],
+      "excludes": [
+        "照相机或摄像机使用费",
+        "国际和国内航班",
+        "导游和司机的小费"
       ]
     },
-    "delhiDay": {
-      "title": "德里一日游",
+    "agraFullDay": {
+      "title": "阿格拉全天游",
       "duration": "1天",
-      "locations": "德里",
-      "description": "在一天内与经验丰富的当地导游一起发现德里丰富的历史和文化。",
+      "locations": "阿格拉",
+      "description": "在日出时分参观泰姬陵和莫卧儿帝国遗迹，聆听专家解说。",
       "itinerary": {
-        "highlights": "库特布塔、莲花寺、胡马雍陵、印度门、红堡"
+        "highlights": "泰姬陵（日出）、阿格拉堡、法塔赫布尔西格里（可选）"
       },
       "includes": [
         "私人交通",
-        "专家导游",
-        "门票",
+        "专业导游",
+        "入场费",
         "午餐"
+      ],
+      "excludes": [
+        "照相机或摄像机使用费",
+        "国际和国内航班",
+        "导游和司机的小费"
       ]
     },
     "jaipurDay": {
       "title": "斋浦尔一日游",
       "duration": "1天",
       "locations": "斋浦尔",
-      "description": "体验粉红之城，参观琥珀堡、城市宫殿和充满活力的市场。",
+      "description": "游览粉红之城，参观琥珀堡、城市宫殿和活跃的市场。",
       "itinerary": {
-        "highlights": "琥珀堡、贾尔宫、风宫、城市宫殿、詹塔尔·曼塔尔、当地市场"
+        "highlights": "琥珀堡、水宫、风之宫殿、城市宫殿、简塔尔曼塔尔、当地市场"
       },
       "includes": [
         "私人交通",
-        "专家导游",
-        "门票",
+        "专业导游",
+        "入场费",
         "午餐"
+      ],
+      "excludes": [
+        "照相机或摄像机使用费",
+        "国际和国内航班",
+        "导游和司机的小费"
       ]
     },
-    "agraDay": {
-      "title": "阿格拉一日游",
-      "duration": "1天",
-      "locations": "阿格拉",
-      "description": "参观泰姬陵和莫卧儿纪念碑，欣赏日出和专家讲解。",
+    "delhiOldHalfDay": {
+      "title": "老德里半日游",
+      "duration": "4-5小时",
+      "locations": "德里",
+      "description": "乘坐人力车游览历史悠久的莫卧儿德里，参观香料市场。",
       "itinerary": {
-        "highlights": "泰姬陵 (日出)、阿格拉堡、法泰普尔西格里 (可选)"
+        "highlights": "贾玛清真寺、人力车游览、香料市场、红堡（外观）、班格拉萨希布谒师所"
       },
       "includes": [
-        "私人交通",
-        "专家导游",
-        "门票",
+        "交通及税费",
+        "导游",
+        "车内矿泉水",
+        "机场/酒店接送",
+        "景点门票"
+      ],
+      "excludes": [
+        "照相机或摄像机使用费",
+        "国际和国内航班",
+        "导游和司机的小费",
+        "早餐、午餐、晚餐"
+      ]
+    },
+    "delhiNewHalfDay": {
+      "title": "新德里半日游",
+      "duration": "4-5小时",
+      "locations": "德里",
+      "description": "探索现代德里的建筑奇迹和政府建筑。",
+      "itinerary": {
+        "highlights": "胡马雍陵、顾特卜塔、莲花寺、印度门、班格拉萨希布谒师所"
+      },
+      "includes": [
+        "交通及税费",
+        "导游",
+        "车内矿泉水",
+        "机场/酒店接送",
+        "景点门票"
+      ],
+      "excludes": [
+        "照相机或摄像机使用费",
+        "国际和国内航班",
+        "导游和司机的小费"
+      ]
+    },
+    "delhiFullDay": {
+      "title": "新旧德里全天游",
+      "duration": "8-9小时",
+      "locations": "德里",
+      "description": "全面的旅游，一天之内覆盖历史悠久的老德里和现代新德里。",
+      "itinerary": {
+        "highlights": "老德里：贾玛清真寺、红堡、香料市场、人力车游览。新德里：印度门、顾特卜塔、莲花寺、胡马雍陵、班格拉萨希布谒师所"
+      },
+      "includes": [
+        "交通及税费",
+        "导游",
+        "车内矿泉水",
+        "机场/酒店接送",
+        "景点门票",
         "午餐"
+      ],
+      "excludes": [
+        "照相机或摄像机使用费",
+        "国际和国内航班",
+        "导游和司机的小费",
+        "早餐和晚餐"
       ]
     },
     "viewDetails": "查看详情",
-    "customizeTour": "定制旅游"
+    "customizeTour": "定制您的旅程",
+    "readMore": "查看更多",
+    "readLess": "收起",
+    "closeDetailsAria": "关闭详情弹窗",
+    "highlights": "亮点",
+    "whatsIncluded": "包含内容",
+    "whatsExcluded": "不包含内容",
+    "enquireNow": "立即咨询",
+    "cannotFind": "没有找到您想要的行程？",
+    "goldenTriangleMumbai": {
+      "title": "黄金三角加孟买",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Mumbai",
+      "description": "Explore India's iconic Golden Triangle along with the vibrant city of Mumbai, combining historical monuments, cultural experiences, and coastal charm.",
+      "itinerary": {
+        "delhi": "Jama Masjid, Raj Ghat, Chandni Chowk, Rickshaw Ride, Red Fort (outside), Spice Market, Humayun's Tomb, Qutub Minar, Lotus Temple, India Gate, President House, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Jal Mahal, Hawa Mahal",
+        "agra": "Taj Mahal, Agra Fort, Mehtab Bagh",
+        "mumbai": "Gateway of India, Juhu Beach, Haji Ali Sufi Shrine, Elephanta Caves"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Guide",
+        "Fresh Water in the Car",
+        "Pick up & Drop off at Airport/Hotel",
+        "Monument Tickets",
+        "Domestic Flights/Train",
+        "Breakfast / Lunch / Dinner"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography or video camera fees"
+      ]
+    },
+    "goldenTriangleVaranasi": {
+      "title": "黄金三角加瓦拉纳西",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Varanasi",
+      "description": "Combine the famous Golden Triangle with the spiritual heart of India, Varanasi, experiencing history, culture, and sacred traditions.",
+      "itinerary": {
+        "delhi": "Qutub Minar, Humayun's Tomb, Lotus Temple, India Gate, Jama Masjid, Chandni Chowk, Rickshaw Ride, Spice Market, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Hawa Mahal, City Palace, Jantar Mantar",
+        "agra": "Taj Mahal (Sunrise), Agra Fort, Fatehpur Sikri",
+        "varanasi": "Evening Ganga Aarti, Morning Boat Ride on the Ganges, Buddhist site of Sarnath"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Accommodation",
+        "Guide",
+        "Fresh Water in the Car",
+        "Monument Tickets",
+        "Domestic Flight/Train",
+        "Breakfast, Lunch, Dinner",
+        "Pick up & Drop off at Airport/Hotel/Train Station"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography & videography fees"
+      ]
+    }
   },
   "contact": {
-    "title": "准备开始您的旅程？",
-    "subtitle": "联系我们获取个性化旅行规划和特别优惠。",
+    "title": "准备好开始您的旅程了吗？",
+    "subtitle": "联系我们，获取个性化旅行规划和特别优惠。",
     "form": {
       "name": "全名",
       "email": "电子邮件",
       "phone": "WhatsApp/电话",
-      "message": "消息",
-      "messagePlaceholder": "告诉我们您的旅行偏好、团体规模或任何特殊要求...",
+      "message": "留言",
+      "messagePlaceholder": "告诉我们您的旅行偏好、团队规模或任何特殊要求...",
       "submit": "发送消息",
-      "success": "谢谢！我们会尽快回复您。"
+      "success": "谢谢！我们将很快回复您。",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "you@example.com",
+      "phonePlaceholder": "+91 XXXXX XXXXX",
+      "country": "国家",
+      "hotelAccommodation": "酒店住宿",
+      "travelers": "旅行人数",
+      "adults": "成人",
+      "children": "儿童",
+      "decreaseAdults": "减少成人",
+      "increaseAdults": "增加成人",
+      "decreaseChildren": "减少儿童",
+      "increaseChildren": "增加儿童",
+      "sending": "Sending..."
     },
     "validation": {
       "nameRequired": "请输入您的全名。",
@@ -101,10 +241,15 @@
       "emailInvalid": "请输入有效的电子邮件。",
       "phoneRequired": "请输入您的电话号码。",
       "phoneInvalid": "请输入有效的电话/WhatsApp号码。"
+    },
+    "hotel": {
+      "3star": "三星",
+      "4star": "四星",
+      "5star": "五星"
     }
   },
   "footer": {
-    "brand": "通往印度奇迹的大门。我们专注于在黄金三角及其以外地区创造难忘的旅行体验。",
+    "brand": "您通往印度奇迹的门户。我们专注于创造黄金三角及更广泛地区的难忘旅行体验。",
     "links": "快速链接",
     "contact": "联系我们",
     "phone": "电话",
@@ -112,11 +257,102 @@
     "address": "地址",
     "copyright": "版权所有。",
     "privacy": "隐私",
-    "terms": "条款"
+    "terms": "条款",
+    "tours": "Tours",
+    "contactNow": "Contact Now",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "followOnFacebook": "Follow us on Facebook",
+    "followOnInstagram": "Follow us on Instagram"
   },
   "features": {
     "privateTransport": "✓ 私人交通",
-    "expertGuide": "✓ 专家导游",
-    "mealsIncluded": "✓ 包含餐食"
+    "expertGuide": "✓ 专业导游",
+    "mealsIncluded": "✓ 含餐",
+    "monumentTickets": "✓ Monument Tickets"
+  },
+  "header": {
+    "brandTag": "Authentic India & World Travel",
+    "brandHomeAria": "indiatourguide Home"
+  },
+  "enquiry": {
+    "title": "Enquire About a Tour",
+    "subtitle": "Fill in your details and we'll get back to you shortly",
+    "send": "Send Enquiry",
+    "successTitle": "Thank you for your enquiry!",
+    "successBody": "Our travel expert will contact you shortly on WhatsApp or email.",
+    "selectTourPackages": "选择旅游套餐...",
+    "toursSelected": "{{count}} tours selected",
+    "tourPackages": "旅游套餐",
+    "feature": {
+      "handpicked": "Handpicked tours & experiences",
+      "personalized": "Personalized itineraries",
+      "guidance": "Expert local guidance"
+    }
+  },
+  "common": {
+    "close": "Close",
+    "clear": "Clear",
+    "countrySearchPlaceholder": "搜索或选择国家...",
+    "noCountriesFound": "No countries found",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "serverConnectionError": "Could not connect to the server. Please try again or contact us directly on WhatsApp.",
+    "serverConnectionErrorShort": "Could not connect to server. Please try again."
+  },
+  "topAttractions": {
+    "eyebrow": "必看目的地",
+    "title": "印度热门景点",
+    "subtitle": "等待探索的地标与文化奇观",
+    "viewAll": "查看全部景点",
+    "viewAllAria": "查看全部景点",
+    "exploreAll": "探索 50+ 景点",
+    "scrollLeftAria": "向左滚动",
+    "scrollRightAria": "向右滚动"
+  },
+  "reviews": {
+    "eyebrow": "Traveler Experiences",
+    "title": "What Travelers Say About Us",
+    "subtitle": "Authentic stories from explorers who trusted us with their India journey",
+    "badgeCount": "128 Google Reviews",
+    "googleAria": "Google",
+    "scrollLeftAria": "Scroll reviews left",
+    "scrollRightAria": "Scroll reviews right"
+  },
+  "attractions": {
+    "title": "Places to Visit in India",
+    "subtitle": "Discover 50+ iconic destinations - from ancient forts and sacred temples to Himalayan valleys and tropical beaches",
+    "backHome": "Back to Home",
+    "backHomeAria": "Back to home",
+    "stats": {
+      "attractions": "Attractions",
+      "categories": "Categories",
+      "states": "States"
+    },
+    "filterByCategoryAria": "Filter by category",
+    "showing": "Showing",
+    "of": "of",
+    "results": "attractions",
+    "clearFilter": "Clear filter",
+    "close": "Close",
+    "explore": "Explore",
+    "planTrip": "Plan Trip",
+    "planTripAria": "Plan a trip to {{attraction}}",
+    "paginationAria": "Attractions pagination",
+    "previousPageAria": "Previous page",
+    "nextPageAria": "Next page",
+    "prev": "Prev",
+    "next": "Next",
+    "pageAria": "Page {{page}}",
+    "category": {
+      "all": "All Places",
+      "forts": "Forts & Palaces",
+      "temples": "Temples & Shrines",
+      "caves": "Caves & Rock-cut",
+      "landmarks": "Iconic Landmarks",
+      "nature": "Nature & Lakes",
+      "beaches": "Beaches & Islands",
+      "wildlife": "Wildlife"
+    }
   }
 }

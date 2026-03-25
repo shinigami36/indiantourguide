@@ -1,0 +1,171 @@
+/*
+  CountrySelect — single-border design.
+  The WRAPPER owns the border; the input row and list are borderless inside it.
+  When open: wrapper loses its bottom border + radius, and the list
+  attaches flush below using negative left/right offsets to align with
+  the wrapper's outer edge.
+*/
+
+/* ── Wrapper (the visible border box) ──────────────────────── */
+.cs-wrapper {
+  position: relative;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cs-wrapper:focus-within {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+/* When open: square off the bottom and drop the bottom border so
+   the list visually continues the wrapper */
+.cs-wrapper.cs-open {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-color: transparent;
+  border-color: #0ea5e9;
+  box-shadow: none;
+}
+
+/* ── Input row (no border — wrapper provides it) ───────────── */
+.cs-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0 0.875rem;
+}
+
+.cs-icon {
+  color: #9ca3af;
+  flex-shrink: 0;
+}
+
+.cs-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.65rem 0;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #111827;
+  background: transparent;
+  min-width: 0;
+}
+
+.cs-input::placeholder {
+  color: #9ca3af;
+}
+
+.cs-clear {
+  background: none;
+  border: none;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 0.7rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cs-clear:hover {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.cs-chevron {
+  color: #9ca3af;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.cs-chevron.up {
+  transform: rotate(180deg);
+}
+
+/* ── Dropdown list ─────────────────────────────────────────── */
+/*
+  left/right: -1.5px aligns the list's outer edge with the wrapper's
+  outer edge (compensating for the wrapper's 1.5px border).
+  top: 100% starts the list at the wrapper's inner bottom edge;
+  since we made border-bottom-color transparent, the list attaches flush.
+*/
+.cs-list {
+  position: absolute;
+  top: 100%;
+  left: -1.5px;
+  right: -1.5px;
+  background: #ffffff;
+  border: 1.5px solid #0ea5e9;
+  border-top: 1px solid #e5e7eb;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  z-index: 500;
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem;
+  max-height: 220px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.cs-list::-webkit-scrollbar       { width: 4px; }
+.cs-list::-webkit-scrollbar-track { background: transparent; }
+.cs-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+.cs-option {
+  padding: 0.55rem 0.875rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+
+.cs-option:hover    { background: #f0f9ff; color: #0ea5e9; }
+.cs-option.cs-selected { background: #e0f2fe; color: #0369a1; font-weight: 600; }
+
+.cs-empty {
+  padding: 0.75rem 0.875rem;
+  font-size: 0.875rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* ── Contact form variant — slightly larger, warmer border ─── */
+.contact-cs .cs-wrapper {
+  border-radius: 10px;
+  border-color: #ddd1c1;
+}
+
+.contact-cs .cs-wrapper:focus-within {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+.contact-cs .cs-wrapper.cs-open {
+  border-color: #0ea5e9;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.contact-cs .cs-input-row {
+  padding: 0 0.9rem;
+}
+
+.contact-cs .cs-input {
+  padding: 0.75rem 0;
+  font-size: 1rem;
+}
+
+.contact-cs .cs-list {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}

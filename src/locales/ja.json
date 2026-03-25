@@ -1,122 +1,358 @@
 {
   "nav": {
     "home": "ホーム",
-    "northTour": "North Tour",
-    "southTour": "South Tour",
-    "internationalTour": "International Tour",
-    "thailand": "Thailand",
-    "contact": "お問い合わせ"
+    "northTour": "北部ツアー",
+    "southTour": "南部ツアー",
+    "internationalTour": "国際ツアー",
+    "thailand": "タイ",
+    "contact": "お問い合わせ",
+    "attractions": "観光地"
   },
   "hero": {
     "title": "本物のインドと世界旅行",
-    "subtitle": "心を込めて作られた旅行",
-    "description": "地元の専門家と本物の文化的没入で本物のインドを体験。",
-    "cta": "ツアーを探索"
+    "subtitle": "心を込めて作られた旅",
+    "description": "地元の専門家と一緒に本物のインドを体験し、真の文化に浸りましょう。",
+    "cta": "ツアーを探す"
   },
   "tours": {
     "title": "人気のツアー",
-    "subtitle": "忘れられない旅のための厳選された体験",
+    "subtitle": "忘れられない旅のために厳選された体験",
     "goldenTriangle": {
-      "title": "黄金の三角ツアー",
+      "title": "ゴールデントライアングルツアー",
       "duration": "4日間",
-      "locations": "デリー、ジャイプール、アグラ",
-      "description": "インドの象徴的な都市を探索：デリー、ジャイプール、アグラをプライベート交通とガイドで。",
+      "locations": "デリー、ジャイプール、アーグラー",
+      "description": "プライベート交通とガイド付きでインドの象徴的な都市、デリー、ジャイプール、アーグラーを探訪。",
       "itinerary": {
-        "day1": "デリー: クトゥブ・ミナール、ロータス寺院、フマユーンの墓、インド門",
-        "day2": "ジャイプール: アンバー城、ジャル・マハル、ハワー・マハル、市の宮殿、ジャンタル・マンタル",
-        "day3": "アグラ: タージ・マハル (日の出)、アグラ城",
-        "day4": "出発または延長"
+        "delhi": "クトゥブ・ミナール、フマーユーン廟、インド門、ロータス寺院",
+        "jaipur": "アンベール城、ジャル・マハル、ハワー・マハル、シティー・パレス、ジャンタル・マンタル",
+        "agra": "タージ・マハル、アーグラー城"
       },
       "includes": [
-        "プライベートエアコン車",
-        "認定された地元ガイド",
-        "ホテルピックアップとドロップオフ",
-        "旅行中のミネラルウォーター",
-        "すべての適用税"
+        "宿泊",
+        "朝食・昼食・夕食",
+        "交通費・税金",
+        "空港/ホテルへのお迎えと送迎",
+        "ガイド",
+        "モニュメント入場料",
+        "車内のミネラルウォーター"
+      ],
+      "excludes": [
+        "写真・ビデオカメラの使用料",
+        "国際線・国内線フライト",
+        "ガイドとドライバーへのチップ"
       ]
     },
-    "delhiDay": {
-      "title": "デリー日帰りツアー",
+    "agraFullDay": {
+      "title": "アーグラー日帰りツアー",
       "duration": "1日",
-      "locations": "デリー",
-      "description": "デリーの豊かな歴史と文化を地元の専門ガイドと一緒に1日で発見。",
+      "locations": "アーグラー",
+      "description": "日の出観覧と専門家の解説付きでタージ・マハルとムガール帝国の史跡を訪問。",
       "itinerary": {
-        "highlights": "クトゥブ・ミナール、ロータス寺院、フマユーンの墓、インド門、レッド・フォート"
+        "highlights": "タージ・マハル（日の出）、アーグラー城、ファテーフプル・シークリー（任意）"
       },
       "includes": [
         "プライベート交通",
         "専門ガイド",
         "入場料",
-        "ランチ"
+        "昼食"
+      ],
+      "excludes": [
+        "写真・ビデオカメラの使用料",
+        "国際線・国内線フライト",
+        "ガイドとドライバーへのチップ"
       ]
     },
     "jaipurDay": {
       "title": "ジャイプール日帰りツアー",
       "duration": "1日",
       "locations": "ジャイプール",
-      "description": "アンバー城、市の宮殿、活気ある市場を訪れるピンクシティを体験。",
+      "description": "アンベール城、シティー・パレス、活気あるマーケットを巡るピンクシティの旅。",
       "itinerary": {
-        "highlights": "アンバー城、ジャル・マハル、ハワー・マハル、市の宮殿、ジャンタル・マンタル、地元市場"
+        "highlights": "アンベール城、ジャル・マハル、ハワー・マハル、シティー・パレス、ジャンタル・マンタル、地元市場"
       },
       "includes": [
         "プライベート交通",
         "専門ガイド",
         "入場料",
-        "ランチ"
+        "昼食"
+      ],
+      "excludes": [
+        "写真・ビデオカメラの使用料",
+        "国際線・国内線フライト",
+        "ガイドとドライバーへのチップ"
       ]
     },
-    "agraDay": {
-      "title": "アグラ日帰りツアー",
-      "duration": "1日",
-      "locations": "アグラ",
-      "description": "日の出観賞と専門家のナレーションでタージ・マハルとムガル記念碑を訪問。",
+    "delhiOldHalfDay": {
+      "title": "オールドデリー半日ツアー",
+      "duration": "4〜5時間",
+      "locations": "デリー",
+      "description": "リキシャに乗ってスパイスマーケットを巡る、歴史あるムガール朝デリーの探訪。",
       "itinerary": {
-        "highlights": "タージ・マハル (日の出)、アグラ城、ファテープル・シークリ (オプション)"
+        "highlights": "ジャーマー・マスジド、リキシャライド、スパイスマーケット、赤い城（外観）、グルドワラ・バングラ・サーヒブ"
       },
       "includes": [
-        "プライベート交通",
-        "専門ガイド",
-        "入場料",
-        "ランチ"
+        "交通費・税金",
+        "ガイド",
+        "車内のミネラルウォーター",
+        "空港/ホテルへのお迎えと送迎",
+        "モニュメントチケット"
+      ],
+      "excludes": [
+        "写真・ビデオカメラの使用料",
+        "国際線・国内線フライト",
+        "ガイドとドライバーへのチップ",
+        "朝食・昼食・夕食"
+      ]
+    },
+    "delhiNewHalfDay": {
+      "title": "ニューデリー半日ツアー",
+      "duration": "4〜5時間",
+      "locations": "デリー",
+      "description": "現代デリーの建築的傑作と政府機関の建物を発見。",
+      "itinerary": {
+        "highlights": "フマーユーン廟、クトゥブ・ミナール、ロータス寺院、インド門、グルドワラ・バングラ・サーヒブ"
+      },
+      "includes": [
+        "交通費・税金",
+        "ガイド",
+        "車内のミネラルウォーター",
+        "空港/ホテルへのお迎えと送迎",
+        "モニュメントチケット"
+      ],
+      "excludes": [
+        "写真・ビデオカメラの使用料",
+        "国際線・国内線フライト",
+        "ガイドとドライバーへのチップ"
+      ]
+    },
+    "delhiFullDay": {
+      "title": "ニュー＆オールドデリー終日ツアー",
+      "duration": "8〜9時間",
+      "locations": "デリー",
+      "description": "歴史的なオールドデリーと現代のニューデリーを一日で巡る充実のツアー。",
+      "itinerary": {
+        "highlights": "オールドデリー：ジャーマー・マスジド、赤い城、スパイスマーケット、リキシャライド。ニューデリー：インド門、クトゥブ・ミナール、ロータス寺院、フマーユーン廟、グルドワラ・バングラ・サーヒブ"
+      },
+      "includes": [
+        "交通費・税金",
+        "ガイド",
+        "車内のミネラルウォーター",
+        "空港/ホテルへのお迎えと送迎",
+        "モニュメントチケット",
+        "昼食"
+      ],
+      "excludes": [
+        "写真・ビデオカメラの使用料",
+        "国際線・国内線フライト",
+        "ガイドとドライバーへのチップ",
+        "朝食と夕食"
       ]
     },
     "viewDetails": "詳細を見る",
-    "customizeTour": "ツアーをカスタマイズ"
+    "customizeTour": "ツアーをカスタマイズ",
+    "readMore": "続きを読む",
+    "readLess": "折りたたむ",
+    "closeDetailsAria": "詳細ポップアップを閉じる",
+    "highlights": "見どころ",
+    "whatsIncluded": "含まれるもの",
+    "whatsExcluded": "含まれないもの",
+    "enquireNow": "今すぐ問い合わせる",
+    "cannotFind": "お探しのツアーが見つかりませんか？",
+    "goldenTriangleMumbai": {
+      "title": "ムンバイ付きゴールデントライアングル",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Mumbai",
+      "description": "Explore India's iconic Golden Triangle along with the vibrant city of Mumbai, combining historical monuments, cultural experiences, and coastal charm.",
+      "itinerary": {
+        "delhi": "Jama Masjid, Raj Ghat, Chandni Chowk, Rickshaw Ride, Red Fort (outside), Spice Market, Humayun's Tomb, Qutub Minar, Lotus Temple, India Gate, President House, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Jal Mahal, Hawa Mahal",
+        "agra": "Taj Mahal, Agra Fort, Mehtab Bagh",
+        "mumbai": "Gateway of India, Juhu Beach, Haji Ali Sufi Shrine, Elephanta Caves"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Guide",
+        "Fresh Water in the Car",
+        "Pick up & Drop off at Airport/Hotel",
+        "Monument Tickets",
+        "Domestic Flights/Train",
+        "Breakfast / Lunch / Dinner"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography or video camera fees"
+      ]
+    },
+    "goldenTriangleVaranasi": {
+      "title": "バラナシ付きゴールデントライアングル",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Varanasi",
+      "description": "Combine the famous Golden Triangle with the spiritual heart of India, Varanasi, experiencing history, culture, and sacred traditions.",
+      "itinerary": {
+        "delhi": "Qutub Minar, Humayun's Tomb, Lotus Temple, India Gate, Jama Masjid, Chandni Chowk, Rickshaw Ride, Spice Market, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Hawa Mahal, City Palace, Jantar Mantar",
+        "agra": "Taj Mahal (Sunrise), Agra Fort, Fatehpur Sikri",
+        "varanasi": "Evening Ganga Aarti, Morning Boat Ride on the Ganges, Buddhist site of Sarnath"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Accommodation",
+        "Guide",
+        "Fresh Water in the Car",
+        "Monument Tickets",
+        "Domestic Flight/Train",
+        "Breakfast, Lunch, Dinner",
+        "Pick up & Drop off at Airport/Hotel/Train Station"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography & videography fees"
+      ]
+    }
   },
   "contact": {
-    "title": "旅を始めますか？",
-    "subtitle": "パーソナライズされた旅行計画と特別オファーのためにご連絡ください。",
+    "title": "旅の始まりに向けて",
+    "subtitle": "個別旅行プランニングと特別オファーについてお問い合わせください。",
     "form": {
-      "name": "フルネーム",
-      "email": "メール",
-      "phone": "WhatsApp/電話",
+      "name": "氏名",
+      "email": "メールアドレス",
+      "phone": "WhatsApp/電話番号",
       "message": "メッセージ",
-      "messagePlaceholder": "旅行の好み、グループサイズ、特別な要件についてお聞かせください...",
+      "messagePlaceholder": "旅行の希望、グループ人数、または特別なご要望をお聞かせください...",
       "submit": "メッセージを送る",
-      "success": "ありがとうございます！すぐにご連絡いたします。"
+      "success": "ありがとうございます！まもなくご連絡いたします。",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "you@example.com",
+      "phonePlaceholder": "+91 XXXXX XXXXX",
+      "country": "国",
+      "hotelAccommodation": "ホテル宿泊",
+      "travelers": "旅行者数",
+      "adults": "大人",
+      "children": "子ども",
+      "decreaseAdults": "大人を減らす",
+      "increaseAdults": "大人を増やす",
+      "decreaseChildren": "子どもを減らす",
+      "increaseChildren": "子どもを増やす",
+      "sending": "Sending..."
     },
     "validation": {
-      "nameRequired": "フルネームを入力してください。",
+      "nameRequired": "氏名を入力してください。",
       "emailRequired": "メールアドレスを入力してください。",
       "emailInvalid": "有効なメールアドレスを入力してください。",
       "phoneRequired": "電話番号を入力してください。",
-      "phoneInvalid": "有効な電話/WhatsApp番号を入力してください。"
+      "phoneInvalid": "有効な電話番号/WhatsAppを入力してください。"
+    },
+    "hotel": {
+      "3star": "3つ星",
+      "4star": "4つ星",
+      "5star": "5つ星"
     }
   },
   "footer": {
-    "brand": "インドの驚異への入り口。私たちは黄金の三角とその先で忘れられない旅行体験を作り出すことに特化しています。",
+    "brand": "インドの不思議への入口。私たちはゴールデントライアングルとその先での忘れられない旅の体験を提供することを専門としています。",
     "links": "クイックリンク",
-    "contact": "連絡先",
+    "contact": "お問い合わせ",
     "phone": "電話",
     "email": "メール",
     "address": "住所",
     "copyright": "全著作権所有。",
     "privacy": "プライバシー",
-    "terms": "利用規約"
+    "terms": "利用規約",
+    "tours": "Tours",
+    "contactNow": "Contact Now",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "followOnFacebook": "Follow us on Facebook",
+    "followOnInstagram": "Follow us on Instagram"
   },
   "features": {
     "privateTransport": "✓ プライベート交通",
     "expertGuide": "✓ 専門ガイド",
-    "mealsIncluded": "✓ 食事込み"
+    "mealsIncluded": "✓ 食事付き",
+    "monumentTickets": "✓ Monument Tickets"
+  },
+  "header": {
+    "brandTag": "Authentic India & World Travel",
+    "brandHomeAria": "indiatourguide Home"
+  },
+  "enquiry": {
+    "title": "Enquire About a Tour",
+    "subtitle": "Fill in your details and we'll get back to you shortly",
+    "send": "Send Enquiry",
+    "successTitle": "Thank you for your enquiry!",
+    "successBody": "Our travel expert will contact you shortly on WhatsApp or email.",
+    "selectTourPackages": "ツアーパッケージを選択...",
+    "toursSelected": "{{count}} tours selected",
+    "tourPackages": "ツアーパッケージ",
+    "feature": {
+      "handpicked": "Handpicked tours & experiences",
+      "personalized": "Personalized itineraries",
+      "guidance": "Expert local guidance"
+    }
+  },
+  "common": {
+    "close": "Close",
+    "clear": "Clear",
+    "countrySearchPlaceholder": "国を検索または選択...",
+    "noCountriesFound": "No countries found",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "serverConnectionError": "Could not connect to the server. Please try again or contact us directly on WhatsApp.",
+    "serverConnectionErrorShort": "Could not connect to server. Please try again."
+  },
+  "topAttractions": {
+    "eyebrow": "必見スポット",
+    "title": "インドの人気観光地",
+    "subtitle": "象徴的な名所と文化遺産を探索しましょう",
+    "viewAll": "すべての観光地を見る",
+    "viewAllAria": "すべての観光地を見る",
+    "exploreAll": "50以上の観光地を探索",
+    "scrollLeftAria": "左へスクロール",
+    "scrollRightAria": "右へスクロール"
+  },
+  "reviews": {
+    "eyebrow": "Traveler Experiences",
+    "title": "What Travelers Say About Us",
+    "subtitle": "Authentic stories from explorers who trusted us with their India journey",
+    "badgeCount": "128 Google Reviews",
+    "googleAria": "Google",
+    "scrollLeftAria": "Scroll reviews left",
+    "scrollRightAria": "Scroll reviews right"
+  },
+  "attractions": {
+    "title": "Places to Visit in India",
+    "subtitle": "Discover 50+ iconic destinations - from ancient forts and sacred temples to Himalayan valleys and tropical beaches",
+    "backHome": "Back to Home",
+    "backHomeAria": "Back to home",
+    "stats": {
+      "attractions": "Attractions",
+      "categories": "Categories",
+      "states": "States"
+    },
+    "filterByCategoryAria": "Filter by category",
+    "showing": "Showing",
+    "of": "of",
+    "results": "attractions",
+    "clearFilter": "Clear filter",
+    "close": "Close",
+    "explore": "Explore",
+    "planTrip": "Plan Trip",
+    "planTripAria": "Plan a trip to {{attraction}}",
+    "paginationAria": "Attractions pagination",
+    "previousPageAria": "Previous page",
+    "nextPageAria": "Next page",
+    "prev": "Prev",
+    "next": "Next",
+    "pageAria": "Page {{page}}",
+    "category": {
+      "all": "All Places",
+      "forts": "Forts & Palaces",
+      "temples": "Temples & Shrines",
+      "caves": "Caves & Rock-cut",
+      "landmarks": "Iconic Landmarks",
+      "nature": "Nature & Lakes",
+      "beaches": "Beaches & Islands",
+      "wildlife": "Wildlife"
+    }
   }
 }

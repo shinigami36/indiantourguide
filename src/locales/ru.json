@@ -1,82 +1,358 @@
 {
   "nav": {
     "home": "Главная",
-    "northTour": "North Tour",
-    "southTour": "South Tour",
-    "internationalTour": "International Tour",
-    "thailand": "Thailand",
-    "contact": "Контакты"
+    "northTour": "Северный тур",
+    "southTour": "Южный тур",
+    "internationalTour": "Международный тур",
+    "thailand": "Таиланд",
+    "contact": "Контакт",
+    "attractions": "Достопримечательности"
   },
   "hero": {
-    "title": "Настоящие Путешествия по Индии и Миру",
+    "title": "Аутентичная Индия и путешествия по миру",
     "subtitle": "Путешествия, созданные людьми, которые заботятся",
-    "description": "Испытайте настоящую Индию с местными экспертами и аутентичным культурным погружением.",
-    "cta": "Исследовать Туры"
+    "description": "Откройте настоящую Индию с местными экспертами и аутентичными культурными погружениями.",
+    "cta": "Исследовать туры"
   },
   "tours": {
-    "title": "Популярные Туры",
-    "subtitle": "Отобранные впечатления для незабываемых путешествий",
+    "title": "Популярные туры",
+    "subtitle": "Тщательно отобранные впечатления для незабываемых путешествий",
     "goldenTriangle": {
-      "title": "Тур Золотой Треугольник",
+      "title": "Тур Золотой треугольник",
       "duration": "4 дня",
-      "locations": "Дели, Джайпур, Агры",
-      "description": "Исследуйте иконические города Индии: Дели, Джайпур и Агру с частным транспортом и гидами."
+      "locations": "Дели, Джайпур, Агра",
+      "description": "Исследуйте знаковые города Индии: Дели, Джайпур и Агру с частным транспортом и гидами.",
+      "itinerary": {
+        "delhi": "Кутб-Минар, Гробница Хумаюна, Ворота Индии, Храм Лотоса",
+        "jaipur": "Крепость Амбер, Джал-Махал, Хава-Махал, Городской дворец, Джантар-Мантар",
+        "agra": "Тадж-Махал, Агрская крепость"
+      },
+      "includes": [
+        "Проживание",
+        "Завтрак, обед, ужин",
+        "Транспорт и налоги",
+        "Встреча и проводы в аэропорту/отеле",
+        "Гид",
+        "Входные билеты в монументы",
+        "Свежая вода в автомобиле"
+      ],
+      "excludes": [
+        "Сборы за использование фотоаппаратов или видеокамер",
+        "Международные и местные рейсы",
+        "Любые чаевые гиду и водителю"
+      ]
     },
-    "delhiDay": {
-      "title": "Однодневный Тур по Дели",
-      "duration": "1 день",
-      "locations": "Дели",
-      "description": "Откройте для себя богатую историю и культуру Дели за один полный день с опытными местными гидами."
-    },
-    "jaipurDay": {
-      "title": "Однодневный Тур по Джайпуру",
-      "duration": "1 день",
-      "locations": "Джайпур",
-      "description": "Испытайте Розовый Город с посещением крепости Амбер, Городского дворца и оживленных рынков."
-    },
-    "agraDay": {
-      "title": "Однодневный Тур по Агре",
+    "agraFullDay": {
+      "title": "Полный день в Агре",
       "duration": "1 день",
       "locations": "Агра",
-      "description": "Посетите Тадж-Махал и Могольские памятники с просмотром восхода солнца и экспертным повествованием."
+      "description": "Посетите Тадж-Махал и могольские памятники с рассветным осмотром и рассказом эксперта.",
+      "itinerary": {
+        "highlights": "Тадж-Махал (рассвет), Агрская крепость, Фатехпур-Сикри (по желанию)"
+      },
+      "includes": [
+        "Частный транспорт",
+        "Гид-эксперт",
+        "Входные билеты",
+        "Обед"
+      ],
+      "excludes": [
+        "Сборы за использование фотоаппаратов или видеокамер",
+        "Международные и местные рейсы",
+        "Любые чаевые гиду и водителю"
+      ]
     },
-    "viewDetails": "Посмотреть Детали",
-    "customizeTour": "Настроить Тур"
+    "jaipurDay": {
+      "title": "Однодневный тур в Джайпур",
+      "duration": "1 день",
+      "locations": "Джайпур",
+      "description": "Познакомьтесь с Розовым городом, посетив крепость Амбер, Городской дворец и яркие рынки.",
+      "itinerary": {
+        "highlights": "Крепость Амбер, Джал-Махал, Хава-Махал, Городской дворец, Джантар-Мантар, местные рынки"
+      },
+      "includes": [
+        "Частный транспорт",
+        "Гид-эксперт",
+        "Входные билеты",
+        "Обед"
+      ],
+      "excludes": [
+        "Сборы за использование фотоаппаратов или видеокамер",
+        "Международные и местные рейсы",
+        "Любые чаевые гиду и водителю"
+      ]
+    },
+    "delhiOldHalfDay": {
+      "title": "Полдня в Старом Дели",
+      "duration": "4-5 часов",
+      "locations": "Дели",
+      "description": "Исследуйте исторический могольский Дели с поездками на рикше и рынками специй.",
+      "itinerary": {
+        "highlights": "Джама-Масджид, Поездка на рикше, Рынок специй, Красный форт (снаружи), Гурдвара Бангла Сахиб"
+      },
+      "includes": [
+        "Транспорт и налоги",
+        "Гид",
+        "Свежая вода в автомобиле",
+        "Встреча и проводы в аэропорту/отеле",
+        "Билеты к монументам"
+      ],
+      "excludes": [
+        "Сборы за использование фотоаппаратов или видеокамер",
+        "Международные и местные рейсы",
+        "Любые чаевые гиду и водителю",
+        "Завтрак, обед, ужин"
+      ]
+    },
+    "delhiNewHalfDay": {
+      "title": "Полдня в Новом Дели",
+      "duration": "4-5 часов",
+      "locations": "Дели",
+      "description": "Откройте архитектурные шедевры и правительственные здания современного Дели.",
+      "itinerary": {
+        "highlights": "Гробница Хумаюна, Кутб-Минар, Храм Лотоса, Ворота Индии, Гурдвара Бангла Сахиб"
+      },
+      "includes": [
+        "Транспорт и налоги",
+        "Гид",
+        "Свежая вода в автомобиле",
+        "Встреча и проводы в аэропорту/отеле",
+        "Билеты к монументам"
+      ],
+      "excludes": [
+        "Сборы за использование фотоаппаратов или видеокамер",
+        "Международные и местные рейсы",
+        "Любые чаевые гиду и водителю"
+      ]
+    },
+    "delhiFullDay": {
+      "title": "Полный день в Новом и Старом Дели",
+      "duration": "8-9 часов",
+      "locations": "Дели",
+      "description": "Комплексный тур, охватывающий как исторический Старый Дели, так и современный Новый Дели за один день.",
+      "itinerary": {
+        "highlights": "Старый Дели: Джама-Масджид, Красный форт, Рынок специй, Рикша. Новый Дели: Ворота Индии, Кутб-Минар, Храм Лотоса, Гробница Хумаюна, Гурдвара Бангла Сахиб"
+      },
+      "includes": [
+        "Транспорт и налоги",
+        "Гид",
+        "Свежая вода в автомобиле",
+        "Встреча и проводы в аэропорту/отеле",
+        "Билеты к монументам",
+        "Обед"
+      ],
+      "excludes": [
+        "Сборы за использование фотоаппаратов или видеокамер",
+        "Международные и местные рейсы",
+        "Любые чаевые гиду и водителю",
+        "Завтрак и ужин"
+      ]
+    },
+    "viewDetails": "Подробнее",
+    "customizeTour": "Настроить тур",
+    "readMore": "Читать далее",
+    "readLess": "Свернуть",
+    "closeDetailsAria": "Закрыть окно с подробностями",
+    "highlights": "Основные моменты",
+    "whatsIncluded": "Что включено",
+    "whatsExcluded": "Что не включено",
+    "enquireNow": "Оставить запрос",
+    "cannotFind": "Не можете найти подходящий тур?",
+    "goldenTriangleMumbai": {
+      "title": "Золотой треугольник с Мумбаи",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Mumbai",
+      "description": "Explore India's iconic Golden Triangle along with the vibrant city of Mumbai, combining historical monuments, cultural experiences, and coastal charm.",
+      "itinerary": {
+        "delhi": "Jama Masjid, Raj Ghat, Chandni Chowk, Rickshaw Ride, Red Fort (outside), Spice Market, Humayun's Tomb, Qutub Minar, Lotus Temple, India Gate, President House, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Jal Mahal, Hawa Mahal",
+        "agra": "Taj Mahal, Agra Fort, Mehtab Bagh",
+        "mumbai": "Gateway of India, Juhu Beach, Haji Ali Sufi Shrine, Elephanta Caves"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Guide",
+        "Fresh Water in the Car",
+        "Pick up & Drop off at Airport/Hotel",
+        "Monument Tickets",
+        "Domestic Flights/Train",
+        "Breakfast / Lunch / Dinner"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography or video camera fees"
+      ]
+    },
+    "goldenTriangleVaranasi": {
+      "title": "Тур Золотой треугольник с Варанаси",
+      "duration": "7 Nights / 8 Days",
+      "locations": "Delhi, Jaipur, Agra, Varanasi",
+      "description": "Combine the famous Golden Triangle with the spiritual heart of India, Varanasi, experiencing history, culture, and sacred traditions.",
+      "itinerary": {
+        "delhi": "Qutub Minar, Humayun's Tomb, Lotus Temple, India Gate, Jama Masjid, Chandni Chowk, Rickshaw Ride, Spice Market, Gurdwara Bangla Sahib",
+        "jaipur": "Amber Fort, Hawa Mahal, City Palace, Jantar Mantar",
+        "agra": "Taj Mahal (Sunrise), Agra Fort, Fatehpur Sikri",
+        "varanasi": "Evening Ganga Aarti, Morning Boat Ride on the Ganges, Buddhist site of Sarnath"
+      },
+      "includes": [
+        "Transportation & Taxes",
+        "Accommodation",
+        "Guide",
+        "Fresh Water in the Car",
+        "Monument Tickets",
+        "Domestic Flight/Train",
+        "Breakfast, Lunch, Dinner",
+        "Pick up & Drop off at Airport/Hotel/Train Station"
+      ],
+      "excludes": [
+        "Any tipping for guide & driver",
+        "Photography & videography fees"
+      ]
+    }
   },
   "contact": {
-    "title": "Готовы Начать Свое Путешествие?",
-    "subtitle": "Свяжитесь с нами для персонального планирования путешествий и специальных предложений.",
+    "title": "Готовы начать путешествие?",
+    "subtitle": "Свяжитесь с нами для индивидуального планирования поездки и специальных предложений.",
     "form": {
-      "name": "Полное Имя",
-      "email": "Электронная Почта",
+      "name": "Полное имя",
+      "email": "Электронная почта",
       "phone": "WhatsApp/Телефон",
       "message": "Сообщение",
-      "messagePlaceholder": "Расскажите нам о ваших предпочтениях в путешествиях, размере группы или особых требованиях...",
-      "submit": "Отправить Сообщение",
-      "success": "Спасибо! Мы свяжемся с вами в ближайшее время."
+      "messagePlaceholder": "Расскажите нам о ваших предпочтениях, размере группы или особых пожеланиях...",
+      "submit": "Отправить сообщение",
+      "success": "Спасибо! Мы свяжемся с вами в ближайшее время.",
+      "namePlaceholder": "John Doe",
+      "emailPlaceholder": "you@example.com",
+      "phonePlaceholder": "+91 XXXXX XXXXX",
+      "country": "Страна",
+      "hotelAccommodation": "Проживание в отеле",
+      "travelers": "Количество путешественников",
+      "adults": "Взрослые",
+      "children": "Дети",
+      "decreaseAdults": "Уменьшить взрослых",
+      "increaseAdults": "Увеличить взрослых",
+      "decreaseChildren": "Уменьшить детей",
+      "increaseChildren": "Увеличить детей",
+      "sending": "Sending..."
     },
     "validation": {
       "nameRequired": "Пожалуйста, введите ваше полное имя.",
       "emailRequired": "Пожалуйста, введите ваш email.",
-      "emailInvalid": "Введите действительный email.",
+      "emailInvalid": "Введите корректный email.",
       "phoneRequired": "Пожалуйста, введите ваш номер телефона.",
-      "phoneInvalid": "Введите действительный номер телефона/WhatsApp."
+      "phoneInvalid": "Введите корректный номер телефона/WhatsApp."
+    },
+    "hotel": {
+      "3star": "3 звезды",
+      "4star": "4 звезды",
+      "5star": "5 звезд"
     }
   },
   "footer": {
-    "brand": "Ваши ворота к чудесам Индии. Мы специализируемся на создании незабываемых впечатлений путешествий по Золотому Треугольнику и за его пределами.",
-    "links": "Быстрые Ссылки",
-    "contact": "Контакты",
+    "brand": "Ваши ворота к чудесам Индии. Мы специализируемся на создании незабываемых путешествий по Золотому треугольнику и за его пределами.",
+    "links": "Быстрые ссылки",
+    "contact": "Контакт",
     "phone": "Телефон",
-    "email": "Электронная Почта",
+    "email": "Электронная почта",
     "address": "Адрес",
     "copyright": "Все права защищены.",
     "privacy": "Конфиденциальность",
-    "terms": "Условия"
+    "terms": "Условия",
+    "tours": "Tours",
+    "contactNow": "Contact Now",
+    "whatsapp": "WhatsApp",
+    "facebook": "Facebook",
+    "instagram": "Instagram",
+    "followOnFacebook": "Follow us on Facebook",
+    "followOnInstagram": "Follow us on Instagram"
   },
   "features": {
-    "privateTransport": "✓ Частный Транспорт",
-    "expertGuide": "✓ Эксперт Гид",
-    "mealsIncluded": "✓ Питание Включено"
+    "privateTransport": "✓ Частный транспорт",
+    "expertGuide": "✓ Гид-эксперт",
+    "mealsIncluded": "✓ Питание включено",
+    "monumentTickets": "✓ Monument Tickets"
+  },
+  "header": {
+    "brandTag": "Authentic India & World Travel",
+    "brandHomeAria": "indiatourguide Home"
+  },
+  "enquiry": {
+    "title": "Enquire About a Tour",
+    "subtitle": "Fill in your details and we'll get back to you shortly",
+    "send": "Send Enquiry",
+    "successTitle": "Thank you for your enquiry!",
+    "successBody": "Our travel expert will contact you shortly on WhatsApp or email.",
+    "selectTourPackages": "Выберите турпакеты...",
+    "toursSelected": "{{count}} tours selected",
+    "tourPackages": "Турпакет(ы)",
+    "feature": {
+      "handpicked": "Handpicked tours & experiences",
+      "personalized": "Personalized itineraries",
+      "guidance": "Expert local guidance"
+    }
+  },
+  "common": {
+    "close": "Close",
+    "clear": "Clear",
+    "countrySearchPlaceholder": "Найдите или выберите страну...",
+    "noCountriesFound": "No countries found",
+    "somethingWentWrong": "Something went wrong. Please try again.",
+    "serverConnectionError": "Could not connect to the server. Please try again or contact us directly on WhatsApp.",
+    "serverConnectionErrorShort": "Could not connect to server. Please try again."
+  },
+  "topAttractions": {
+    "eyebrow": "Обязательные к посещению",
+    "title": "Лучшие достопримечательности Индии",
+    "subtitle": "Легендарные места и культурные сокровища, которые стоит открыть",
+    "viewAll": "Смотреть все достопримечательности",
+    "viewAllAria": "Посмотреть все достопримечательности",
+    "exploreAll": "Исследовать 50+ мест",
+    "scrollLeftAria": "Прокрутить влево",
+    "scrollRightAria": "Прокрутить вправо"
+  },
+  "reviews": {
+    "eyebrow": "Traveler Experiences",
+    "title": "What Travelers Say About Us",
+    "subtitle": "Authentic stories from explorers who trusted us with their India journey",
+    "badgeCount": "128 Google Reviews",
+    "googleAria": "Google",
+    "scrollLeftAria": "Scroll reviews left",
+    "scrollRightAria": "Scroll reviews right"
+  },
+  "attractions": {
+    "title": "Places to Visit in India",
+    "subtitle": "Discover 50+ iconic destinations - from ancient forts and sacred temples to Himalayan valleys and tropical beaches",
+    "backHome": "Back to Home",
+    "backHomeAria": "Back to home",
+    "stats": {
+      "attractions": "Attractions",
+      "categories": "Categories",
+      "states": "States"
+    },
+    "filterByCategoryAria": "Filter by category",
+    "showing": "Showing",
+    "of": "of",
+    "results": "attractions",
+    "clearFilter": "Clear filter",
+    "close": "Close",
+    "explore": "Explore",
+    "planTrip": "Plan Trip",
+    "planTripAria": "Plan a trip to {{attraction}}",
+    "paginationAria": "Attractions pagination",
+    "previousPageAria": "Previous page",
+    "nextPageAria": "Next page",
+    "prev": "Prev",
+    "next": "Next",
+    "pageAria": "Page {{page}}",
+    "category": {
+      "all": "All Places",
+      "forts": "Forts & Palaces",
+      "temples": "Temples & Shrines",
+      "caves": "Caves & Rock-cut",
+      "landmarks": "Iconic Landmarks",
+      "nature": "Nature & Lakes",
+      "beaches": "Beaches & Islands",
+      "wildlife": "Wildlife"
+    }
   }
 }

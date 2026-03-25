@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="IndiaTourGuide icon">
+  <defs>
+    <linearGradient id="itgBg" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0284c7"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="itgRing" x1="12" y1="12" x2="52" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e0f2fe" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="url(#itgBg)"/>
+  <rect x="8" y="8" width="48" height="48" rx="13" fill="none" stroke="url(#itgRing)" stroke-width="2.5"/>
+  <text x="32" y="38" text-anchor="middle" fill="#ffffff" font-size="18" font-family="Manrope, Arial, sans-serif" font-weight="800" letter-spacing="1.2">ITG</text>
+</svg>
