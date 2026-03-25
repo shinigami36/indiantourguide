@@ -30,7 +30,4 @@ dist-ssr
 public/assets/images/*.mp4
 public/assets/images/*.mov
 public/assets/videos/
-*.mp4
-*.mov
-*.avi
 public/assets/galleryimages/
