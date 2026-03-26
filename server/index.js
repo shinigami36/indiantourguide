@@ -81,6 +81,8 @@ const sanitizeBoolean = (value) => value === true || value === 'true' || value =
 
 // ─── Resend email client ──────────────────────────────────────────────────────
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+console.log('[startup] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
+console.log('[startup] NOTIFY_EMAIL:', process.env.NOTIFY_EMAIL || '(not set)');
 
 // ─── Validation ──────────────────────────────────────────────────────────────
 function validateEnquiry({ name, email, phone, startDate, endDate, hotelCategory, noHotelRequired }) {
@@ -320,7 +322,10 @@ app.post('/api/enquiry', enquiryLimiter, (req, res) => {
   });
 
   // Fire email notification in background (non-blocking)
-  sendEmail(data).catch(err => console.error('Email failed:', err.message));
+  console.log('[enquiry] sending email to:', data.email, '| resend client:', !!resend);
+  sendEmail(data)
+    .then(() => console.log('[enquiry] email sent OK'))
+    .catch(err => console.error('[enquiry] Email failed:', err.message));
   // WhatsApp dispatch is disabled for this rollout.
 });
 
