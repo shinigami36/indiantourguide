@@ -157,7 +157,7 @@ async function sendEmail({ name, email, phone, country, startDate, endDate, noHo
   const safeChildren = escapeHtml(String(children));
   const safeMessage = escapeHtml(message || '');
 
-  const toAddress = process.env.NOTIFY_EMAIL || process.env.GMAIL_USER || 'indiatourguide1@gmail.com';
+  const toAddress = process.env.NOTIFY_EMAIL || 'Indiatoursguide.work@gmail.com';
 
   await resend.emails.send({
     from: 'indiatourguide <onboarding@resend.dev>',
