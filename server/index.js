@@ -161,7 +161,7 @@ async function sendEmail({ name, email, phone, country, startDate, endDate, noHo
 
   const toAddress = process.env.NOTIFY_EMAIL || 'Indiatoursguide.work@gmail.com';
 
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: 'indiatourguide <onboarding@resend.dev>',
     to: toAddress,
     reply_to: email,
@@ -230,6 +230,9 @@ async function sendEmail({ name, email, phone, country, startDate, endDate, noHo
       </div>
     `,
   });
+  if (error) {
+    throw new Error(error.message);
+  }
 }
 
 // ─── Send WhatsApp via Meta Cloud API ────────────────────────────────────────
