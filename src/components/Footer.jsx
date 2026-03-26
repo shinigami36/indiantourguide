@@ -51,7 +51,7 @@ const Footer = ({ onNavigate }) => {
           <div className="footer-contact">
             <h3>{t('footer.contact')}</h3>
             <ul>
-              <li>{t('footer.email', { defaultValue: 'Email' })}: <a href="mailto:indiatourguide1@gmail.com">indiatourguide1@gmail.com</a></li>
+              <li>{t('footer.email', { defaultValue: 'Email' })}: <a href="mailto:Indiatoursguide.work@gmail.com">Indiatoursguide.work@gmail.com</a></li>
               <li>{t('footer.whatsapp', { defaultValue: 'WhatsApp' })}: <a href="https://wa.me/917302028445" target="_blank" rel="noopener noreferrer">+91-730-202-8445</a></li>
               <li>{t('footer.facebook', { defaultValue: 'Facebook' })}: <a href="https://www.facebook.com/share/1MhrNAYwni/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">{t('footer.followOnFacebook', { defaultValue: 'Follow us on Facebook' })}</a></li>
               <li>{t('footer.instagram', { defaultValue: 'Instagram' })}: <a href="https://www.instagram.com/indiatourguide_?igsh=MWxrdzc0ODl3aGY4MQ%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer">{t('footer.followOnInstagram', { defaultValue: 'Follow us on Instagram' })}</a></li>
