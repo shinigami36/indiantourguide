@@ -337,4 +337,10 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`indiatourguide API running on http://localhost:${PORT}`);
+
+  // Ping self every 14 minutes to prevent Render free tier spin-down
+  const SELF_URL = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
+  setInterval(() => {
+    axios.get(`${SELF_URL}/api/health`).catch(() => {});
+  }, 14 * 60 * 1000);
 });
