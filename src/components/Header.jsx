@@ -4,6 +4,7 @@ import './Header.css';
 
 const Header = ({ currentPage, onNavigate }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [sectionActive, setSectionActive] = useState('');
   const { t, i18n } = useTranslation();
 
   const languages = [
@@ -20,9 +21,17 @@ const Header = ({ currentPage, onNavigate }) => {
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  // Navigate to a full page and clear any section highlight
+  const navigatePage = (page) => {
+    onNavigate(page);
+    setSectionActive('');
+    closeMenu();
+  };
+
   // Navigate home then scroll to a section id (works from any page)
   const goToSection = (sectionId) => {
     onNavigate('home');
+    setSectionActive(sectionId);
     closeMenu();
     setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 80);
   };
@@ -34,13 +43,13 @@ const Header = ({ currentPage, onNavigate }) => {
         <button
           type="button"
           className="brand"
-          aria-label={t('header.brandHomeAria', { defaultValue: 'indiatourguide Home' })}
+          aria-label={t('header.brandHomeAria', { defaultValue: 'indiatoursguide Home' })}
           onClick={() => { onNavigate('home'); closeMenu(); }}
         >
           <img
             className="brand-logo"
             src="/assets/images/icons/Screenshot%202026-02-19%20at%208.32.35%E2%80%AFPM.png"
-            alt="indiatourguide logo"
+            alt="indiatoursguide logo"
           />
           <span className="brand-copy">
             <span className="brand-name" aria-hidden="true">
@@ -69,22 +78,34 @@ const Header = ({ currentPage, onNavigate }) => {
           <ul className={`nav-links ${isMenuOpen ? 'open' : ''}`} id="primaryNav">
             <li>
               <button
-                className={`nav-page-link ${currentPage === 'home' ? 'active' : ''}`}
-                onClick={() => { onNavigate('home'); closeMenu(); }}
-                aria-current={currentPage === 'home' ? 'page' : undefined}
+                className={`nav-page-link ${currentPage === 'home' && !sectionActive ? 'active' : ''}`}
+                onClick={() => navigatePage('home')}
+                aria-current={currentPage === 'home' && !sectionActive ? 'page' : undefined}
               >
                 {t('nav.home')}
               </button>
             </li>
             <li>
-              <button className="nav-page-link" onClick={() => goToSection('packages')}>
+              <button
+                className={`nav-page-link ${sectionActive === 'packages' ? 'active' : ''}`}
+                onClick={() => goToSection('packages')}
+              >
                 {t('nav.tours', { defaultValue: 'Tours' })}
               </button>
             </li>
             <li>
               <button
+                className={`nav-page-link ${currentPage === 'international' ? 'active' : ''}`}
+                onClick={() => navigatePage('international')}
+                aria-current={currentPage === 'international' ? 'page' : undefined}
+              >
+                {t('nav.internationalTour', { defaultValue: 'International Tours' })}
+              </button>
+            </li>
+            <li>
+              <button
                 className={`nav-page-link ${currentPage === 'attractions' ? 'active' : ''}`}
-                onClick={() => { onNavigate('attractions'); closeMenu(); }}
+                onClick={() => navigatePage('attractions')}
                 aria-current={currentPage === 'attractions' ? 'page' : undefined}
               >
                 {t('nav.attractions', { defaultValue: 'Attractions' })}
@@ -103,7 +124,7 @@ const Header = ({ currentPage, onNavigate }) => {
               </select>
             </li>
             <li className="mobile-only-nav-item">
-              <button className="btn btn-primary mobile-nav-contact-btn" onClick={() => goToSection('enquiry')}>
+              <button className="btn btn-primary mobile-nav-contact-btn" onClick={() => { setSectionActive(''); goToSection('enquiry'); }}>
                 {t('nav.contact')}
               </button>
             </li>
@@ -124,7 +145,7 @@ const Header = ({ currentPage, onNavigate }) => {
             </select>
           </div>
 
-          <button className="btn btn-primary contact-btn desktop-only" onClick={() => goToSection('enquiry')}>
+          <button className="btn btn-primary contact-btn desktop-only" onClick={() => { setSectionActive(''); goToSection('enquiry'); }}>
             {t('nav.contact')}
           </button>
         </div>

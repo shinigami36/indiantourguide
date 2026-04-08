@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Tours from './components/Tours';
 import TopAttractions from './components/TopAttractions';
 import Attractions from './components/Attractions';
+import InternationalTours from './components/InternationalTours';
 import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -33,9 +34,9 @@ function App() {
 
   // Keep browser tab title aligned with current page context
   useEffect(() => {
-    document.title = currentPage === 'attractions'
-      ? 'Attractions | IndiaTourGuide'
-      : 'IndiaTourGuide | Private India & World Tours';
+    if (currentPage === 'attractions') document.title = 'Attractions | indiatoursguide';
+    else if (currentPage === 'international') document.title = 'International Tours | indiatoursguide';
+    else document.title = 'indiatoursguide | Private India & World Tours';
   }, [currentPage]);
 
   const handleEnquireTour = useCallback((tourName) => {
@@ -56,6 +57,12 @@ function App() {
           <Attractions
             onEnquireTour={handleEnquireTour}
             onNavigateHome={() => setCurrentPage('home')}
+          />
+        ) : currentPage === 'international' ? (
+          <InternationalTours
+            onEnquireTour={handleEnquireTour}
+            onNavigateHome={() => setCurrentPage('home')}
+            onOpenEnquiry={() => setShowEnquiryModal(true)}
           />
         ) : (
           <>

@@ -16,7 +16,7 @@
   },
   "header": {
     "brandTag": "Authentic India & World Travel",
-    "brandHomeAria": "indiatourguide Home"
+    "brandHomeAria": "indiatoursguide Home"
   },
   "tours": {
     "title": "Popular Tours",
@@ -212,6 +212,119 @@
         "Any tipping for guide & driver",
         "Photography & videography fees"
       ]
+    },
+    "turkishDelight9D": {
+      "title": "Turkish Delight Tour Package",
+      "duration": "9 Days / 8 Nights",
+      "locations": "Istanbul, Ankara, Cappadocia, Pamukkale, Kusadasi",
+      "description": "An unforgettable 9-day journey through Turkey's finest destinations — from the historic streets of Istanbul and Ankara, to the magical fairy chimneys of Cappadocia, the thermal cotton-castle pools of Pamukkale, and the ancient ruins of Ephesus.",
+      "itinerary": {
+        "day1": "Arrival in Istanbul — Airport transfer, hotel check-in in Taksim area, dinner at outside restaurant",
+        "day2": "Istanbul → Ankara — Domestic flight, Anatolian Civilizations Museum, Ankara Castle, Roman Baths, Atatürk Mausoleum, overnight in Ankara",
+        "day3": "Ankara → Cappadocia — Salt Lake & Flamingo Colony, Caravanserai, OZKONAK UNESCO Underground City, Pigeon Valley",
+        "day4": "Full Day Cappadocia — Optional Hot Air Balloon ride, Avanos Pottery experience, Pasabag & Zelve Open Air Museum, Uchisar Castle, Gala Dinner with Turkish Night Show",
+        "day5": "Cappadocia → Pamukkale — Mevlana & Whirling Dervishes Museum in Konya, evening arrival at Pamukkale",
+        "day6": "Pamukkale → Kusadasi — Hierapolis Ancient City, Thermal Travertins, Temple of Artemis (Seven Wonders), Ephesus Ancient City, House of Virgin Mary",
+        "day7": "Kusadasi → Istanbul — 6-hr scenic coach journey, Hippodrome, Blue Mosque, Hagia Sophia, hotel check-in",
+        "day8": "Istanbul — Topkapi Palace, Grand Bazaar, Bosphorus Dinner Cruise with Show & Unlimited Local Drinks (3 hrs)",
+        "day9": "Departure — Breakfast, free time, transfer to Istanbul Airport, end of tour"
+      },
+      "includes": [
+        "Arrival & Departure transfers with A/C class coach",
+        "All transportation with New Model A/C coach",
+        "8 Overnights accommodation in mentioned hotels",
+        "1-way domestic flight Istanbul → Ankara (25 KG + 8 KG Cabin)",
+        "All entrance fees as per itinerary",
+        "All lunches during the itinerary",
+        "All dinners at outside restaurants / hotels",
+        "Daily water bottle per person in bus",
+        "English Speaking Professional Tour Guide",
+        "Bosphorus Dinner Cruise with Show & Unlimited Local Drinks (3 hrs)",
+        "Turkish Night Club Dinner & Show in Cappadocia",
+        "All auto parking fees & highway tolls",
+        "Room Taxes (10% + VAT for all services)"
+      ],
+      "excludes": [
+        "All personal expenses & room extras",
+        "International air tickets",
+        "Hot air balloon ride (optional)",
+        "All beverages during meals (except water)",
+        "Visa fee",
+        "Tips: $3 per person/per day (guide) + $2 per person/per day (driver)"
+      ]
+    },
+    "istanbulCappadocia7D": {
+      "title": "Istanbul & Cappadocia Tour",
+      "duration": "7 Days / 6 Nights",
+      "locations": "Istanbul, Cappadocia",
+      "description": "Discover Turkey's two most iconic destinations in 7 days — Istanbul's legendary Blue Mosque, Hagia Sophia and Grand Bazaar, combined with Cappadocia's surreal fairy chimneys, underground cities and Turkish Night Club show. Optional hot air balloon ride available.",
+      "itinerary": {
+        "day1": "Arrival at Istanbul — Private minivan transfer to hotel in Taksim area, check-in, dinner at outside restaurant (walking distance)",
+        "day2": "Old City Tour — Hippodrome, Blue Mosque, Hagia Sophia, Topkapi Palace, Grand Bazaar, lunch by own",
+        "day3": "European Side — Çamlıca Hill coffee break, Çamlıca Tower, Asian & European sides of Istanbul, Spice Market, Turkish Night Club Show with unlimited drinks",
+        "day4": "Istanbul → Cappadocia — Domestic flight (Economy 15 KG + 8 KG cabin), OZKONAK Underground City, Pigeon Valley, hotel check-in, dinner",
+        "day5": "Full Day Cappadocia — Pashabag & Zelve Open Air Museum, Avanos town & pottery ateliers, Uchisar Castle (photography), Lovers Valley",
+        "day6": "Cappadocia → Istanbul — Domestic flight back, free time for rest, dinner at Dubb Indian Bosphorus Restaurant",
+        "day7": "Departure — Breakfast, transfer to airport depending on flight time, end of tour"
+      },
+      "includes": [
+        "4 Overnights in Istanbul (Bed & Breakfast / Half Board for 5★ hotels outside Taksim)",
+        "2 Overnights in Cappadocia cave hotel (Half Board)",
+        "Arrival transfer with private minivan",
+        "All tours with private minivan",
+        "English speaking tour guide (subject to availability)",
+        "All dinners during the itinerary",
+        "All entrance fees during the itinerary",
+        "Turkish Night Club Show in Istanbul with Unlimited Local Drinks (private transfers included)",
+        "2-way domestic flight Istanbul ↔ Cappadocia (20 KG + 8 KG Cabin)",
+        "All auto parking fees & highway tolls",
+        "All room taxes"
+      ],
+      "excludes": [
+        "All personal expenses & room extras",
+        "International flights",
+        "All lunches during the itinerary",
+        "Turkish Night Club in Cappadocia (optional)",
+        "Hot air balloon ride (optional — prices vary)",
+        "Visa fee",
+        "Tips: $3 per person/per day (guide) + $2 per person/per day (driver)"
+      ]
+    },
+    "sevenChurches8D": {
+      "title": "Seven Churches of Revelation",
+      "duration": "8 Days / 7 Nights",
+      "locations": "Istanbul, Izmir, Pergamum, Pamukkale, Kusadasi",
+      "description": "A profound spiritual journey through the Seven Churches of Revelation — walk in the footsteps of the Apostle John from Istanbul to Ephesus, Smyrna, Pergamum, Thyatira, Sardes, Philadelphia and Laodicea, with Pamukkale's thermal terraces and a Bosphorus Cruise included.",
+      "itinerary": {
+        "day1": "Istanbul — Arrival at airport, transfer to hotel 4★/5★ upgraded, dinner at Turkish Restaurant, overnight in Istanbul",
+        "day2": "Classical Istanbul — Hippodrome, Blue Mosque, Hagia Sophia, Topkapi Palace, Grand Bazaar, Bosphorus Cruise (2 hrs), dinner at outside Indian Restaurant",
+        "day3": "Smyrna & Pergamum — Domestic flight to Izmir, Smyrna ('The Suffering Church'), Pergamum ('The Compromising Church' — altar of Zeus), overnight in Izmir",
+        "day4": "Thyatira, Sardes & Philadelphia — Thyatira ('The Adulterous Church'), Sardes ('The Dead Church'), Philadelphia ('The Faithful Church'), proceed to Pamukkale",
+        "day5": "Pamukkale & Laodicea — Pamukkale Thermal Travertins, Hierapolis, Laodicea ('The Lukewarm Church'), transfer to Kusadasi",
+        "day6": "Ephesus & Kusadasi — Ephesus ('The Loveless Church'), House of Virgin Mary, Basilica of St. John, Kusadasi town & free time for shopping",
+        "day7": "Izmir Day Tour — Alexander Hill (Kadifekale), Old Jewish Quarter & Synagogue, Polycarp Church, Alsancak (Old Greek Quarter), overnight in Izmir",
+        "day8": "Departure — Free time for shopping in Izmir, transfer to Izmir Adnan Menderes Airport, domestic flight to Istanbul, connecting flight home"
+      },
+      "includes": [
+        "English Speaking Professional Tour Guide",
+        "All transportation with A/C class coaches",
+        "All museum entrance fees during the program",
+        "Lunches & Dinners at Istanbul (outside Turkish & Indian restaurants, water included)",
+        "Bosphorus Cruise (2 hrs) with private boat in Istanbul",
+        "2-way domestic flight Istanbul ↔ Izmir",
+        "2 Overnights in Istanbul (4★ Superior or 5★ upgraded, Bed & Breakfast)",
+        "2 Overnights in Izmir (4★ Superior, Half Board)",
+        "1 Overnight in Pamukkale (5★ Thermal Hotel upgraded, Half Board)",
+        "2 Overnights in Kusadasi (5★ upgraded, Half Board)",
+        "All lunches on route after Istanbul",
+        "All auto parking fees & highway tolls"
+      ],
+      "excludes": [
+        "Visa expenses",
+        "International air tickets",
+        "All personal expenses & room extras",
+        "Tips: $3 per person/per day (guide) + $2 per person/per day (driver)"
+      ]
     }
   },
   "enquiry": {
@@ -318,6 +431,14 @@
     "googleAria": "Google",
     "scrollLeftAria": "Scroll reviews left",
     "scrollRightAria": "Scroll reviews right"
+  },
+  "internationalTours": {
+    "title": "International Tours",
+    "subtitle": "Hand-crafted journeys across the world's most captivating destinations",
+    "availableNow": "Available Now",
+    "comingSoon": "Coming Soon",
+    "comingSoonNote": "We're crafting unforgettable experiences to these destinations. Register your interest and be the first to know.",
+    "notifyMe": "Register Interest"
   },
   "attractions": {
     "title": "Places to Visit in India",

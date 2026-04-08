@@ -320,3 +320,111 @@
     gap: 0.5rem;
   }
 }
+
+/* ── Tour Category Pills ── */
+.contact-category-pills {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.contact-category-pill {
+  flex: 1;
+  min-width: 0;
+  padding: 0.6rem 0.5rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 180ms, background 180ms, color 180ms, box-shadow 180ms;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-category-pill:hover {
+  border-color: #0ea5e9;
+  color: #0ea5e9;
+}
+
+.contact-category-pill.active {
+  background: linear-gradient(135deg, #0ea5e9 0%, #818cf8 100%);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+}
+
+/* ── Tour Package Multi-select ── */
+.contact-multiselect-trigger {
+  width: 100%;
+  padding: 0.65rem 0.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  color: #1e293b;
+  font-size: 0.925rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 180ms, background 180ms, box-shadow 180ms;
+  text-align: left;
+}
+
+.contact-multiselect-trigger:hover,
+.contact-multiselect-trigger.open {
+  border-color: #0ea5e9;
+  background: #ffffff;
+}
+
+.contact-multiselect-trigger.open {
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+}
+
+.contact-multiselect-trigger .placeholder {
+  color: #94a3b8;
+}
+
+.contact-multiselect-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+  z-index: 200;
+  max-height: 220px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.contact-multiselect-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.875rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #374151;
+  transition: background 0.12s ease;
+}
+
+.contact-multiselect-option:hover {
+  background: #f0f9ff;
+}
+
+.contact-multiselect-option input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: #0ea5e9;
+  flex-shrink: 0;
+}
+

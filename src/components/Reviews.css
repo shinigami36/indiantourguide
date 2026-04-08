@@ -58,10 +58,39 @@
   margin: 0 0 0.5rem;
 }
 
+.reviews-badge-verified {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #16a34a;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 20px;
+  padding: 3px 10px;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.02em;
+}
+
 .reviews-google-logo {
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: -0.01em;
+}
+
+.reviews-view-link {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  color: #4285F4;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.reviews-view-link:hover {
+  text-decoration: underline;
 }
 
 /* Slider wrapper + arrows */

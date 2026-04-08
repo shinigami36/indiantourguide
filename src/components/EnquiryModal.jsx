@@ -4,7 +4,7 @@ import CountrySelect from './CountrySelect';
 import { postJsonWithRetry } from '../utils/api';
 import './EnquiryModal.css';
 
-const TOUR_OPTIONS = [
+const INDIA_TOUR_KEYS = [
   'tours.goldenTriangle.title',
   'tours.agraFullDay.title',
   'tours.jaipurDay.title',
@@ -14,6 +14,15 @@ const TOUR_OPTIONS = [
   'tours.goldenTriangleMumbai.title',
   'tours.goldenTriangleVaranasi.title',
 ];
+
+const INTL_TOUR_KEYS = [
+  'tours.turkishDelight9D.title',
+  'tours.istanbulCappadocia7D.title',
+  'tours.sevenChurches8D.title',
+];
+
+// All tour keys for "both" mode
+const ALL_TOUR_KEYS = [...INDIA_TOUR_KEYS, ...INTL_TOUR_KEYS];
 
 const HOTEL_OPTIONS = [
   { value: '3 Star', labelKey: 'contact.hotel.3star' },
@@ -28,10 +37,18 @@ const EMPTY_FORM = {
   hotelCategory: '', adults: 1, children: 0, message: '',
 };
 
+// Detect category from a pre-selected tour name
+const detectCategory = (tourName, t) => {
+  if (!tourName) return '';
+  const intlTitles = INTL_TOUR_KEYS.map(k => t(k));
+  return intlTitles.includes(tourName) ? 'international' : 'india';
+};
+
 const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [selectedTours, setSelectedTours] = useState(initialTour ? [initialTour] : []);
+  const [tourCategory, setTourCategory] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -43,11 +60,12 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
     if (isOpen) {
       setFormData(EMPTY_FORM);
       setSelectedTours(initialTour ? [initialTour] : []);
+      setTourCategory(detectCategory(initialTour, t));
       setErrors({});
       setSubmitted(false);
       setDropdownOpen(false);
     }
-  }, [isOpen, initialTour]);
+  }, [isOpen, initialTour, t]);
 
   useEffect(() => {
     const handler = (e) => {
@@ -84,6 +102,21 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
     );
   };
 
+  const handleCategoryChange = (cat) => {
+    setTourCategory(cat);
+    // Remove tours that are no longer valid for the new category
+    const validKeys = cat === 'india' ? INDIA_TOUR_KEYS : cat === 'international' ? INTL_TOUR_KEYS : ALL_TOUR_KEYS;
+    const validTitles = validKeys.map(k => t(k));
+    setSelectedTours(prev => prev.filter(tour => validTitles.includes(tour)));
+    setDropdownOpen(false);
+  };
+
+  const activeTourKeys = tourCategory === 'india'
+    ? INDIA_TOUR_KEYS
+    : tourCategory === 'international'
+      ? INTL_TOUR_KEYS
+      : ALL_TOUR_KEYS;
+
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = t('contact.validation.nameRequired') || 'Name is required';
@@ -111,6 +144,7 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
         ...formData,
         tourPackages: selectedTours,
         tourName: selectedTours.join(', '),
+        tourCategory,
       });
 
       if (res.ok && data.success) {
@@ -133,6 +167,12 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
     : selectedTours.length === 1
       ? selectedTours[0]
       : t('enquiry.toursSelected', { count: selectedTours.length, defaultValue: `${selectedTours.length} tours selected` });
+
+  const CATEGORY_OPTIONS = [
+    { value: 'india',         label: '🇮🇳 India' },
+    { value: 'international', label: '🌍 International' },
+    { value: 'both',          label: '✈️ Both' },
+  ];
 
   return (
     <div className="enquiry-modal-overlay" onClick={onClose}>
@@ -216,27 +256,46 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
                 </div>
               </div>
 
-              <div className="form-group" ref={dropdownRef}>
-                <label>{t('enquiry.tourPackages', { defaultValue: 'Tour Package(s)' })}</label>
-                <button type="button" className={`multiselect-trigger ${dropdownOpen ? 'open' : ''}`} onClick={() => setDropdownOpen(o => !o)}>
-                  <span className={selectedTours.length === 0 ? 'placeholder' : ''}>{triggerLabel}</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d={dropdownOpen ? 'M18 15l-6-6-6 6' : 'M6 9l6 6 6-6'} />
-                  </svg>
-                </button>
-                {dropdownOpen && (
-                  <div className="multiselect-dropdown">
-                    {TOUR_OPTIONS.map(tourKey => {
-                      const tourLabel = t(tourKey);
-                      return (
-                      <label key={tourKey} className="multiselect-option">
-                        <input type="checkbox" checked={selectedTours.includes(tourLabel)} onChange={() => toggleTour(tourLabel)} />
-                        <span>{tourLabel}</span>
-                      </label>
-                    );})}
-                  </div>
-                )}
+              <div className="form-group">
+                <label>{t('enquiry.tourType', { defaultValue: 'I am interested in' })}</label>
+                <div className="tour-category-pills">
+                  {CATEGORY_OPTIONS.map(opt => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      className={`category-pill ${tourCategory === opt.value ? 'active' : ''}`}
+                      onClick={() => handleCategoryChange(opt.value)}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
               </div>
+
+              {tourCategory && (
+                <div className="form-group" ref={dropdownRef}>
+                  <label>{t('enquiry.tourPackages', { defaultValue: 'Tour Package(s)' })}</label>
+                  <button type="button" className={`multiselect-trigger ${dropdownOpen ? 'open' : ''}`} onClick={() => setDropdownOpen(o => !o)}>
+                    <span className={selectedTours.length === 0 ? 'placeholder' : ''}>{triggerLabel}</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d={dropdownOpen ? 'M18 15l-6-6-6 6' : 'M6 9l6 6 6-6'} />
+                    </svg>
+                  </button>
+                  {dropdownOpen && (
+                    <div className="multiselect-dropdown">
+                      {activeTourKeys.map(tourKey => {
+                        const tourLabel = t(tourKey);
+                        return (
+                          <label key={tourKey} className="multiselect-option">
+                            <input type="checkbox" checked={selectedTours.includes(tourLabel)} onChange={() => toggleTour(tourLabel)} />
+                            <span>{tourLabel}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              )}
 
               <div className="form-group">
                 <label>{t('contact.form.hotelAccommodation', { defaultValue: 'Hotel Accommodation' })}</label>

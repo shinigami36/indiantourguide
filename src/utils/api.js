@@ -17,6 +17,72 @@ export const warmBackend = async () => {
   }
 };
 
+export const getJsonWithRetry = async (
+  path,
+  {
+    timeoutMs = 20000,
+    retryCount = 1,
+    retryDelayMs = 1500,
+  } = {}
+) => {
+  const endpoint = `${API_URL}${path}`;
+  let lastError;
+
+  for (let attempt = 0; attempt <= retryCount; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+    try {
+      const res = await fetch(endpoint, {
+        method: 'GET',
+        headers: { Accept: 'application/json' },
+        signal: controller.signal,
+      });
+
+      clearTimeout(timer);
+
+      let data = {};
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        data = await res.json();
+      }
+
+      const canRetryStatus = [408, 425, 429, 500, 502, 503, 504].includes(res.status);
+      const shouldRetry = !res.ok && canRetryStatus && attempt < retryCount;
+
+      if (shouldRetry) {
+        await delay(retryDelayMs);
+        continue;
+      }
+
+      return { res, data };
+    } catch (error) {
+      clearTimeout(timer);
+      lastError = error;
+
+      if (attempt < retryCount) {
+        await delay(retryDelayMs);
+        continue;
+      }
+    }
+  }
+
+  throw lastError || new Error('Request failed');
+};
+
+export const fetchGoogleReviews = async () => {
+  if (!API_URL) {
+    throw new Error('API base URL is not configured');
+  }
+
+  const { res, data } = await getJsonWithRetry('/api/google-reviews');
+  if (!res.ok || !data?.success) {
+    throw new Error(data?.error || 'Unable to load Google reviews');
+  }
+
+  return data.data;
+};
+
 export const postJsonWithRetry = async (
   path,
   payload,

@@ -1,12 +1,9 @@
-import { useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { fetchGoogleReviews } from '../utils/api';
 import './Reviews.css';
 
-// ─── Static review data ────────────────────────────────────────────────────
-// To connect live Google Reviews, call your backend endpoint
-// (e.g. GET /api/reviews) which proxies the Google Places API using your
-// GOOGLE_PLACES_API_KEY and place ID. Replace REVIEWS with the fetched data.
-const REVIEWS = [
+const FALLBACK_REVIEWS = [
   {
     id: 1,
     name: 'James Anderson',
@@ -14,7 +11,7 @@ const REVIEWS = [
     avatar: 'JA',
     rating: 5,
     date: 'February 2026',
-    text: 'Absolutely incredible experience! Our guide was knowledgeable, the itinerary was perfectly paced, and the Taj Mahal at sunrise is something I will never forget. World Tour India made every detail seamless.',
+    text: 'Absolutely incredible experience! Our guide was knowledgeable, the itinerary was perfectly paced, and the Taj Mahal at sunrise is something I will never forget. indiatoursguide made every detail seamless.',
   },
   {
     id: 2,
@@ -72,6 +69,23 @@ const REVIEWS = [
   },
 ];
 
+const toAvatar = (name) => {
+  if (!name) return 'GU';
+  const words = String(name).trim().split(/\s+/).filter(Boolean);
+  const initials = words.slice(0, 2).map((word) => word.charAt(0).toUpperCase()).join('');
+  return initials || 'GU';
+};
+
+const mapGoogleReviewToCard = (review, index) => ({
+  id: review.id || `${index}`,
+  name: review.name || 'Google User',
+  country: 'Google Review',
+  avatar: toAvatar(review.name),
+  rating: Number.isFinite(Number(review.rating)) ? Number(review.rating) : 5,
+  date: review.relativeTimeDescription || 'Recent review',
+  text: review.text || '',
+});
+
 const Stars = ({ count }) => (
   <div className="review-stars" aria-label={`${count} out of 5 stars`}>
     {Array.from({ length: 5 }, (_, i) => (
@@ -92,10 +106,69 @@ const Stars = ({ count }) => (
 const Reviews = () => {
   const { t } = useTranslation();
   const scrollRef = useRef(null);
+  const [reviews, setReviews] = useState(FALLBACK_REVIEWS);
+  const [summary, setSummary] = useState({
+    businessName: 'indiatoursguide',
+    rating: 4.9,
+    totalReviews: 128,
+    googleUrl: '',
+  });
 
   const nudge = (dir) => {
     scrollRef.current?.scrollBy({ left: dir * 340, behavior: 'smooth' });
   };
+
+  const loadReviews = useCallback(async () => {
+    try {
+      const payload = await fetchGoogleReviews();
+
+      const mapped = Array.isArray(payload?.reviews)
+        ? payload.reviews
+            .map(mapGoogleReviewToCard)
+            .filter((review) => review.text)
+            .slice(0, 10)
+        : [];
+
+      if (mapped.length > 0) {
+        setReviews(mapped);
+      }
+
+      setSummary({
+        businessName: payload?.businessName || 'indiatoursguide',
+        rating: Number.isFinite(Number(payload?.rating)) ? Number(payload.rating) : 4.9,
+        totalReviews: Number.isFinite(Number(payload?.totalReviews)) ? Number(payload.totalReviews) : mapped.length,
+        googleUrl: payload?.googleUrl || '',
+      });
+    } catch {
+      // Keep fallback data when backend is not configured or unavailable.
+    }
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    const safeLoad = async () => {
+      if (!active) return;
+      await loadReviews();
+    };
+
+    safeLoad();
+
+    // Poll once per day to keep API usage very low.
+    const intervalId = window.setInterval(safeLoad, 24 * 60 * 60 * 1000);
+
+    return () => {
+      active = false;
+      window.clearInterval(intervalId);
+    };
+  }, [loadReviews]);
+
+  const badgeCountText = useMemo(() => {
+    if (!summary.totalReviews) {
+      return t('reviews.badgeCount', { defaultValue: 'Google Reviews' });
+    }
+    return `${summary.totalReviews} Google Reviews`;
+  }, [summary.totalReviews, t]);
 
   return (
     <section className="reviews-section" aria-labelledby="reviews-title">
@@ -109,14 +182,20 @@ const Reviews = () => {
             <p className="section-subtitle">{t('reviews.subtitle', { defaultValue: 'Authentic stories from explorers who trusted us with their India journey' })}</p>
           </div>
           <div className="reviews-badge">
+            <div className="reviews-badge-verified">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="#16a34a" aria-hidden="true">
+                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              <span>Verified on Google</span>
+            </div>
             <div className="reviews-badge-rating">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true">
                 <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
               </svg>
-              <span className="reviews-badge-score">4.9</span>
+              <span className="reviews-badge-score">{summary.rating.toFixed(1)}</span>
               <span className="reviews-badge-max">/ 5</span>
             </div>
-            <p className="reviews-badge-count">{t('reviews.badgeCount', { defaultValue: '128 Google Reviews' })}</p>
+            <p className="reviews-badge-count">{badgeCountText}</p>
             <div className="reviews-google-logo" aria-label={t('reviews.googleAria', { defaultValue: 'Google' })}>
               <span style={{ color: '#4285F4' }}>G</span>
               <span style={{ color: '#EA4335' }}>o</span>
@@ -125,6 +204,11 @@ const Reviews = () => {
               <span style={{ color: '#34A853' }}>l</span>
               <span style={{ color: '#EA4335' }}>e</span>
             </div>
+            {summary.googleUrl ? (
+              <a className="reviews-view-link" href={summary.googleUrl} target="_blank" rel="noreferrer">
+                View all reviews ↗
+              </a>
+            ) : null}
           </div>
         </div>
 
@@ -137,7 +221,7 @@ const Reviews = () => {
           </button>
 
           <div className="reviews-scroll" ref={scrollRef}>
-            {REVIEWS.map(review => (
+            {reviews.map(review => (
               <article key={review.id} className="review-card">
                 <div className="review-card-top">
                   <div className="review-avatar" aria-hidden="true">{review.avatar}</div>

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FOREIGN_TOURS } from '../data/foreignTours';
 import './Tours.css';
 
 // Defined outside component so the array isn't recreated on every render
@@ -13,6 +14,7 @@ const TOURS = [
   { id: 'golden-triangle-mumbai',  titleKey: 'tours.goldenTriangleMumbai.title',   durationKey: 'tours.goldenTriangleMumbai.duration',   locationsKey: 'tours.goldenTriangleMumbai.locations',   descriptionKey: 'tours.goldenTriangleMumbai.description',   itineraryKey: 'tours.goldenTriangleMumbai.itinerary',   includesKey: 'tours.goldenTriangleMumbai.includes',   video: '/assets/tour-videos/Golden%20Triangle%20With%20Mumbai.mp4',               rating: 4.8, mealsIncluded: true  },
   { id: 'golden-triangle-varanasi',titleKey: 'tours.goldenTriangleVaranasi.title', durationKey: 'tours.goldenTriangleVaranasi.duration', locationsKey: 'tours.goldenTriangleVaranasi.locations', descriptionKey: 'tours.goldenTriangleVaranasi.description', itineraryKey: 'tours.goldenTriangleVaranasi.itinerary', includesKey: 'tours.goldenTriangleVaranasi.includes', video: '/assets/tour-videos/Golden%20Triangle%20Tour%20with%20Varanasi.mp4',      rating: 4.9, mealsIncluded: true  },
 ];
+
 
 const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
   const { t } = useTranslation();
@@ -55,6 +57,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
   }, [selectedTourId]);
 
   const tours = TOURS;
+  const foreignTours = FOREIGN_TOURS;
 
   const toggleDesc = (tourId) => {
     setExpandedDescs(prev => {
@@ -90,6 +93,20 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
       );
     }
 
+    // Day-by-day itinerary for multi-day foreign tours
+    if (tour.country) {
+      const itineraryObj = t(tour.itineraryKey, { returnObjects: true });
+      if (typeof itineraryObj === 'object' && itineraryObj !== null) {
+        return (
+          <>
+            {Object.entries(itineraryObj).map(([key, value], i) => (
+              <p key={key}><strong>Day {i + 1}:</strong> {value}</p>
+            ))}
+          </>
+        );
+      }
+    }
+
     return <p>{t(`${tour.itineraryKey}.highlights`)}</p>;
   };
 
@@ -102,7 +119,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
     excludes: t(tour.includesKey.replace('includes', 'excludes'), { returnObjects: true }),
   });
 
-  const selectedTour = tours.find((tour) => tour.id === selectedTourId) || null;
+  const selectedTour = [...tours, ...foreignTours].find((tour) => tour.id === selectedTourId) || null;
   const selectedTourContent = selectedTour ? resolveTourContent(selectedTour) : null;
 
   return (
@@ -175,6 +192,76 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
           })}
         </div>
 
+        <div className="tours-section-divider">
+          <span className="tours-section-divider-label">{t('tours.internationalTours', { defaultValue: 'International Tours' })}</span>
+        </div>
+
+        <div className="tours-grid">
+          {foreignTours.map(tour => {
+            const { title, duration, locations, description } = resolveTourContent(tour);
+            const isDescExpanded = expandedDescs.has(tour.id);
+
+            return (
+              <article key={tour.id} className="tour-card">
+                <div className="tour-image">
+                  <div
+                    className="tour-country-banner"
+                    style={{ background: tour.bannerGradient }}
+                  >
+                    <span className="tour-country-flag">{tour.flag}</span>
+                    <span className="tour-country-name">{tour.country}</span>
+                  </div>
+                  <div className="tour-rating">
+                    <span className="stars">{renderStars(tour.rating)}</span>
+                    <span className="rating-text">{tour.rating}</span>
+                  </div>
+                </div>
+
+                <div className="tour-content">
+                  <div className="tour-meta">
+                    <span className="badge duration">{duration}</span>
+                    <span className="badge location">{locations}</span>
+                  </div>
+
+                  <h3 className="tour-title">{title}</h3>
+                  <div className={`tour-desc-wrapper${isDescExpanded ? '' : ' collapsed'}`}>
+                    <p
+                      ref={el => { descRefs.current[tour.id] = el; }}
+                      className="tour-description"
+                    >{description}</p>
+                    {overflowingDescs.has(tour.id) && (
+                      <button className="read-more-btn" onClick={() => toggleDesc(tour.id)}>
+                        {isDescExpanded
+                          ? t('tours.readLess', { defaultValue: 'Read less' })
+                          : t('tours.readMore', { defaultValue: 'Read more' })}
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="tour-features">
+                    <span className="feature">{t('features.privateTransport')}</span>
+                    <span className="feature">{t('features.expertGuide')}</span>
+                    <span className="feature">{t('features.monumentTickets', { defaultValue: '✓ Monument Tickets' })}</span>
+                    {tour.mealsIncluded && <span className="feature">{t('features.mealsIncluded')}</span>}
+                  </div>
+
+                  <button
+                    className="btn btn-primary tour-btn"
+                    onClick={() => openDetails(tour.id)}
+                    aria-haspopup="dialog"
+                    aria-expanded={selectedTourId === tour.id}
+                  >
+                    {t('tours.viewDetails')}
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </button>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
         {selectedTour && selectedTourContent && (
           <div className="tour-modal-overlay" onClick={closeDetails} role="presentation">
             <div
@@ -189,9 +276,19 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
               </button>
 
               <div className="tour-modal-media">
-                <video autoPlay muted loop playsInline>
-                  <source src={selectedTour.video} type="video/mp4" />
-                </video>
+                {selectedTour.video ? (
+                  <video autoPlay muted loop playsInline>
+                    <source src={selectedTour.video} type="video/mp4" />
+                  </video>
+                ) : (
+                  <div
+                    className="tour-country-banner"
+                    style={{ background: selectedTour.bannerGradient }}
+                  >
+                    <span className="tour-country-flag">{selectedTour.flag}</span>
+                    <span className="tour-country-name">{selectedTour.country}</span>
+                  </div>
+                )}
                 <div className="tour-rating">
                   <span className="stars">{renderStars(selectedTour.rating)}</span>
                   <span className="rating-text">{selectedTour.rating}</span>

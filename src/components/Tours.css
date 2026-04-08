@@ -519,6 +519,65 @@
   }
 }
 
+/* Country Banner (foreign tours without video) */
+.tour-country-banner {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tour-country-flag {
+  font-size: 3.5rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+}
+
+.tour-country-name {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* International Tours Section Divider */
+.tours-section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3rem 0 2rem;
+}
+
+.tours-section-divider::before,
+.tours-section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #e2e8f0);
+}
+
+.tours-section-divider::after {
+  background: linear-gradient(to left, transparent, #e2e8f0);
+}
+
+.tours-section-divider-label {
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  padding: 0.35rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  background: #f8fafc;
+}
+
 /* Tours CTA */
 .tours-cta {
   text-align: center;

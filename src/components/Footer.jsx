@@ -17,11 +17,11 @@ const Footer = ({ onNavigate }) => {
             <button type="button" className="logo" onClick={() => onNavigate('home')}>
               <img
                 src="/assets/images/icons/Screenshot%202026-02-19%20at%208.32.35%E2%80%AFPM.png"
-                alt="indiatourguide Logo"
+                alt="indiatoursguide Logo"
                 width="40"
                 height="40"
               />
-              <span>indiatourguide</span>
+              <span>indiatoursguide</span>
             </button>
             <p>{t('footer.brand')}</p>
             <div className="social-links">
@@ -61,7 +61,7 @@ const Footer = ({ onNavigate }) => {
         </div>
 
         <div className="footer-bottom">
-          <span>© <span id="year">{new Date().getFullYear()}</span> indiatourguide. {t('footer.copyright')}</span>
+          <span>© <span id="year">{new Date().getFullYear()}</span> indiatoursguide. {t('footer.copyright')}</span>
           <span>{t('footer.privacy')} · {t('footer.terms')}</span>
         </div>
       </div>
