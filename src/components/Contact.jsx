@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CountrySelect from './CountrySelect';
 import { postJsonWithRetry } from '../utils/api';
@@ -53,6 +53,16 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const tourDropdownRef = useRef(null);
 
+  useEffect(() => {
+    const handler = (e) => {
+      if (tourDropdownRef.current && !tourDropdownRef.current.contains(e.target)) {
+        setTourDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
   const activeTourKeys = tourCategory === 'india'
     ? INDIA_TOUR_KEYS
     : tourCategory === 'international'
@@ -105,8 +115,11 @@ const Contact = () => {
     }
     if (!formData.phone.trim()) {
       newErrors.phone = t('contact.validation.phoneRequired');
-    } else if (formData.phone.replace(/\D/g, '').length < 6) {
-      newErrors.phone = t('contact.validation.phoneInvalid');
+    } else {
+      const digits = formData.phone.replace(/\D/g, '').length;
+      if (digits < 6 || digits > 15) {
+        newErrors.phone = t('contact.validation.phoneInvalid');
+      }
     }
     if (!formData.startDate) {
       newErrors.startDate = t('enquiry.validation.startDateRequired', { defaultValue: 'Start date is required.' });
@@ -144,6 +157,8 @@ const Contact = () => {
         setStatus('success');
         setStatusMsg(data.message || t('contact.success', { defaultValue: 'Enquiry sent successfully.' }));
         setFormData(EMPTY_FORM);
+        setSelectedTours([]);
+        setTourCategory('');
       } else if (data.errors) {
         setErrors(data.errors);
       } else {

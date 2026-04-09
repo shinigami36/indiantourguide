@@ -204,13 +204,19 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
             return (
               <article key={tour.id} className="tour-card">
                 <div className="tour-image">
-                  <div
-                    className="tour-country-banner"
-                    style={{ background: tour.bannerGradient }}
-                  >
-                    <span className="tour-country-flag">{tour.flag}</span>
-                    <span className="tour-country-name">{tour.country}</span>
-                  </div>
+                  {tour.video ? (
+                    <video autoPlay muted loop playsInline>
+                      <source src={tour.video} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <div
+                      className="tour-country-banner"
+                      style={{ background: tour.bannerGradient }}
+                    >
+                      <span className="tour-country-flag">{tour.flag}</span>
+                      <span className="tour-country-name">{tour.country}</span>
+                    </div>
+                  )}
                   <div className="tour-rating">
                     <span className="stars">{renderStars(tour.rating)}</span>
                     <span className="rating-text">{tour.rating}</span>

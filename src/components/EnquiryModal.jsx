@@ -54,6 +54,7 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dropdownRef = useRef(null);
+  const autoCloseTimerRef = useRef(null);
 
   // Reset all state whenever the modal opens (or initialTour changes)
   useEffect(() => {
@@ -76,6 +77,25 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
   }, []);
+
+  // Body scroll lock + Escape to close
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+      clearTimeout(autoCloseTimerRef.current);
+    };
+  }, [isOpen, onClose]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -122,7 +142,14 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
     if (!formData.name.trim()) newErrors.name = t('contact.validation.nameRequired') || 'Name is required';
     if (!formData.email.trim()) newErrors.email = t('contact.validation.emailRequired') || 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = t('contact.validation.emailInvalid') || 'Invalid email';
-    if (!formData.phone.trim()) newErrors.phone = t('contact.validation.phoneRequired') || 'Phone is required';
+    if (!formData.phone.trim()) {
+      newErrors.phone = t('contact.validation.phoneRequired') || 'Phone is required';
+    } else {
+      const digits = formData.phone.replace(/\D/g, '').length;
+      if (digits < 6 || digits > 15) {
+        newErrors.phone = t('contact.validation.phoneInvalid') || 'Invalid phone number';
+      }
+    }
     if (!formData.startDate) newErrors.startDate = t('enquiry.validation.startDateRequired', { defaultValue: 'Start date is required.' });
     if (!formData.endDate) newErrors.endDate = t('enquiry.validation.endDateRequired', { defaultValue: 'End date is required.' });
     if (formData.startDate && formData.endDate && formData.endDate < formData.startDate) {
@@ -149,7 +176,7 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
 
       if (res.ok && data.success) {
         setSubmitted(true);
-        setTimeout(() => { onClose(); }, 3000);
+        autoCloseTimerRef.current = setTimeout(() => { onClose(); }, 3000);
       } else {
         setErrors(data.errors || { general: data.error || t('common.somethingWentWrong', { defaultValue: 'Something went wrong' }) });
       }

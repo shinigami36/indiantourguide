@@ -95,10 +95,16 @@ const InternationalTours = ({ onEnquireTour, onNavigateHome, onOpenEnquiry }) =>
             return (
               <article key={tour.id} className="tour-card">
                 <div className="tour-image">
-                  <div className="tour-country-banner" style={{ background: tour.bannerGradient }}>
-                    <span className="tour-country-flag">{tour.flag}</span>
-                    <span className="tour-country-name">{tour.country}</span>
-                  </div>
+                  {tour.video ? (
+                    <video autoPlay muted loop playsInline className="tour-video">
+                      <source src={tour.video} type="video/mp4" />
+                    </video>
+                  ) : (
+                    <div className="tour-country-banner" style={{ background: tour.bannerGradient }}>
+                      <span className="tour-country-flag">{tour.flag}</span>
+                      <span className="tour-country-name">{tour.country}</span>
+                    </div>
+                  )}
                   <div className="tour-rating">
                     <span className="stars">{renderStars(tour.rating)}</span>
                     <span className="rating-text">{tour.rating}</span>
@@ -175,10 +181,16 @@ const InternationalTours = ({ onEnquireTour, onNavigateHome, onOpenEnquiry }) =>
             <button className="tour-modal-close" type="button" onClick={() => setSelectedTourId(null)} aria-label={t('tours.closeDetailsAria', { defaultValue: 'Close details popup' })}>×</button>
 
             <div className="tour-modal-media">
-              <div className="tour-country-banner" style={{ background: selectedTour.bannerGradient }}>
-                <span className="tour-country-flag">{selectedTour.flag}</span>
-                <span className="tour-country-name">{selectedTour.country}</span>
-              </div>
+              {selectedTour.video ? (
+                <video autoPlay muted loop playsInline className="tour-video">
+                  <source src={selectedTour.video} type="video/mp4" />
+                </video>
+              ) : (
+                <div className="tour-country-banner" style={{ background: selectedTour.bannerGradient }}>
+                  <span className="tour-country-flag">{selectedTour.flag}</span>
+                  <span className="tour-country-name">{selectedTour.country}</span>
+                </div>
+              )}
               <div className="tour-rating">
                 <span className="stars">{renderStars(selectedTour.rating)}</span>
                 <span className="rating-text">{selectedTour.rating}</span>
