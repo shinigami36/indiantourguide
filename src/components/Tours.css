@@ -363,7 +363,7 @@
   font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
-  z-index: 2;
+  z-index: 10;
   transition: background 0.18s ease, transform 0.18s ease;
   display: flex;
   align-items: center;

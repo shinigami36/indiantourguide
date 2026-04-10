@@ -50,6 +50,16 @@
   height: 32px;
 }
 
+.footer-brand-tag {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--clr-primary);
+  margin-top: 1px;
+}
+
 .footer-brand p {
   color: var(--clr-text-3);
   line-height: 1.75;
@@ -69,32 +79,36 @@
 /* ── Social links ────────────────────────────────────────────── */
 .social-links {
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
   margin: 0.75rem 0 1rem;
 }
 
 .social-links a {
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(0,0,0,0.06);
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(0,0,0,0.04);
   border: 1px solid rgba(0,0,0,0.07);
   color: var(--clr-text-3);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
   transition: all var(--transition);
+  width: fit-content;
 }
 
 .social-links a:hover {
   background: var(--clr-primary);
   border-color: var(--clr-primary);
   color: #ffffff;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(232,120,67,0.3);
 }
 
-.social-links svg { display: block; }
+.social-links svg { display: block; flex-shrink: 0; }
 
 /* ── Payment badges ──────────────────────────────────────────── */
 .payment-methods {
