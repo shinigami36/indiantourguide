@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
+
+const INTL_DESTINATIONS = [
+  'Maldives', 'Thailand', 'Indonesia', 'Vietnam', 'Dubai',
+  'Malaysia', 'Singapore', 'Andaman & Nicobar Islands', 'Nepal', 'Sri Lanka',
+];
 
 const Header = ({ currentPage, onNavigate }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sectionActive, setSectionActive] = useState('');
+  const [intlDropdownOpen, setIntlDropdownOpen] = useState(false);
   const { t, i18n } = useTranslation();
+  const intlDropdownRef = useRef(null);
 
   const languages = [
     { code: 'en', name: 'English' },
@@ -19,16 +26,26 @@ const Header = ({ currentPage, onNavigate }) => {
     { code: 'ru', name: 'Русский' },
   ];
 
+  // Close intl dropdown on outside click
+  useEffect(() => {
+    const handler = (e) => {
+      if (intlDropdownRef.current && !intlDropdownRef.current.contains(e.target)) {
+        setIntlDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, []);
+
   const closeMenu = () => setIsMenuOpen(false);
 
-  // Navigate to a full page and clear any section highlight
   const navigatePage = (page) => {
     onNavigate(page);
     setSectionActive('');
+    setIntlDropdownOpen(false);
     closeMenu();
   };
 
-  // Navigate home then scroll to a section id (works from any page)
   const goToSection = (sectionId) => {
     onNavigate('home');
     setSectionActive(sectionId);
@@ -43,16 +60,16 @@ const Header = ({ currentPage, onNavigate }) => {
         <button
           type="button"
           className="brand"
-          aria-label={t('header.brandHomeAria', { defaultValue: 'indiatoursguide Home' })}
+          aria-label="India Tours Guide Home"
           onClick={() => { onNavigate('home'); closeMenu(); }}
         >
           <img
             className="brand-logo"
             src="/assets/images/icons/Screenshot%202026-02-19%20at%208.32.35%E2%80%AFPM.png"
-            alt="indiatoursguide logo"
+            alt="India Tours Guide logo"
           />
           <span className="brand-copy">
-            <span className="brand-name">indiatoursguide</span>
+            <span className="brand-name">India Tours Guide</span>
             <small className="brand-tag">{t('header.brandTag', { defaultValue: 'Authentic India & World Travel' })}</small>
           </span>
         </button>
@@ -88,15 +105,53 @@ const Header = ({ currentPage, onNavigate }) => {
                 {t('nav.tours', { defaultValue: 'Tours' })}
               </button>
             </li>
-            <li>
+
+            {/* International Tours with dropdown */}
+            <li className="dropdown" ref={intlDropdownRef}>
               <button
-                className={`nav-page-link ${currentPage === 'international' ? 'active' : ''}`}
-                onClick={() => navigatePage('international')}
-                aria-current={currentPage === 'international' ? 'page' : undefined}
+                className={`dropdown-toggle nav-page-link ${currentPage === 'international' ? 'active' : ''}`}
+                onClick={() => setIntlDropdownOpen(prev => !prev)}
+                aria-haspopup="true"
+                aria-expanded={intlDropdownOpen}
               >
                 {t('nav.internationalTour', { defaultValue: 'International Tours' })}
+                <svg
+                  className={`dropdown-chevron${intlDropdownOpen ? ' rotated' : ''}`}
+                  width="14" height="14" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" strokeWidth="2.5"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6"/>
+                </svg>
               </button>
+
+              {intlDropdownOpen && (
+                <ul className="dropdown-menu" role="menu">
+                  <li role="none">
+                    <button
+                      className="dropdown-item-btn"
+                      role="menuitem"
+                      onClick={() => navigatePage('international')}
+                    >
+                      All International Tours
+                    </button>
+                  </li>
+                  <li role="none" style={{ borderTop: '1px solid rgba(0,0,0,0.06)', margin: '0.25rem 0' }} />
+                  {INTL_DESTINATIONS.map(dest => (
+                    <li key={dest} role="none">
+                      <button
+                        className="dropdown-item-btn"
+                        role="menuitem"
+                        onClick={() => navigatePage('international')}
+                      >
+                        {dest}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </li>
+
             <li>
               <button
                 className={`nav-page-link ${currentPage === 'attractions' ? 'active' : ''}`}

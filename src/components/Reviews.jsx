@@ -11,7 +11,7 @@ const FALLBACK_REVIEWS = [
     avatar: 'JA',
     rating: 5,
     date: 'February 2026',
-    text: 'Absolutely incredible experience! Our guide was knowledgeable, the itinerary was perfectly paced, and the Taj Mahal at sunrise is something I will never forget. indiatoursguide made every detail seamless.',
+    text: 'Absolutely incredible experience! Our guide was knowledgeable, the itinerary was perfectly paced, and the Taj Mahal at sunrise is something I will never forget. India Tours Guide made every detail seamless.',
   },
   {
     id: 2,
@@ -108,7 +108,7 @@ const Reviews = () => {
   const scrollRef = useRef(null);
   const [reviews, setReviews] = useState(FALLBACK_REVIEWS);
   const [summary, setSummary] = useState({
-    businessName: 'indiatoursguide',
+    businessName: 'India Tours Guide',
     rating: 4.9,
     totalReviews: 128,
     googleUrl: '',
@@ -134,7 +134,7 @@ const Reviews = () => {
       }
 
       setSummary({
-        businessName: payload?.businessName || 'indiatoursguide',
+        businessName: payload?.businessName || 'India Tours Guide',
         rating: Number.isFinite(Number(payload?.rating)) ? Number(payload.rating) : 4.9,
         totalReviews: Number.isFinite(Number(payload?.totalReviews)) ? Number(payload.totalReviews) : mapped.length,
         googleUrl: payload?.googleUrl || '',

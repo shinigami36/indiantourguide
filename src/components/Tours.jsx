@@ -175,17 +175,25 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
                     {tour.mealsIncluded && <span className="feature">{t('features.mealsIncluded')}</span>}
                   </div>
 
-                  <button
-                    className="btn btn-primary tour-btn"
-                    onClick={() => openDetails(tour.id)}
-                    aria-haspopup="dialog"
-                    aria-expanded={selectedTourId === tour.id}
-                  >
-                    {t('tours.viewDetails')}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </button>
+                  <div className="tour-card-actions">
+                    <button
+                      className="btn btn-primary tour-btn"
+                      onClick={() => openDetails(tour.id)}
+                      aria-haspopup="dialog"
+                      aria-expanded={selectedTourId === tour.id}
+                    >
+                      {t('tours.viewDetails')}
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
+                    </button>
+                    <button
+                      className="btn tour-book-btn"
+                      onClick={() => onEnquireTour(t(`tours.${tour.id}.title`, { defaultValue: tour.id }))}
+                    >
+                      {t('tours.bookNow', { defaultValue: 'Book Now' })}
+                    </button>
+                  </div>
                 </div>
               </article>
             );
@@ -251,17 +259,25 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
                     {tour.mealsIncluded && <span className="feature">{t('features.mealsIncluded')}</span>}
                   </div>
 
-                  <button
-                    className="btn btn-primary tour-btn"
-                    onClick={() => openDetails(tour.id)}
-                    aria-haspopup="dialog"
-                    aria-expanded={selectedTourId === tour.id}
-                  >
-                    {t('tours.viewDetails')}
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                  </button>
+                  <div className="tour-card-actions">
+                    <button
+                      className="btn btn-primary tour-btn"
+                      onClick={() => openDetails(tour.id)}
+                      aria-haspopup="dialog"
+                      aria-expanded={selectedTourId === tour.id}
+                    >
+                      {t('tours.viewDetails')}
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                      </svg>
+                    </button>
+                    <button
+                      className="btn tour-book-btn"
+                      onClick={() => onEnquireTour(t(`tours.${tour.id}.title`, { defaultValue: tour.id }))}
+                    >
+                      {t('tours.bookNow', { defaultValue: 'Book Now' })}
+                    </button>
+                  </div>
                 </div>
               </article>
             );
@@ -335,8 +351,8 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
                   )}
 
                   <div className="tour-enquiry-section">
-                    <button className="btn btn-outline enquire-now-btn" onClick={() => { closeDetails(); onEnquireTour(selectedTourContent.title); }}>
-                      {t('tours.enquireNow', { defaultValue: 'Enquire Now' })}
+                    <button className="btn btn-primary enquire-now-btn" onClick={() => { closeDetails(); onEnquireTour(selectedTourContent.title); }}>
+                      {t('tours.bookNow', { defaultValue: 'Book Now' })}
                     </button>
                   </div>
                 </div>

@@ -44,7 +44,7 @@ const detectCategory = (tourName, t) => {
   return intlTitles.includes(tourName) ? 'international' : 'india';
 };
 
-const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
+const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [selectedTours, setSelectedTours] = useState(initialTour ? [initialTour] : []);
@@ -59,14 +59,14 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
   // Reset all state whenever the modal opens (or initialTour changes)
   useEffect(() => {
     if (isOpen) {
-      setFormData(EMPTY_FORM);
+      setFormData({ ...EMPTY_FORM, adults: initialAdults || 1 });
       setSelectedTours(initialTour ? [initialTour] : []);
       setTourCategory(detectCategory(initialTour, t));
       setErrors({});
       setSubmitted(false);
       setDropdownOpen(false);
     }
-  }, [isOpen, initialTour, t]);
+  }, [isOpen, initialTour, initialAdults, t]);
 
   useEffect(() => {
     const handler = (e) => {

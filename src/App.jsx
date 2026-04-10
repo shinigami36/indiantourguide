@@ -15,6 +15,7 @@ import './App.css';
 function App() {
   const [showEnquiryModal, setShowEnquiryModal] = useState(false);
   const [initialTour, setInitialTour] = useState(null);
+  const [initialAdults, setInitialAdults] = useState(null);
   const [currentPage, setCurrentPage] = useState('home');
 
   // Open enquiry modal after 2 minutes of browsing
@@ -37,9 +38,9 @@ function App() {
 
   // Keep browser tab title aligned with current page context
   useEffect(() => {
-    if (currentPage === 'attractions') document.title = 'Attractions | indiatoursguide';
-    else if (currentPage === 'international') document.title = 'International Tours | indiatoursguide';
-    else document.title = 'indiatoursguide | Private India & World Tours';
+    if (currentPage === 'attractions') document.title = 'Attractions | India Tours Guide';
+    else if (currentPage === 'international') document.title = 'International Tours | India Tours Guide';
+    else document.title = 'India Tours Guide | Private India & World Tours';
   }, [currentPage]);
 
   const handleEnquireTour = useCallback((tourName) => {
@@ -47,9 +48,16 @@ function App() {
     setShowEnquiryModal(true);
   }, []);
 
+  const handleGetEstimate = useCallback(({ destination, travellers, days }) => {
+    setInitialTour(destination || null);
+    setInitialAdults(travellers || null);
+    setShowEnquiryModal(true);
+  }, []);
+
   const handleCloseModal = useCallback(() => {
     setShowEnquiryModal(false);
     setInitialTour(null);
+    setInitialAdults(null);
   }, []);
 
   return (
@@ -71,6 +79,7 @@ function App() {
           <>
             <Hero
               onOpenEnquiry={() => setShowEnquiryModal(true)}
+              onGetEstimate={handleGetEstimate}
               onScrollToTours={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
             />
             <Tours
@@ -88,6 +97,7 @@ function App() {
         isOpen={showEnquiryModal}
         onClose={handleCloseModal}
         initialTour={initialTour}
+        initialAdults={initialAdults}
       />
     </div>
   );

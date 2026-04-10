@@ -201,6 +201,40 @@
 }
 
 /* ── Tour CTA ────────────────────────────────────────────────── */
+/* ── Card action row ─────────────────────────────────────────── */
+.tour-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+
+/* Book Now — filled orange pill */
+.tour-book-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: var(--clr-primary) !important;
+  color: #ffffff !important;
+  border: 1.5px solid var(--clr-primary) !important;
+  padding: 0.5rem 1.125rem !important;
+  min-height: unset !important;
+  border-radius: 999px !important;
+  letter-spacing: 0.01em;
+  transition: all 0.22s ease;
+  box-shadow: none !important;
+}
+
+.tour-book-btn:hover {
+  background: var(--clr-primary-dk) !important;
+  border-color: var(--clr-primary-dk) !important;
+  transform: none !important;
+  box-shadow: 0 4px 14px rgba(232,120,67,0.35) !important;
+}
+
 .tour-btn {
   margin-top: auto;
   align-self: flex-start;
@@ -391,9 +425,9 @@
 .enquire-now-btn {
   width: 100%;
   justify-content: center;
-  background: var(--btn-bg);
-  color: #ffffff;
-  border: none;
+  background: var(--clr-primary) !important;
+  color: #ffffff !important;
+  border-color: var(--clr-primary) !important;
   font-weight: 700;
   border-radius: 999px;
   padding: 0.875rem 2rem;
@@ -401,6 +435,14 @@
 }
 
 .enquire-now-btn:hover {
+  background: var(--clr-primary-dk) !important;
+  border-color: var(--clr-primary-dk) !important;
+  box-shadow: 0 4px 14px rgba(232,120,67,0.35) !important;
+  transform: none !important;
+}
+
+/* keep old hover for anything that kept the old name */
+.enquire-now-btn-old:hover {
   background: var(--btn-bg-hover);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(13,12,34,0.16);

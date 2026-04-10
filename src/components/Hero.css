@@ -113,7 +113,124 @@
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
+  position: relative;
 }
+
+.hero-search-field--btn {
+  user-select: none;
+}
+
+.hero-field-value {
+  color: var(--clr-text-1) !important;
+  font-weight: 600 !important;
+}
+
+/* ── Field dropdowns ──────────────────────────────────────────── */
+.hero-field-dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 0;
+  min-width: 240px;
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.09);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(13,12,34,0.14);
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem;
+  z-index: 200;
+  max-height: 260px;
+  overflow-y: auto;
+  animation: fadeUp 0.15s ease-out;
+}
+
+.hero-field-dropdown li {
+  padding: 0.55rem 0.875rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: var(--clr-text-2);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+  white-space: normal;
+  font-family: var(--font-sans);
+}
+
+.hero-field-dropdown li:hover,
+.hero-field-dropdown li.selected {
+  background: rgba(232,120,67,0.08);
+  color: var(--clr-primary);
+  font-weight: 600;
+}
+
+/* Travellers panel */
+.hero-field-dropdown--travellers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1.25rem 1.5rem;
+  min-width: 200px;
+  max-height: none;
+}
+
+.hero-traveller-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--clr-text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hero-traveller-stepper {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.hero-traveller-stepper button {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  background: #fff;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  font-family: var(--font-sans);
+  color: var(--clr-text-1);
+}
+
+.hero-traveller-stepper button:hover {
+  background: var(--clr-primary);
+  border-color: var(--clr-primary);
+  color: #fff;
+}
+
+.hero-traveller-stepper strong {
+  font-size: 1.5rem;
+  color: var(--clr-text-1);
+  min-width: 2rem;
+  text-align: center;
+}
+
+.hero-done-btn {
+  background: var(--clr-primary);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.45rem 1.5rem;
+  font-size: 0.825rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.15s;
+}
+
+.hero-done-btn:hover { background: var(--clr-primary-dk); }
 
 .hero-search-field > svg:first-child {
   color: var(--clr-primary);
