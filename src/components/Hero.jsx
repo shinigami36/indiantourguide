@@ -43,24 +43,24 @@ const Hero = ({ onOpenEnquiry, onScrollToTours }) => {
             </button>
           </div>
         </div>
+      </div>
 
-        {/* Floating cards — outside hero-content, anchored to bottom of hero-inner */}
-        <div className="hero-floating-review">
-          <div className="hero-float-avatar">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <div className="hero-float-review-content">
-            <div className="hero-float-stars">★★★★★</div>
-            <div className="hero-float-name">James Anderson</div>
-            <div className="hero-float-text">Unforgettable experience. Will plan again!</div>
-          </div>
+      {/* Floating cards — direct children of <section> to avoid layout interference */}
+      <div className="hero-floating-review">
+        <div className="hero-float-avatar">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
+        <div className="hero-float-review-content">
+          <div className="hero-float-stars">★★★★★</div>
+          <div className="hero-float-name">James Anderson</div>
+          <div className="hero-float-text">Unforgettable experience. Will plan again!</div>
+        </div>
+      </div>
 
-        <div className="hero-floating-location">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-          <span>New Delhi, India</span>
-          <span className="hero-float-date">· Taj Mahal Sunrise</span>
-        </div>
+      <div className="hero-floating-location">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        <span>New Delhi, India</span>
+        <span className="hero-float-date">· Taj Mahal Sunrise</span>
       </div>
     </section>
   );
