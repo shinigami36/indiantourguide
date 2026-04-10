@@ -5,7 +5,7 @@
   min-height: 94vh;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
   width: 100%;
   max-width: 100vw;
 }
@@ -21,6 +21,16 @@
   z-index: 0;
   transform: scale(1) translateZ(0);
   will-change: transform;
+  overflow: hidden;
+}
+
+/* clip bg/overlay without clipping dropdown children */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
 }
 
 /* Gradient overlay — lighter than before so image shows well */
