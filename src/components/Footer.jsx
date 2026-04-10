@@ -11,7 +11,7 @@ const Footer = ({ onNavigate }) => {
 
   return (
     <footer className="site-footer">
-      <div className="container">
+      <div className="footer-main-content">
         <div className="footer-content">
           <div className="footer-brand">
             <button type="button" className="logo" onClick={() => onNavigate('home')}>
@@ -61,9 +61,12 @@ const Footer = ({ onNavigate }) => {
         </div>
 
         <div className="footer-bottom">
-          <span>© <span id="year">{new Date().getFullYear()}</span> indiatoursguide. {t('footer.copyright')}</span>
+          <span>© {new Date().getFullYear()} indiatoursguide. {t('footer.copyright')}</span>
           <span>{t('footer.privacy')} · {t('footer.terms')}</span>
         </div>
+      </div>
+      <div className="footer-orange-bar">
+        Crafted with ♥ for India Travel · indiatoursguide.com
       </div>
     </footer>
   );

@@ -1,8 +1,4 @@
-/* ============================================================
-   Contact Form – mirrors EnquiryModal design system exactly
-   Text tiers:  #1e293b | #374151 | #64748b | #94a3b8
-   Font scale:  labels 0.875rem | inputs 0.925rem | sub 0.8rem | error 0.78rem
-   ============================================================ */
+/* ── Contact Form ─────────────────────────────────────────────── */
 
 .enquiry-form {
   max-width: 600px;
@@ -11,67 +7,73 @@
   gap: 1.25rem;
 }
 
-/* ── Two-column row ── */
+/* ── Two-column row ──────────────────────────────────────────── */
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
 }
 
-/* ── Field group ── */
+/* ── Field group ─────────────────────────────────────────────── */
 .form-group {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.4rem;
   position: relative;
 }
 
 .form-group label {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: #374151;
-  letter-spacing: 0.01em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--clr-text-2);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
-/* ── Inputs & Textarea ── */
+/* ── Inputs & Textarea ───────────────────────────────────────── */
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 0.65rem 0.875rem;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 9px;
-  background: #f8fafc;
-  font-size: 0.925rem;
-  font-family: inherit;
-  color: #1e293b;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  padding: 0.725rem 1rem;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: var(--clr-bg-alt);
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  color: var(--clr-text-1);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
   box-sizing: border-box;
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #94a3b8;
+  color: var(--clr-text-muted);
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+  border-color: rgba(0,0,0,0.18);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #0ea5e9;
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(234,76,137,0.1);
   background: #ffffff;
 }
 
 .form-group input.error,
 .form-group textarea.error {
   border-color: #f87171;
-  background: #fff5f5;
+  background: rgba(254,242,242,0.7);
 }
 
 .form-group input.error:focus,
 .form-group textarea.error:focus {
-  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.15);
+  box-shadow: 0 0 0 3px rgba(248,113,113,0.12);
 }
 
-/* ── Date row ── */
+/* ── Date row ────────────────────────────────────────────────── */
 .date-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -80,136 +82,134 @@
 
 .date-field {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 .date-label {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--clr-text-3);
+  letter-spacing: 0.01em;
 }
 
-/* ── Error message ── */
+/* ── Error message ───────────────────────────────────────────── */
 .error-message {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: #dc2626;
   margin-top: 0.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
 }
 
-/* ── Status banner ── */
+/* ── Status banner ───────────────────────────────────────────── */
 .form-status {
   text-align: center;
-  padding: 0.75rem 1rem;
-  border-radius: 9px;
+  padding: 0.875rem 1.25rem;
+  border-radius: 10px;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .form-status.error {
-  background: #fef2f2;
+  background: rgba(254,242,242,0.9);
   color: #dc2626;
-  border: 1px solid #fca5a5;
+  border: 1px solid rgba(252,165,165,0.6);
 }
 
 .form-status.success {
-  background: #f0fdf4;
+  background: rgba(240,253,244,0.9);
   color: #166534;
-  border: 1px solid #bbf7d0;
+  border: 1px solid rgba(134,239,172,0.6);
 }
 
-/* ── Country select ── */
+/* ── Country select ──────────────────────────────────────────── */
 .contact-select {
   width: 100%;
-  padding: 0.65rem 0.875rem;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 9px;
-  background: #f8fafc;
-  font-size: 0.925rem;
-  font-family: inherit;
-  color: #1e293b;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 0.725rem 1rem;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: var(--clr-bg-alt);
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  color: var(--clr-text-1);
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
   appearance: auto;
   box-sizing: border-box;
 }
 
 .contact-select:focus {
   outline: none;
-  border-color: #0ea5e9;
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
-  background: #ffffff;
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(234,76,137,0.1);
 }
 
-/* ── Hotel accommodation ── */
+/* ── Hotel options ───────────────────────────────────────────── */
 .contact-hotel-options {
   display: flex;
   gap: 0.5rem;
-  transition: opacity 0.2s ease, filter 0.2s ease;
+  transition: opacity 0.2s ease;
 }
 
 .contact-hotel-options.disabled {
   opacity: 0.35;
-  filter: blur(0.5px);
   pointer-events: none;
 }
 
 .contact-hotel-btn {
   flex: 1;
-  padding: 0.55rem 0.4rem;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 9px;
-  background: #f8fafc;
-  color: #374151;
-  font-size: 0.875rem;
+  padding: 0.6rem 0.5rem;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: var(--clr-bg-alt);
+  color: var(--clr-text-2);
+  font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
-  font-family: inherit;
+  transition: all var(--transition);
+  font-family: var(--font-sans);
 }
 
 .contact-hotel-btn:hover:not(:disabled) {
-  border-color: #0ea5e9;
-  color: #0ea5e9;
-  background: #f0f9ff;
+  border-color: rgba(0,0,0,0.2);
+  color: var(--clr-text-1);
+  background: #fff;
 }
 
 .contact-hotel-btn.active {
-  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
-  border-color: transparent;
+  background: var(--clr-text-1);
+  border-color: var(--clr-text-1);
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
 }
 
-.contact-hotel-btn:disabled {
-  cursor: not-allowed;
-}
+.contact-hotel-btn:disabled { cursor: not-allowed; }
 
-/* ── No Hotel Required checkbox ── */
+/* ── No Hotel checkbox ───────────────────────────────────────── */
 .no-hotel-check {
   display: flex;
   align-items: center;
   width: 100%;
-  gap: 0.625rem;
-  padding: 0.6rem 0.875rem;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 9px;
-  background: #f8fafc;
+  gap: 0.6rem;
+  padding: 0.625rem 1rem;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  background: var(--clr-bg-alt);
   font-size: 0.875rem;
-  color: #374151;
+  color: var(--clr-text-2);
   cursor: pointer;
   user-select: none;
-  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.18s ease, background 0.18s ease;
   box-sizing: border-box;
 }
 
 .no-hotel-check input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  min-width: 16px;
+  width: 15px;
+  height: 15px;
+  min-width: 15px;
   margin: 0;
-  accent-color: #0ea5e9;
+  accent-color: var(--clr-primary);
   flex-shrink: 0;
   cursor: pointer;
-  vertical-align: middle;
 }
 
 .no-hotel-check span {
@@ -220,26 +220,19 @@
 }
 
 .no-hotel-check:hover {
-  border-color: #0ea5e9;
-  background: #f0f9ff;
-}
-
-.no-hotel-check:focus-within {
-  border-color: #0ea5e9;
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+  border-color: rgba(0,0,0,0.18);
+  background: #fff;
 }
 
 .no-hotel-check:has(input:checked) {
-  border-color: #0ea5e9;
-  background: #f0f9ff;
-  color: #0369a1;
+  border-color: var(--clr-primary);
+  background: rgba(234,76,137,0.04);
+  color: var(--clr-primary-dk);
 }
 
-.no-hotel-check:has(input:checked) span {
-  font-weight: 600;
-}
+.no-hotel-check:has(input:checked) span { font-weight: 600; }
 
-/* ── Traveler stepper ── */
+/* ── Traveler stepper ────────────────────────────────────────── */
 .contact-travelers-row {
   display: flex;
   gap: 0.75rem;
@@ -250,16 +243,22 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 9px;
-  padding: 0.55rem 0.75rem;
-  background: #f8fafc;
+  border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  padding: 0.6rem 0.875rem;
+  background: var(--clr-bg-alt);
   gap: 0.5rem;
+  transition: border-color 0.18s ease;
+}
+
+.contact-traveler-field:focus-within {
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px rgba(234,76,137,0.08);
 }
 
 .contact-traveler-label {
-  font-size: 0.875rem;
-  color: #374151;
+  font-size: 0.85rem;
+  color: var(--clr-text-2);
   font-weight: 500;
 }
 
@@ -272,56 +271,35 @@
 .contact-stepper-btn {
   width: 28px;
   height: 28px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 7px;
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 8px;
   background: #ffffff;
-  color: #374151;
-  font-size: 1.1rem;
+  color: var(--clr-text-2);
+  font-size: 1rem;
   line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.15s ease;
-  font-family: inherit;
+  font-family: var(--font-sans);
 }
 
 .contact-stepper-btn:hover {
-  background: #0ea5e9;
-  border-color: #0ea5e9;
+  background: var(--clr-text-1);
+  border-color: var(--clr-text-1);
   color: #ffffff;
-  box-shadow: 0 2px 6px rgba(14, 165, 233, 0.3);
 }
 
 .contact-stepper-value {
-  font-size: 0.925rem;
+  font-size: 0.9rem;
   font-weight: 700;
-  color: #1e293b;
+  color: var(--clr-text-1);
   min-width: 1.5rem;
   text-align: center;
 }
 
-/* ── Responsive ── */
-@media (max-width: 600px) {
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .date-row {
-    grid-template-columns: 1fr;
-  }
-
-  .enquiry-form {
-    gap: 1rem;
-  }
-
-  .contact-travelers-row {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-}
-
-/* ── Tour Category Pills ── */
+/* ── Tour Category Pills ─────────────────────────────────────── */
 .contact-category-pills {
   display: flex;
   gap: 0.5rem;
@@ -331,15 +309,15 @@
   flex: 1;
   min-width: 0;
   padding: 0.6rem 0.5rem;
-  border: 1.5px solid #e2e8f0;
+  border: 1.5px solid rgba(0,0,0,0.1);
   border-radius: 10px;
-  background: #f8fafc;
-  color: #475569;
-  font-size: 0.875rem;
+  background: var(--clr-bg-alt);
+  color: var(--clr-text-3);
+  font-size: 0.825rem;
   font-weight: 600;
-  font-family: inherit;
+  font-family: var(--font-sans);
   cursor: pointer;
-  transition: border-color 180ms, background 180ms, color 180ms, box-shadow 180ms;
+  transition: all 0.18s ease;
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -347,49 +325,48 @@
 }
 
 .contact-category-pill:hover {
-  border-color: #0ea5e9;
-  color: #0ea5e9;
+  border-color: rgba(0,0,0,0.18);
+  color: var(--clr-text-1);
+  background: #fff;
 }
 
 .contact-category-pill.active {
-  background: linear-gradient(135deg, #0ea5e9 0%, #818cf8 100%);
-  border-color: transparent;
+  background: var(--clr-text-1);
+  border-color: var(--clr-text-1);
   color: #ffffff;
-  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
 }
 
-/* ── Tour Package Multi-select ── */
+/* ── Tour Package Multi-select ───────────────────────────────── */
 .contact-multiselect-trigger {
   width: 100%;
-  padding: 0.65rem 0.875rem;
+  padding: 0.725rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  background: #f8fafc;
-  border: 1.5px solid #e2e8f0;
+  background: var(--clr-bg-alt);
+  border: 1.5px solid rgba(0,0,0,0.1);
   border-radius: 10px;
-  color: #1e293b;
-  font-size: 0.925rem;
-  font-family: inherit;
+  color: var(--clr-text-1);
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
   cursor: pointer;
-  transition: border-color 180ms, background 180ms, box-shadow 180ms;
+  transition: border-color 0.18s ease;
   text-align: left;
 }
 
 .contact-multiselect-trigger:hover,
 .contact-multiselect-trigger.open {
-  border-color: #0ea5e9;
-  background: #ffffff;
+  border-color: rgba(0,0,0,0.18);
+  background: #fff;
 }
 
 .contact-multiselect-trigger.open {
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+  box-shadow: 0 0 0 3px rgba(234,76,137,0.1);
+  border-color: var(--clr-primary);
 }
 
-.contact-multiselect-trigger .placeholder {
-  color: #94a3b8;
-}
+.contact-multiselect-trigger .placeholder { color: var(--clr-text-muted); }
 
 .contact-multiselect-dropdown {
   position: absolute;
@@ -397,34 +374,42 @@
   left: 0;
   right: 0;
   background: #ffffff;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.1);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(13,12,34,0.12);
   z-index: 200;
   max-height: 220px;
   overflow-y: auto;
-  overflow-x: hidden;
+  animation: fadeUp 0.15s ease-out;
 }
 
 .contact-multiselect-option {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.65rem 0.875rem;
+  padding: 0.625rem 1rem;
   cursor: pointer;
-  font-size: 0.9rem;
-  color: #374151;
-  transition: background 0.12s ease;
+  font-size: 0.875rem;
+  color: var(--clr-text-2);
+  transition: background 0.1s ease;
 }
 
 .contact-multiselect-option:hover {
-  background: #f0f9ff;
+  background: var(--clr-bg-alt);
+  color: var(--clr-text-1);
 }
 
 .contact-multiselect-option input[type="checkbox"] {
-  width: 15px;
-  height: 15px;
-  accent-color: #0ea5e9;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--clr-primary);
   flex-shrink: 0;
 }
 
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .form-row          { grid-template-columns: 1fr; }
+  .date-row          { grid-template-columns: 1fr; }
+  .enquiry-form      { gap: 1rem; }
+  .contact-travelers-row { flex-direction: column; gap: 0.5rem; }
+}

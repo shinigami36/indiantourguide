@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './TopAttractions.css';
 
@@ -6,152 +6,148 @@ const featured = [
   {
     id: 'taj-mahal',
     name: 'Taj Mahal',
-    city: 'Agra',
-    image: '/assets/attractions/m_activities-agra-taj-mahal_l_400_640.avif',
-    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-    icon: '🕌',
-    tag: 'Wonder of the World',
-  },
-  {
-    id: 'amber-fort',
-    name: 'Amber Fort',
-    city: 'Jaipur',
-    image: '/assets/attractions/m_activities_amber_fort_2_l_436_573.avif',
-    gradient: 'linear-gradient(135deg, #f6d365 0%, #fda085 100%)',
-    icon: '🏯',
-    tag: 'Rajput Heritage',
+    state: 'Uttar Pradesh',
+    image: '/assets/home-page-attraction/Taj mahal.jpg',
+    gradient: 'linear-gradient(135deg, #c8a97e 0%, #a07850 100%)',
   },
   {
     id: 'red-fort',
     name: 'Red Fort',
-    city: 'Delhi',
-    image: '/assets/attractions/m_activities_delhi_red_fort_l_341_817.avif',
-    gradient: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
-    icon: '🏰',
-    tag: 'Mughal Empire',
+    state: 'Delhi',
+    image: '/assets/home-page-attraction/red fort.jpg',
+    gradient: 'linear-gradient(135deg, #d4846a 0%, #b85c3a 100%)',
   },
   {
     id: 'lotus-temple',
     name: 'Lotus Temple',
-    city: 'Delhi',
-    image: '/assets/attractions/m_activities_delhi_lotus_temple_l_508_764.avif',
-    gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-    icon: '🌸',
-    tag: 'Iconic Architecture',
-  },
-  {
-    id: 'hawa-mahal',
-    name: 'Hawa Mahal',
-    city: 'Jaipur',
-    image: '/assets/attractions/m_activities-jaipur-hawa-mahal_l_400_640.webp',
-    gradient: 'linear-gradient(135deg, #fd7b5b 0%, #e05fa7 100%)',
-    icon: '🪟',
-    tag: 'Pink City',
+    state: 'Delhi',
+    image: '/assets/home-page-attraction/lotus temple.jpg',
+    gradient: 'linear-gradient(135deg, #e8d5c4 0%, #c4a882 100%)',
   },
   {
     id: 'qutb-minar',
     name: 'Qutb Minar',
-    city: 'Delhi',
-    image: '/assets/attractions/m_activities_delhi_qutab_minar_l_384_574.avif',
-    gradient: 'linear-gradient(135deg, #43a047 0%, #1de9b6 100%)',
-    icon: '🗼',
-    tag: 'UNESCO Heritage',
+    state: 'Delhi',
+    image: '/assets/home-page-attraction/kutub minar.jpg',
+    gradient: 'linear-gradient(135deg, #b8c4a0 0%, #8a9e70 100%)',
+  },
+  {
+    id: 'amber-fort',
+    name: 'Amber Fort',
+    state: 'Rajasthan',
+    image: '/assets/home-page-attraction/amber fort.jpg',
+    gradient: 'linear-gradient(135deg, #e6c97e 0%, #c8a040 100%)',
   },
 ];
+
+const VISIBLE = 4; // cards visible at once on desktop
 
 const TopAttractions = ({ onNavigateAttractions }) => {
   const { t } = useTranslation();
   const scrollRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft]   = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const updateArrows = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setCanScrollLeft(el.scrollLeft > 4);
+    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+  };
 
   const nudge = (dir) => {
-    scrollRef.current?.scrollBy({ left: dir * 310, behavior: 'smooth' });
+    const el = scrollRef.current;
+    if (!el) return;
+    const cardWidth = el.firstElementChild?.offsetWidth ?? 300;
+    el.scrollBy({ left: dir * (cardWidth + 16), behavior: 'smooth' });
+    setTimeout(updateArrows, 350);
   };
 
   return (
-  <section className="top-attractions-section" id="attractions">
-    <div className="container">
-      <div className="top-attractions-header">
-        <div>
-          <span className="section-eyebrow">{t('topAttractions.eyebrow', { defaultValue: 'Must-See Destinations' })}</span>
-          <h2 className="section-title">{t('topAttractions.title', { defaultValue: 'Top Attractions in India' })}</h2>
-          <p className="section-subtitle">
+    <section className="ta-section" id="attractions-home">
+
+      {/* ── Refined section header ── */}
+      <div className="ta-header">
+        <div className="container">
+          <span className="ta-eyebrow-tag">
+            {t('topAttractions.eyebrow', { defaultValue: 'Must-See Destinations' })}
+          </span>
+          <div className="ta-header-row">
+            <h2 className="ta-title">
+              {t('topAttractions.title', { defaultValue: 'Iconic India' })}
+            </h2>
+            <button className="ta-see-all" onClick={onNavigateAttractions}>
+              {t('topAttractions.viewAll', { defaultValue: 'View all' })}
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <p className="ta-subtitle">
             {t('topAttractions.subtitle', { defaultValue: 'Iconic landmarks and cultural wonders waiting to be explored' })}
           </p>
         </div>
-        <button
-          className="see-all-btn"
-          onClick={onNavigateAttractions}
-          aria-label={t('topAttractions.viewAllAria', { defaultValue: 'View all attractions' })}
-        >
-          {t('topAttractions.viewAll', { defaultValue: 'View All Attractions' })}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </button>
       </div>
 
-      <div className="top-attractions-wrapper">
-        <button className="ta-arrow ta-arrow-left" onClick={() => nudge(-1)} aria-label={t('topAttractions.scrollLeftAria', { defaultValue: 'Scroll left' })}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {/* ── Card strip ── */}
+      <div className="ta-strip-wrapper">
+        <div
+          className="ta-strip"
+          ref={scrollRef}
+          onScroll={updateArrows}
+        >
+          {featured.map(item => (
+            <button
+              key={item.id}
+              className="ta-card"
+              onClick={onNavigateAttractions}
+              aria-label={`Explore ${item.name}`}
+            >
+              <div
+                className="ta-card-photo"
+                style={!item.image ? { background: item.gradient } : undefined}
+              >
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="ta-card-img"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+              <div className="ta-card-body">
+                <p className="ta-card-state">{item.state}</p>
+                <h3 className="ta-card-name">{item.name}</h3>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Arrow controls ── */}
+      <div className="ta-controls">
+        <button
+          className={`ta-arrow ${!canScrollLeft ? 'disabled' : ''}`}
+          onClick={() => nudge(-1)}
+          disabled={!canScrollLeft}
+          aria-label={t('topAttractions.scrollLeftAria', { defaultValue: 'Previous' })}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M15 18l-6-6 6-6"/>
           </svg>
         </button>
-
-        <div className="top-attractions-scroll" ref={scrollRef}>
-          {featured.map(attraction => (
-          <button
-            key={attraction.id}
-            className="top-attraction-card"
-            onClick={onNavigateAttractions}
-            aria-label={`Explore ${attraction.name}`}
-          >
-            <div
-              className="top-attraction-visual"
-              style={!attraction.image ? { background: attraction.gradient } : undefined}
-            >
-              {attraction.image ? (
-                <img
-                  src={attraction.image}
-                  alt=""
-                  className="top-attraction-img"
-                  loading="lazy"
-                />
-              ) : (
-                <span className="top-attraction-icon" aria-hidden="true">{attraction.icon}</span>
-              )}
-              <div className="top-attraction-overlay" aria-hidden="true" />
-              <div className="top-attraction-info">
-                <span className="top-attraction-tag">{attraction.tag}</span>
-                <h3 className="top-attraction-name">{attraction.name}</h3>
-                <p className="top-attraction-city">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                  </svg>
-                  {attraction.city}
-                </p>
-              </div>
-            </div>
-          </button>
-          ))}
-        </div>
-
-        <button className="ta-arrow ta-arrow-right" onClick={() => nudge(1)} aria-label={t('topAttractions.scrollRightAria', { defaultValue: 'Scroll right' })}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <button
+          className={`ta-arrow ${!canScrollRight ? 'disabled' : ''}`}
+          onClick={() => nudge(1)}
+          disabled={!canScrollRight}
+          aria-label={t('topAttractions.scrollRightAria', { defaultValue: 'Next' })}
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M9 18l6-6-6-6"/>
           </svg>
         </button>
       </div>
 
-      <div className="top-attractions-cta">
-        <button className="explore-all-btn" onClick={onNavigateAttractions}>
-          {t('topAttractions.exploreAll', { defaultValue: 'Explore 50+ Attractions' })}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </section>
+    </section>
   );
 };
 

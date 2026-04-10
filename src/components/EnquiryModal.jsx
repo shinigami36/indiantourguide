@@ -215,6 +215,7 @@ const EnquiryModal = ({ isOpen, onClose, initialTour }) => {
         ) : (
           <>
             <div className="modal-header">
+              <span className="modal-eyebrow">Plan Your Trip</span>
               <h2>{t('enquiry.title', { defaultValue: 'Enquire About a Tour' })}</h2>
               <p>{t('enquiry.subtitle', { defaultValue: "Fill in your details and we'll get back to you shortly" })}</p>
             </div>
