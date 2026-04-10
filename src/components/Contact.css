@@ -123,6 +123,11 @@
   border: 1px solid rgba(134,239,172,0.6);
 }
 
+/* Country select (CountrySelect component) inside contact form — fix inner-box look */
+.form-group .cs-wrapper { border: 1.5px solid rgba(0,0,0,0.1); background: var(--clr-bg-alt); border-radius: 10px; }
+.form-group .cs-input { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0.725rem 0 !important; width: auto !important; font-size: 0.9rem !important; }
+.form-group .cs-wrapper:focus-within { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(232,120,67,0.12); background: #fff; }
+
 /* ── Country select ──────────────────────────────────────────── */
 .contact-select {
   width: 100%;
