@@ -257,6 +257,97 @@
   color: var(--clr-text-1);
 }
 
+/* ── International Tours dropdown ────────────────────────────── */
+.intl-dropdown-menu {
+  min-width: 240px;
+  padding: 0.5rem;
+}
+
+.intl-dropdown-item {
+  padding: 0.35rem 0.25rem;
+  border-radius: 8px;
+}
+
+.intl-dropdown-divider {
+  height: 1px;
+  background: rgba(0,0,0,0.06);
+  margin: 0.35rem 0.25rem;
+}
+
+.intl-dest-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  border: none;
+  background: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.12s;
+}
+
+.intl-dest-btn:hover { background: var(--clr-bg-muted); }
+
+.intl-dest-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.625rem 0 0.625rem;
+}
+
+.intl-dest-flag { font-size: 1.1rem; flex-shrink: 0; }
+
+.intl-dest-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--clr-text-1);
+  flex: 1;
+}
+
+.intl-dest-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.intl-dest-badge--live {
+  background: rgba(22,163,74,0.1);
+  color: #16a34a;
+}
+
+.intl-dest-badge--soon {
+  background: rgba(232,120,67,0.1);
+  color: var(--clr-primary);
+}
+
+.intl-register-btn {
+  display: block;
+  width: calc(100% - 1.25rem);
+  margin: 0.2rem 0.625rem 0.25rem;
+  padding: 0.3rem 0;
+  background: none;
+  border: 1px solid rgba(232,120,67,0.3);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--clr-primary);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background 0.12s, border-color 0.12s;
+  text-align: center;
+}
+
+.intl-register-btn:hover {
+  background: rgba(232,120,67,0.08);
+  border-color: var(--clr-primary);
+}
+
 /* ── CTA button ──────────────────────────────────────────────── */
 .contact-btn {
   padding: 0.55rem 1.25rem;

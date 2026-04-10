@@ -62,7 +62,7 @@ function App() {
 
   return (
     <div className="App">
-      <Header currentPage={currentPage} onNavigate={setCurrentPage} />
+      <Header currentPage={currentPage} onNavigate={setCurrentPage} onOpenEnquiry={() => setShowEnquiryModal(true)} />
       <main>
         {currentPage === 'attractions' ? (
           <Attractions

@@ -2,12 +2,17 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
 
-const INTL_DESTINATIONS = [
-  'Maldives', 'Thailand', 'Indonesia', 'Vietnam', 'Dubai',
-  'Malaysia', 'Singapore', 'Andaman & Nicobar Islands', 'Nepal', 'Sri Lanka',
+const COMING_SOON = [
+  { flag: '🇹🇭', name: 'Thailand' },
+  { flag: '🇯🇵', name: 'Japan' },
+  { flag: '🇰🇷', name: 'South Korea' },
+  { flag: '🇸🇬', name: 'Singapore' },
+  { flag: '🇲🇾', name: 'Malaysia' },
+  { flag: '🇳🇵', name: 'Nepal' },
+  { flag: '🇱🇰', name: 'Sri Lanka' },
 ];
 
-const Header = ({ currentPage, onNavigate }) => {
+const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sectionActive, setSectionActive] = useState('');
   const [intlDropdownOpen, setIntlDropdownOpen] = useState(false);
@@ -126,25 +131,36 @@ const Header = ({ currentPage, onNavigate }) => {
               </button>
 
               {intlDropdownOpen && (
-                <ul className="dropdown-menu" role="menu">
-                  <li role="none">
+                <ul className="dropdown-menu intl-dropdown-menu" role="menu">
+                  {/* Turkey — live */}
+                  <li role="none" className="intl-dropdown-item">
                     <button
-                      className="dropdown-item-btn"
+                      className="intl-dest-btn"
                       role="menuitem"
                       onClick={() => navigatePage('international')}
                     >
-                      All International Tours
+                      <span className="intl-dest-flag">🇹🇷</span>
+                      <span className="intl-dest-name">Turkey</span>
+                      <span className="intl-dest-badge intl-dest-badge--live">Available</span>
                     </button>
                   </li>
-                  <li role="none" style={{ borderTop: '1px solid rgba(0,0,0,0.06)', margin: '0.25rem 0' }} />
-                  {INTL_DESTINATIONS.map(dest => (
-                    <li key={dest} role="none">
+
+                  <li role="none" className="intl-dropdown-divider" />
+
+                  {/* Coming soon destinations */}
+                  {COMING_SOON.map(dest => (
+                    <li key={dest.name} role="none" className="intl-dropdown-item">
+                      <div className="intl-dest-row">
+                        <span className="intl-dest-flag">{dest.flag}</span>
+                        <span className="intl-dest-name">{dest.name}</span>
+                        <span className="intl-dest-badge intl-dest-badge--soon">Coming Soon</span>
+                      </div>
                       <button
-                        className="dropdown-item-btn"
+                        className="intl-register-btn"
                         role="menuitem"
-                        onClick={() => navigatePage('international')}
+                        onClick={() => { setIntlDropdownOpen(false); closeMenu(); onOpenEnquiry(); }}
                       >
-                        {dest}
+                        Register Interest
                       </button>
                     </li>
                   ))}
