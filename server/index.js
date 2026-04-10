@@ -332,6 +332,96 @@ app.post('/api/enquiry', enquiryLimiter, (req, res) => {
   // WhatsApp dispatch is disabled for this rollout.
 });
 
+// ── Google Reviews — 24-hour server-side cache ────────────────────────────────
+const reviewsLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 30,
+  message: { error: 'Too many review requests. Please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+let reviewsCache = null;
+let reviewsCacheAt = 0;
+const REVIEWS_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+
+const normalizeGoogleReview = (review, index) => {
+  const authorName = (review?.author_name || 'Google User').trim().slice(0, 120);
+  const text = (review?.text || '').trim().slice(0, 1600);
+  const rating = Number.isFinite(Number(review?.rating))
+    ? Math.max(1, Math.min(5, Number(review.rating)))
+    : 5;
+  const timeEpoch = Number.isFinite(Number(review?.time)) ? Number(review.time) : null;
+  return {
+    id: `${timeEpoch || Date.now()}-${index}`,
+    name: authorName,
+    rating,
+    text,
+    relativeTimeDescription: (review?.relative_time_description || '').trim(),
+    profilePhotoUrl: (review?.profile_photo_url || '').trim().slice(0, 1000),
+    time: timeEpoch,
+  };
+};
+
+app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
+  if (reviewsCache && Date.now() - reviewsCacheAt < REVIEWS_CACHE_TTL) {
+    return res.json({ success: true, data: reviewsCache, cached: true });
+  }
+
+  const placesApiKey = resolveSecret(
+    process.env.GOOGLE_PLACES_API_KEY,
+    process.env.GOOGLE_PLACES_API_KEY_ENC,
+    'GOOGLE_PLACES_API_KEY_ENC'
+  );
+  const placeId = (process.env.GOOGLE_PLACE_ID || '').trim().slice(0, 200);
+
+  if (!placesApiKey) {
+    return res.status(503).json({ success: false, error: 'Google reviews not configured.' });
+  }
+  if (!placeId) {
+    return res.status(503).json({ success: false, error: 'GOOGLE_PLACE_ID not configured.' });
+  }
+
+  try {
+    const fields = 'name,rating,user_ratings_total,reviews,url';
+    const endpoint = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=${encodeURIComponent(fields)}&reviews_sort=newest&key=${encodeURIComponent(placesApiKey)}`;
+
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
+      return res.status(502).json({ success: false, error: 'Failed to reach Google Places API.' });
+    }
+
+    const payload = await response.json();
+    if (payload?.status !== 'OK' || !payload?.result) {
+      if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
+      return res.status(502).json({ success: false, error: `Google API error: ${payload?.status}` });
+    }
+
+    const place = payload.result;
+    const reviews = Array.isArray(place.reviews)
+      ? place.reviews.map(normalizeGoogleReview).filter(r => r.text)
+      : [];
+
+    const data = {
+      businessName: (place.name || 'indiatoursguide').trim().slice(0, 140),
+      rating: Number.isFinite(Number(place.rating)) ? Number(place.rating) : null,
+      totalReviews: Number.isFinite(Number(place.user_ratings_total)) ? Number(place.user_ratings_total) : 0,
+      googleUrl: (place.url || '').trim().slice(0, 2000),
+      reviews,
+      fetchedAt: new Date().toISOString(),
+    };
+
+    reviewsCache = data;
+    reviewsCacheAt = Date.now();
+    return res.json({ success: true, data });
+  } catch (err) {
+    console.error('Google reviews fetch error:', err);
+    if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
+    return res.status(500).json({ success: false, error: 'Failed to fetch Google reviews.' });
+  }
+});
+
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
