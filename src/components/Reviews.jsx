@@ -126,7 +126,7 @@ const Reviews = () => {
         ? payload.reviews
             .map(mapGoogleReviewToCard)
             .filter((review) => review.text)
-            .slice(0, 10)
+            .slice(0, 6)
         : [];
 
       if (mapped.length > 0) {
