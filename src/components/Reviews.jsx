@@ -181,7 +181,13 @@ const Reviews = () => {
             <h2 className="section-title" id="reviews-title">{t('reviews.title', { defaultValue: 'What Travelers Say About Us' })}</h2>
             <p className="section-subtitle">{t('reviews.subtitle', { defaultValue: 'Authentic stories from explorers who trusted us with their India journey' })}</p>
           </div>
-          <div className="reviews-badge">
+          <a
+            className="reviews-badge reviews-badge--link"
+            href="https://www.google.com/maps/place/indiatoursguide/@28.5886227,77.2420518,17z/data=!3m1!4b1!4m6!3m5!1s0xa6fc91abf481fa81:0x8a2c00ece6b4fc84!8m2!3d28.5886227!4d77.2420518!16s%2Fg%2F11z30dhpjg?entry=ttu&g_ep=EgoyMDI2MDQwNy4wIKXMDSoASAFQAw%3D%3D"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View India Tours Guide on Google Maps"
+          >
             <div className="reviews-badge-verified">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="#16a34a" aria-hidden="true">
                 <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
@@ -204,12 +210,7 @@ const Reviews = () => {
               <span style={{ color: '#34A853' }}>l</span>
               <span style={{ color: '#EA4335' }}>e</span>
             </div>
-            {summary.googleUrl ? (
-              <a className="reviews-view-link" href={summary.googleUrl} target="_blank" rel="noreferrer">
-                View all reviews ↗
-              </a>
-            ) : null}
-          </div>
+          </a>
         </div>
 
         {/* Slider */}
