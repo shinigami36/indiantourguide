@@ -190,12 +190,12 @@
 }
 
 .tour-features .feature {
-  background: rgba(234,76,137,0.06);
+  background: rgba(232,120,67,0.08);
   color: var(--clr-primary-dk);
   font-size: 0.7rem;
   padding: 0.22rem 0.6rem;
   border-radius: 999px;
-  border: 1px solid rgba(234,76,137,0.14);
+  border: 1px solid rgba(232,120,67,0.18);
   font-weight: 600;
   letter-spacing: 0.01em;
 }
