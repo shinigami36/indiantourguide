@@ -208,6 +208,119 @@
         "Any tipping for guide & driver",
         "Photography & videography fees"
       ]
+    },
+    "turkishDelight9D": {
+      "title": "Forfait Tour Délices de Turquie",
+      "duration": "9 Jours / 8 Nuits",
+      "locations": "Istanbul, Ankara, Cappadoce, Pamukkale, Kusadasi",
+      "description": "Un voyage inoubliable de 9 jours à travers les plus beaux sites de Turquie — des rues historiques d'Istanbul et Ankara aux cheminées de fées magiques de Cappadoce.",
+      "itinerary": {
+        "day1": "Arrivée à Istanbul — Transfert aéroport, hôtel à Taksim, dîner au restaurant",
+        "day2": "Istanbul → Ankara — Vol intérieur, Musée des Civilisations Anatoliennes, Citadelle d'Ankara, Mausolée d'Atatürk",
+        "day3": "Ankara → Cappadoce — Lac Salé, Caravansérail, Ville Souterraine OZKONAK, Vallée des Pigeons",
+        "day4": "Cappadoce — Montgolfière optionnelle, poterie à Avanos, Musée de Zelve, Château d'Uchisar",
+        "day5": "Cappadoce → Pamukkale — Musée Mevlana à Konya, arrivée à Pamukkale",
+        "day6": "Pamukkale → Kusadasi — Hiérapolis, Travertins Thermaux, Éphèse, Maison de la Vierge Marie",
+        "day7": "Kusadasi → Istanbul — Trajet en car 6h, Hippodrome, Mosquée Bleue, Sainte-Sophie",
+        "day8": "Istanbul — Palais de Topkapi, Grand Bazar, Croisière dînatoire sur le Bosphore",
+        "day9": "Départ — Petit-déjeuner, temps libre, transfert à l'aéroport"
+      },
+      "includes": [
+        "Transferts arrivée & départ en car A/C",
+        "Tous les transports en car A/C neuf",
+        "8 nuits d'hébergement dans les hôtels mentionnés",
+        "Vol intérieur Istanbul → Ankara (25 KG + 8 KG cabine)",
+        "Tous les droits d'entrée",
+        "Tous les déjeuners",
+        "Tous les dîners",
+        "Une bouteille d'eau par jour par personne dans le bus",
+        "Guide touristique professionnel anglophone",
+        "Croisière dînatoire Bosphore avec spectacle",
+        "Soirée turque en Cappadoce",
+        "Frais de parking et péages",
+        "Taxes de chambre"
+      ],
+      "excludes": [
+        "Dépenses personnelles",
+        "Billets d'avion internationaux",
+        "Montgolfière (optionnelle)",
+        "Boissons pendant les repas (sauf eau)",
+        "Frais de visa",
+        "Pourboires : 3 $/personne/jour (guide) + 2 $/personne/jour (chauffeur)"
+      ]
+    },
+    "istanbulCappadocia7D": {
+      "title": "Tour Istanbul & Cappadoce",
+      "duration": "7 Jours / 6 Nuits",
+      "locations": "Istanbul, Cappadoce",
+      "description": "Découvrez les deux destinations les plus emblématiques de Turquie en 7 jours — la Mosquée Bleue, Sainte-Sophie et le Grand Bazar d'Istanbul, combinés avec les cheminées de fées de Cappadoce.",
+      "itinerary": {
+        "day1": "Arrivée à Istanbul — Transfert en minivan privé, enregistrement, dîner",
+        "day2": "Vieille ville — Hippodrome, Mosquée Bleue, Sainte-Sophie, Topkapi, Grand Bazar",
+        "day3": "Côté européen — Colline Çamlıca, Tour Çamlıca, Marché aux épices, Night-Club turc",
+        "day4": "Istanbul → Cappadoce — Vol intérieur, Ville Souterraine OZKONAK, Vallée des Pigeons",
+        "day5": "Cappadoce — Pashabag & Zelve, Avanos poterie, Château d'Uchisar",
+        "day6": "Cappadoce → Istanbul — Vol retour, temps libre, dîner au restaurant indien",
+        "day7": "Départ — Petit-déjeuner, transfert aéroport"
+      },
+      "includes": [
+        "4 nuits à Istanbul (demi-pension)",
+        "2 nuits en hôtel troglodyte en Cappadoce (demi-pension)",
+        "Transfert arrivée en minivan privé",
+        "Tous les tours en minivan privé",
+        "Guide anglophone",
+        "Tous les dîners",
+        "Toutes les entrées",
+        "Night-Club turc à Istanbul avec boissons illimitées",
+        "Vol aller-retour Istanbul ↔ Cappadoce",
+        "Frais de parking et péages",
+        "Toutes taxes de chambre"
+      ],
+      "excludes": [
+        "Dépenses personnelles",
+        "Vols internationaux",
+        "Tous les déjeuners",
+        "Night-Club turc en Cappadoce (optionnel)",
+        "Montgolfière (optionnelle)",
+        "Frais de visa",
+        "Pourboires"
+      ]
+    },
+    "sevenChurches8D": {
+      "title": "Les Sept Églises de l'Apocalypse",
+      "duration": "8 Jours / 7 Nuits",
+      "locations": "Istanbul, Izmir, Pergame, Pamukkale, Kusadasi",
+      "description": "Un profond voyage spirituel à travers les Sept Églises de l'Apocalypse — sur les traces de l'Apôtre Jean d'Istanbul à Éphèse, Smyrne, Pergame et au-delà.",
+      "itinerary": {
+        "day1": "Istanbul — Arrivée, transfert hôtel 4★/5★, dîner au restaurant turc",
+        "day2": "Istanbul classique — Hippodrome, Mosquée Bleue, Sainte-Sophie, Topkapi, Grand Bazar, Croisière Bosphore",
+        "day3": "Smyrne & Pergame — Vol intérieur vers Izmir, Smyrne, Pergame",
+        "day4": "Thyatire, Sardes & Philadelphie — Trois églises, transfert à Pamukkale",
+        "day5": "Pamukkale & Laodicée — Travertins thermaux, Hiérapolis, Laodicée, transfert à Kusadasi",
+        "day6": "Éphèse & Kusadasi — Éphèse, Maison de la Vierge Marie, Basilique Saint-Jean, temps libre",
+        "day7": "Excursion à Izmir — Quartier juif, Église Polycarpe, quartier grec Alsancak",
+        "day8": "Départ — Temps libre, transfert aéroport Izmir, vol intérieur Istanbul"
+      },
+      "includes": [
+        "Guide professionnel anglophone",
+        "Tous les transports",
+        "Toutes les entrées",
+        "Déjeuners & dîners à Istanbul",
+        "Croisière Bosphore (2h) en bateau privé",
+        "Vol aller-retour Istanbul ↔ Izmir",
+        "2 nuits à Istanbul",
+        "2 nuits à Izmir (demi-pension)",
+        "1 nuit à Pamukkale (hôtel thermal 5★)",
+        "2 nuits à Kusadasi (5★, demi-pension)",
+        "Tous les déjeuners après Istanbul",
+        "Frais de parking et péages"
+      ],
+      "excludes": [
+        "Frais de visa",
+        "Billets d'avion internationaux",
+        "Dépenses personnelles",
+        "Pourboires"
+      ]
     }
   },
   "contact": {
@@ -354,5 +467,13 @@
       "beaches": "Beaches & Islands",
       "wildlife": "Wildlife"
     }
+  },
+  "internationalTours": {
+    "title": "Tours Internationaux",
+    "subtitle": "Des voyages artisanaux vers les destinations les plus captivantes du monde",
+    "availableNow": "Disponible maintenant",
+    "comingSoon": "Bientôt disponible",
+    "comingSoonNote": "Nous créons des expériences inoubliables vers ces destinations. Enregistrez votre intérêt et soyez le premier à le savoir.",
+    "notifyMe": "Enregistrer l'intérêt"
   }
 }

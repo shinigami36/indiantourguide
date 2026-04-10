@@ -17,9 +17,12 @@ function App() {
   const [initialTour, setInitialTour] = useState(null);
   const [currentPage, setCurrentPage] = useState('home');
 
-  // Open enquiry modal on first load
+  // Open enquiry modal after 2 minutes of browsing
   useEffect(() => {
-    setShowEnquiryModal(true);
+    const timer = setTimeout(() => {
+      setShowEnquiryModal(true);
+    }, 2 * 60 * 1000); // 2 minutes
+    return () => clearTimeout(timer);
   }, []);
 
   // Warm backend once to reduce first-request cold-start impact.

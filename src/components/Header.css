@@ -186,7 +186,7 @@
 .language-select:focus {
   outline: none;
   border-color: var(--clr-primary);
-  box-shadow: 0 0 0 3px rgba(234,76,137,0.12);
+  box-shadow: 0 0 0 3px rgba(232,120,67,0.12);
 }
 
 /* ── Dropdown ────────────────────────────────────────────────── */

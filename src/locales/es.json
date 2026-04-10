@@ -212,6 +212,119 @@
         "Propinas para guía y conductor",
         "Tarifas de fotografía y videografía"
       ]
+    },
+    "turkishDelight9D": {
+      "title": "Paquete Tour Delicias de Turquía",
+      "duration": "9 Días / 8 Noches",
+      "locations": "Estambul, Ankara, Capadocia, Pamukkale, Kusadasi",
+      "description": "Un viaje inolvidable de 9 días por los mejores destinos de Turquía — desde las históricas calles de Estambul y Ankara, hasta las mágicas chimeneas de Capadocia, las piscinas termales de Pamukkale y las ruinas de Éfeso.",
+      "itinerary": {
+        "day1": "Llegada a Estambul — Traslado al aeropuerto, check-in en Taksim, cena en restaurante exterior",
+        "day2": "Estambul → Ankara — Vuelo doméstico, Museo de Civilizaciones de Anatolia, Castillo de Ankara, Mausoleo de Atatürk",
+        "day3": "Ankara → Capadocia — Lago Salado, Caravanserai, Ciudad Subterránea de OZKONAK, Valle de Palomas",
+        "day4": "Capadocia Completo — Paseo en globo opcional, alfarería en Avanos, Museo al Aire Libre de Zelve, Castillo de Uchisar",
+        "day5": "Capadocia → Pamukkale — Museo Mevlana en Konya, llegada a Pamukkale",
+        "day6": "Pamukkale → Kusadasi — Ciudad Antigua de Hierápolis, Travertinos Termales, Éfeso, Casa de la Virgen María",
+        "day7": "Kusadasi → Estambul — Viaje en autocar 6 hrs, Hipódromo, Mezquita Azul, Santa Sofía",
+        "day8": "Estambul — Palacio Topkapi, Gran Bazar, Crucero Cena por el Bósforo con espectáculo",
+        "day9": "Salida — Desayuno, tiempo libre, traslado al Aeropuerto de Estambul"
+      },
+      "includes": [
+        "Traslados de llegada y salida con autocar A/C",
+        "Todo el transporte con autocar A/C nuevo",
+        "8 noches de alojamiento en hoteles mencionados",
+        "Vuelo doméstico Estambul → Ankara (25 KG + 8 KG cabina)",
+        "Todas las entradas según itinerario",
+        "Todos los almuerzos durante el itinerario",
+        "Todas las cenas en restaurantes/hoteles",
+        "Botella de agua diaria por persona en el autobús",
+        "Guía turístico profesional de habla inglesa",
+        "Crucero Cena por el Bósforo con espectáculo y bebidas ilimitadas",
+        "Cena y Espectáculo de Noche Turca en Capadocia",
+        "Tasas de aparcamiento y peajes de autopista",
+        "Impuestos de habitación"
+      ],
+      "excludes": [
+        "Gastos personales y extras de habitación",
+        "Billetes de avión internacionales",
+        "Paseo en globo (opcional)",
+        "Bebidas durante las comidas (excepto agua)",
+        "Tasa de visado",
+        "Propinas: $3/persona/día (guía) + $2/persona/día (conductor)"
+      ]
+    },
+    "istanbulCappadocia7D": {
+      "title": "Tour Estambul y Capadocia",
+      "duration": "7 Días / 6 Noches",
+      "locations": "Estambul, Capadocia",
+      "description": "Descubra los dos destinos más icónicos de Turquía en 7 días — la legendaria Mezquita Azul, Santa Sofía y el Gran Bazar de Estambul, combinados con las chimeneas de hadas de Capadocia.",
+      "itinerary": {
+        "day1": "Llegada a Estambul — Traslado en minivan privada, check-in en Taksim, cena en restaurante exterior",
+        "day2": "Ciudad Antigua — Hipódromo, Mezquita Azul, Santa Sofía, Palacio Topkapi, Gran Bazar",
+        "day3": "Lado Europeo — Colina Çamlıca, Torre Çamlıca, Mercado de Especias, Noche Club Turco",
+        "day4": "Estambul → Capadocia — Vuelo doméstico, Ciudad Subterránea de OZKONAK, Valle de Palomas",
+        "day5": "Capadocia Completo — Museo al Aire Libre de Pashabag y Zelve, Avanos, Castillo de Uchisar",
+        "day6": "Capadocia → Estambul — Vuelo doméstico de regreso, tiempo libre, cena en restaurante indio",
+        "day7": "Salida — Desayuno, traslado al aeropuerto"
+      },
+      "includes": [
+        "4 noches en Estambul (media pensión)",
+        "2 noches en hotel cueva en Capadocia (media pensión)",
+        "Traslado de llegada en minivan privada",
+        "Todos los tours en minivan privada",
+        "Guía turístico de habla inglesa",
+        "Todas las cenas durante el itinerario",
+        "Todas las entradas durante el itinerario",
+        "Noche Club Turco en Estambul con bebidas ilimitadas",
+        "Vuelo doméstico de ida y vuelta Estambul ↔ Capadocia",
+        "Tasas de aparcamiento y peajes",
+        "Todos los impuestos de habitación"
+      ],
+      "excludes": [
+        "Gastos personales y extras de habitación",
+        "Vuelos internacionales",
+        "Todos los almuerzos",
+        "Noche Club Turco en Capadocia (opcional)",
+        "Paseo en globo (opcional)",
+        "Tasa de visado",
+        "Propinas"
+      ]
+    },
+    "sevenChurches8D": {
+      "title": "Las Siete Iglesias del Apocalipsis",
+      "duration": "8 Días / 7 Noches",
+      "locations": "Estambul, Esmirna, Pérgamo, Pamukkale, Kusadasi",
+      "description": "Un profundo viaje espiritual por las Siete Iglesias del Apocalipsis — siga los pasos del Apóstol Juan desde Estambul hasta Éfeso, Esmirna, Pérgamo y más.",
+      "itinerary": {
+        "day1": "Estambul — Llegada, traslado al hotel 4★/5★, cena en restaurante turco",
+        "day2": "Estambul Clásico — Hipódromo, Mezquita Azul, Santa Sofía, Topkapi, Gran Bazar, Crucero por el Bósforo",
+        "day3": "Esmirna y Pérgamo — Vuelo doméstico a Esmirna, Esmirna ('La Iglesia Sufriente'), Pérgamo",
+        "day4": "Tiatira, Sardes y Filadelfia — Las tres iglesias del interior, traslado a Pamukkale",
+        "day5": "Pamukkale y Laodicea — Travertinos termales, Hierápolis, Laodicea, traslado a Kusadasi",
+        "day6": "Éfeso y Kusadasi — Éfeso, Casa de la Virgen María, Basílica de San Juan, tiempo libre",
+        "day7": "Tour por Esmirna — Barrio judío, Iglesia de Policarpo, tiempo libre",
+        "day8": "Salida — Tiempo libre, traslado al aeropuerto de Esmirna, vuelo doméstico a Estambul"
+      },
+      "includes": [
+        "Guía turístico profesional de habla inglesa",
+        "Todo el transporte con autocares A/C",
+        "Todas las entradas durante el programa",
+        "Almuerzos y cenas en Estambul",
+        "Crucero por el Bósforo (2 hrs) en barco privado",
+        "Vuelo doméstico de ida y vuelta Estambul ↔ Esmirna",
+        "2 noches en Estambul (4★/5★)",
+        "2 noches en Esmirna (4★, media pensión)",
+        "1 noche en Pamukkale (5★ Hotel Termal)",
+        "2 noches en Kusadasi (5★, media pensión)",
+        "Todos los almuerzos después de Estambul",
+        "Tasas de aparcamiento y peajes"
+      ],
+      "excludes": [
+        "Gastos de visado",
+        "Billetes de avión internacionales",
+        "Gastos personales y extras de habitación",
+        "Propinas"
+      ]
     }
   },
   "enquiry": {
@@ -365,5 +478,13 @@
       "beaches": "Playas e Islas",
       "wildlife": "Vida silvestre"
     }
+  },
+  "internationalTours": {
+    "title": "Tours Internacionales",
+    "subtitle": "Viajes artesanales a los destinos más fascinantes del mundo",
+    "availableNow": "Disponible Ahora",
+    "comingSoon": "Próximamente",
+    "comingSoonNote": "Estamos creando experiencias inolvidables a estos destinos. Registe su interés y sea el primero en saber.",
+    "notifyMe": "Registrar Interés"
   }
 }

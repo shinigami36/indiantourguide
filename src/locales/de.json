@@ -208,6 +208,119 @@
         "Any tipping for guide & driver",
         "Photography & videography fees"
       ]
+    },
+    "turkishDelight9D": {
+      "title": "Türkisches Vergnügen Reisepaket",
+      "duration": "9 Tage / 8 Nächte",
+      "locations": "Istanbul, Ankara, Kappadokien, Pamukkale, Kusadasi",
+      "description": "Eine unvergessliche 9-tägige Reise durch die schönsten Reiseziele der Türkei — von den historischen Straßen Istanbuls und Ankaras bis zu den magischen Feenschornsteinen Kappadokiens.",
+      "itinerary": {
+        "day1": "Ankunft in Istanbul — Flughafentransfer, Hotel-Check-in im Taksim-Bereich, Abendessen im Restaurant",
+        "day2": "Istanbul → Ankara — Inlandsflug, Museum der anatolischen Zivilisationen, Ankara-Burg, Atatürk-Mausoleum",
+        "day3": "Ankara → Kappadokien — Salzsee, Karawanserei, OZKONAK-Untergrundstadt, Taubental",
+        "day4": "Ganztägig Kappadokien — Optionaler Heißluftballon, Avanos-Töpferei, Zelve-Freilichtmuseum, Uchisar-Burg",
+        "day5": "Kappadokien → Pamukkale — Mevlana-Museum in Konya, Abendankunft in Pamukkale",
+        "day6": "Pamukkale → Kusadasi — Hierapolis, Thermische Travertine, Tempel der Artemis, Ephesus, Haus der Jungfrau Maria",
+        "day7": "Kusadasi → Istanbul — 6-stündige Busfahrt, Hippodrom, Blaue Moschee, Hagia Sophia",
+        "day8": "Istanbul — Topkapi-Palast, Großer Basar, Bosporus-Dinnerkreuzfahrt",
+        "day9": "Abreise — Frühstück, Freizeit, Transfer zum Flughafen Istanbul"
+      },
+      "includes": [
+        "An- und Abreisetransfers mit A/C-Reisebus",
+        "Alle Transporte mit neuem A/C-Reisebus",
+        "8 Übernachtungen in den genannten Hotels",
+        "Inlandsflug Istanbul → Ankara (25 KG + 8 KG Kabine)",
+        "Alle Eintrittsgelder gemäß Reiseprogramm",
+        "Alle Mittagessen während der Reise",
+        "Alle Abendessen in Außenrestaurants/Hotels",
+        "Täglich eine Wasserflasche pro Person im Bus",
+        "Englischsprachiger professioneller Reiseführer",
+        "Bosporus-Dinnerkreuzfahrt mit Show & unbegrenzte lokale Getränke",
+        "Türkische Nacht in Kappadokien",
+        "Alle Parkgebühren und Autobahnmaut",
+        "Zimmersteuer"
+      ],
+      "excludes": [
+        "Alle persönlichen Ausgaben",
+        "Internationale Flugtickets",
+        "Heißluftballonfahrt (optional)",
+        "Alle Getränke zu den Mahlzeiten (außer Wasser)",
+        "Visakosten",
+        "Trinkgelder: 3 $/Person/Tag (Reiseführer) + 2 $/Person/Tag (Fahrer)"
+      ]
+    },
+    "istanbulCappadocia7D": {
+      "title": "Istanbul & Kappadokien Tour",
+      "duration": "7 Tage / 6 Nächte",
+      "locations": "Istanbul, Kappadokien",
+      "description": "Entdecken Sie die zwei ikonischsten Reiseziele der Türkei in 7 Tagen — Istanbuls legendäre Blaue Moschee, Hagia Sophia und Großer Basar, kombiniert mit Kappadokiens surrealen Feenschornsteinen.",
+      "itinerary": {
+        "day1": "Ankunft in Istanbul — Transfer mit privatem Minivan, Check-in, Abendessen",
+        "day2": "Altstadttour — Hippodrom, Blaue Moschee, Hagia Sophia, Topkapi-Palast, Großer Basar",
+        "day3": "Europäische Seite — Çamlıca-Hügel, Çamlıca-Turm, Gewürzmarkt, Türkischer Nachtklub",
+        "day4": "Istanbul → Kappadokien — Inlandsflug, OZKONAK-Untergrundstadt, Taubental",
+        "day5": "Ganztägig Kappadokien — Pashabag & Zelve, Avanos-Töpferei, Uchisar-Burg",
+        "day6": "Kappadokien → Istanbul — Inlandsflug zurück, Freizeit, Abendessen im indischen Restaurant",
+        "day7": "Abreise — Frühstück, Transfer zum Flughafen"
+      },
+      "includes": [
+        "4 Übernachtungen in Istanbul (Halbpension)",
+        "2 Übernachtungen in Kappadokien Höhlenhotel (Halbpension)",
+        "Ankunftstransfer mit privatem Minivan",
+        "Alle Touren mit privatem Minivan",
+        "Englischsprachiger Reiseführer",
+        "Alle Abendessen im Reiseprogramm",
+        "Alle Eintrittsgelder",
+        "Türkischer Nachtklub in Istanbul mit unbegrenzten Getränken",
+        "Hin- und Rückflug Istanbul ↔ Kappadokien",
+        "Alle Parkgebühren und Maut",
+        "Alle Zimmersteuer"
+      ],
+      "excludes": [
+        "Alle persönlichen Ausgaben",
+        "Internationale Flüge",
+        "Alle Mittagessen",
+        "Türkischer Nachtklub in Kappadokien (optional)",
+        "Heißluftballon (optional)",
+        "Visakosten",
+        "Trinkgelder"
+      ]
+    },
+    "sevenChurches8D": {
+      "title": "Die Sieben Gemeinden der Offenbarung",
+      "duration": "8 Tage / 7 Nächte",
+      "locations": "Istanbul, Izmir, Pergamon, Pamukkale, Kusadasi",
+      "description": "Eine tiefgreifende spirituelle Reise durch die sieben Gemeinden der Offenbarung — auf den Spuren des Apostels Johannes von Istanbul bis Ephesus, Smyrna, Pergamon und weiteren Städten.",
+      "itinerary": {
+        "day1": "Istanbul — Ankunft, Transfer zum Hotel 4★/5★, Abendessen im türkischen Restaurant",
+        "day2": "Klassisches Istanbul — Hippodrom, Blaue Moschee, Hagia Sophia, Topkapi, Großer Basar, Bosporus-Kreuzfahrt",
+        "day3": "Smyrna & Pergamon — Inlandsflug nach Izmir, Smyrna, Pergamon",
+        "day4": "Thyatira, Sardes & Philadelphia — Drei Kirchen im Landesinneren, Weiterfahrt nach Pamukkale",
+        "day5": "Pamukkale & Laodizea — Thermische Travertine, Hierapolis, Laodizea, Transfer nach Kusadasi",
+        "day6": "Ephesus & Kusadasi — Ephesus, Haus der Jungfrau Maria, Johannesbasilika, Freizeit",
+        "day7": "Izmir-Tagestour — Jüdisches Viertel, Polykarp-Kirche, Alsancak-Viertel",
+        "day8": "Abreise — Freizeit, Transfer zum Flughafen Izmir, Inlandsflug nach Istanbul"
+      },
+      "includes": [
+        "Englischsprachiger professioneller Reiseführer",
+        "Alle Transporte mit A/C-Reisebussen",
+        "Alle Eintrittsgelder",
+        "Mittag- und Abendessen in Istanbul",
+        "Bosporus-Kreuzfahrt (2 Std.) mit Privatboot",
+        "Hin- und Rückflug Istanbul ↔ Izmir",
+        "2 Übernachtungen in Istanbul",
+        "2 Übernachtungen in Izmir (Halbpension)",
+        "1 Übernachtung in Pamukkale (5★ Thermalhotel)",
+        "2 Übernachtungen in Kusadasi (5★, Halbpension)",
+        "Alle Mittagessen nach Istanbul",
+        "Alle Parkgebühren und Maut"
+      ],
+      "excludes": [
+        "Visagebühren",
+        "Internationale Flugtickets",
+        "Persönliche Ausgaben",
+        "Trinkgelder"
+      ]
     }
   },
   "contact": {
@@ -354,5 +467,13 @@
       "beaches": "Beaches & Islands",
       "wildlife": "Wildlife"
     }
+  },
+  "internationalTours": {
+    "title": "Internationale Touren",
+    "subtitle": "Handgefertigte Reisen zu den faszinierendsten Reisezielen der Welt",
+    "availableNow": "Jetzt verfügbar",
+    "comingSoon": "Demnächst",
+    "comingSoonNote": "Wir gestalten unvergessliche Erlebnisse an diesen Reisezielen. Registrieren Sie Ihr Interesse und erfahren Sie es als Erster.",
+    "notifyMe": "Interesse registrieren"
   }
 }
