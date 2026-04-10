@@ -3,10 +3,14 @@ import { useTranslation } from 'react-i18next';
 import './Hero.css';
 
 const DESTINATIONS = [
-  'Golden Triangle (Delhi · Agra · Jaipur)',
-  'Delhi', 'Agra & Taj Mahal', 'Jaipur', 'Varanasi',
-  'Mumbai', 'Kerala', 'Rajasthan', 'Goa', 'Himachal Pradesh',
-  'Ladakh', 'Andaman Islands', 'Mysore & Coorg', 'Kolkata',
+  'Golden Triangle Tour',
+  'Full Day Agra Tour',
+  'Jaipur Day Tour',
+  'Half Day Old Delhi Tour',
+  'Half Day New Delhi Tour',
+  'Full Day New & Old Delhi Tour',
+  'Golden Triangle with Mumbai',
+  'Golden Triangle Tour with Varanasi',
 ];
 
 const DAYS_OPTIONS = [
