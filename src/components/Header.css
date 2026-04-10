@@ -42,8 +42,8 @@
 .brand:hover { opacity: 0.8; }
 
 .brand-logo {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   border-radius: 8px;
   display: block;
   object-fit: cover;
@@ -56,11 +56,12 @@
 }
 
 .brand-name {
-  font-size: 0.9rem;
+  font-size: 1.15rem;
   font-weight: 800;
   line-height: 1.1;
   color: var(--clr-text-1);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
 }
 
 .brand-name-primary { color: var(--clr-text-1); }
@@ -429,8 +430,8 @@
 
   .header-right { gap: 0.5rem; margin-left: auto; }
   .brand { gap: 0.5rem; flex-shrink: 1; min-width: 0; }
-  .brand-logo { width: 30px; height: 30px; flex-shrink: 0; }
-  .brand-name { font-size: 0.9rem; }
+  .brand-logo { width: 34px; height: 34px; flex-shrink: 0; }
+  .brand-name { font-size: 1rem; }
   .brand-tag  { font-size: 0.58rem; }
 }
 
