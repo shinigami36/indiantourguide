@@ -10,8 +10,8 @@ class ErrorBoundary extends Component {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, info) {
-    console.error('[ErrorBoundary] Caught error:', error, info);
+  componentDidCatch(error) {
+    console.error('[ErrorBoundary] Application error:', error?.message || 'Unknown error');
   }
 
   render() {
@@ -56,7 +56,7 @@ class ErrorBoundary extends Component {
               Refresh Page
             </button>
             <a
-              href="mailto:indiatourguide1@gmail.com"
+              href={`mailto:${import.meta.env.VITE_SUPPORT_EMAIL || 'indiatourguide1@gmail.com'}`}
               style={{
                 padding: '0.65rem 1.5rem',
                 background: 'transparent',

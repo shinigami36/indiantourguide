@@ -23,6 +23,16 @@ const resolveSecret = (plainValue, encryptedValue, secretName) => {
     return '';
   }
 };
+// ─── Global error handlers ────────────────────────────────────────────────────
+process.on('unhandledRejection', (reason) => {
+  console.error('[critical] Unhandled promise rejection:', reason instanceof Error ? reason.message : reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('[critical] Uncaught exception:', err.message);
+  process.exit(1);
+});
+
 app.disable('x-powered-by');
 app.set('trust proxy', 1);
 
@@ -34,6 +44,29 @@ const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5174')
 // ─── Middleware ───────────────────────────────────────────────────────────────
 app.use(helmet({
   referrerPolicy: { policy: 'no-referrer' },
+  hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
+  frameguard: { action: 'deny' },
+  noSniff: true,
+  xssFilter: true,
+  hidePoweredBy: true,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'"],
+      imgSrc: ["'self'", 'https:', 'data:'],
+      connectSrc: [
+        "'self'",
+        'https://maps.googleapis.com',
+        'https://graph.facebook.com',
+      ],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      frameSrc: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+    },
+  },
 }));
 app.use(express.json({ limit: '50kb' }));
 app.use(express.urlencoded({ extended: true, limit: '50kb' }));
@@ -135,8 +168,8 @@ const Enquiry = mongoose.model('Enquiry', enquirySchema);
 
 // ─── Resend email client ──────────────────────────────────────────────────────
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-console.log('[startup] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY);
-console.log('[startup] NOTIFY_EMAIL:', process.env.NOTIFY_EMAIL || '(not set)');
+console.log('[startup] Email notifications:', resend ? 'configured' : 'not configured');
+console.log('[startup] Notify email:', process.env.NOTIFY_EMAIL ? 'configured' : 'not configured');
 
 // ─── Validation ──────────────────────────────────────────────────────────────
 function validateEnquiry({ name, email, phone, startDate, endDate, hotelCategory, noHotelRequired }) {
@@ -365,8 +398,8 @@ app.post('/api/enquiry', enquiryLimiter, (req, res) => {
     endDate: sanitizeText(endDate, 20),
     noHotelRequired: wantsNoHotel,
     hotelCategory: wantsNoHotel ? '' : sanitizeText(hotelCategory, 50),
-    adults: Number(adults) || 1,
-    children: Number(children) || 0,
+    adults: Math.max(1, Math.min(50, parseInt(adults, 10) || 1)),
+    children: Math.max(0, Math.min(50, parseInt(children, 10) || 0)),
     message: sanitizeText(message, 2000),
     tourName: sanitizeText(tourName, 150),
     tourPackages: Array.isArray(tourPackages) ? tourPackages.map((item) => sanitizeText(item, 150)).filter(Boolean) : [],
@@ -386,7 +419,7 @@ app.post('/api/enquiry', enquiryLimiter, (req, res) => {
   }
 
   // Fire email notification in background (non-blocking)
-  console.log('[enquiry] sending email to:', data.email, '| resend client:', !!resend);
+  console.log('[enquiry] sending email notification | resend client:', !!resend);
   sendEmail(data)
     .then(() => console.log('[enquiry] email sent OK'))
     .catch(err => console.error('[enquiry] Email failed:', err.message));
@@ -396,7 +429,8 @@ app.post('/api/enquiry', enquiryLimiter, (req, res) => {
 // ── Google Reviews — 24-hour server-side cache ────────────────────────────────
 const reviewsLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  max: 30,
+  max: 10,
+  skipSuccessfulRequests: false,
   message: { error: 'Too many review requests. Please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,
@@ -447,7 +481,14 @@ app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
     const fields = 'name,rating,user_ratings_total,reviews,url';
     const endpoint = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=${encodeURIComponent(fields)}&reviews_sort=newest&key=${encodeURIComponent(placesApiKey)}`;
 
-    const response = await fetch(endpoint);
+    const fetchController = new AbortController();
+    const fetchTimeout = setTimeout(() => fetchController.abort(), 10000);
+    let response;
+    try {
+      response = await fetch(endpoint, { signal: fetchController.signal });
+    } finally {
+      clearTimeout(fetchTimeout);
+    }
     if (!response.ok) {
       if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
       return res.status(502).json({ success: false, error: 'Failed to reach Google Places API.' });
@@ -456,7 +497,7 @@ app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
     const payload = await response.json();
     if (payload?.status !== 'OK' || !payload?.result) {
       if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
-      return res.status(502).json({ success: false, error: `Google API error: ${payload?.status}` });
+      return res.status(502).json({ success: false, error: 'Reviews service temporarily unavailable.' });
     }
 
     const place = payload.result;
@@ -484,7 +525,7 @@ app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
 });
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', globalLimiter, (req, res) => {
   const dbState = mongoose.connection.readyState;
   const dbStatus = ['disconnected', 'connected', 'connecting', 'disconnecting'][dbState] || 'unknown';
   const emailConfigured = !!process.env.RESEND_API_KEY;
