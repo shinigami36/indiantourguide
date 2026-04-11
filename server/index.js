@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const axios = require('axios');
 const rateLimit = require('express-rate-limit');
 const { Resend } = require('resend');
+const mongoose = require('mongoose');
 const { decryptSecret } = require('../tools/decrypt-secret');
 
 const app = express();
@@ -78,6 +79,35 @@ const escapeHtml = (value) => String(value)
   .replace(/'/g, '&#39;');
 
 const sanitizeBoolean = (value) => value === true || value === 'true' || value === 1 || value === '1';
+
+// ─── MongoDB ──────────────────────────────────────────────────────────────────
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('[startup] Connected to MongoDB'))
+    .catch((err) => console.error('[startup] MongoDB connection error:', err.message));
+} else {
+  console.log('[startup] MONGODB_URI not set — enquiries will not be persisted');
+}
+
+const enquirySchema = new mongoose.Schema({
+  name: String,
+  email: String,
+  phone: String,
+  country: String,
+  startDate: String,
+  endDate: String,
+  noHotelRequired: { type: Boolean, default: false },
+  hotelCategory: String,
+  adults: { type: Number, default: 1 },
+  children: { type: Number, default: 0 },
+  tourPackages: [String],
+  tourName: String,
+  message: String,
+  createdAt: { type: Date, default: Date.now },
+  status: { type: String, default: 'new' },
+});
+
+const Enquiry = mongoose.model('Enquiry', enquirySchema);
 
 // ─── Resend email client ──────────────────────────────────────────────────────
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
@@ -323,6 +353,13 @@ app.post('/api/enquiry', enquiryLimiter, (req, res) => {
     success: true,
     message: 'Thank you for your enquiry. Our travel expert will contact you shortly.',
   });
+
+  // Save to MongoDB in background
+  if (mongoose.connection.readyState === 1) {
+    new Enquiry(data).save()
+      .then(() => console.log('[enquiry] saved to MongoDB'))
+      .catch(err => console.error('[enquiry] MongoDB save failed:', err.message));
+  }
 
   // Fire email notification in background (non-blocking)
   console.log('[enquiry] sending email to:', data.email, '| resend client:', !!resend);
