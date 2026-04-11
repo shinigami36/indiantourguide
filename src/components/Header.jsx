@@ -68,6 +68,11 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
           aria-label="India Tours Guide Home"
           onClick={() => { onNavigate('home'); closeMenu(); }}
         >
+          <img
+            className="brand-logo"
+            src="/assets/images/icons/Screenshot%202026-02-19%20at%208.32.35%E2%80%AFPM.png"
+            alt="India Tours Guide logo"
+          />
           <span className="brand-copy">
             <span className="brand-name brand-name--script">India Tours Guide</span>
             <small className="brand-tag">{t('header.brandTag', { defaultValue: 'Authentic India & World Travel' })}</small>
