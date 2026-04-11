@@ -22,7 +22,7 @@ const Footer = ({ onNavigate }) => {
                 height="40"
               />
               <div>
-                <span>India Tours Guide</span>
+                <span className="footer-brand-name">India Tours Guide</span>
                 <small className="footer-brand-tag">Authentic India &amp; World Travel</small>
               </div>
             </button>

@@ -74,7 +74,7 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
             alt="India Tours Guide logo"
           />
           <span className="brand-copy">
-            <span className="brand-name">India Tours Guide</span>
+            <span className="brand-name brand-name--script">India Tours Guide</span>
             <small className="brand-tag">{t('header.brandTag', { defaultValue: 'Authentic India & World Travel' })}</small>
           </span>
         </button>

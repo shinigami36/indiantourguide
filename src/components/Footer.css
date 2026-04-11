@@ -50,6 +50,15 @@
   height: 32px;
 }
 
+.footer-brand-name {
+  display: block;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--clr-primary);
+  line-height: 1.1;
+}
+
 .footer-brand-tag {
   display: block;
   font-size: 0.6rem;

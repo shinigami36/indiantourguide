@@ -66,6 +66,15 @@
   white-space: nowrap;
 }
 
+.brand-name--script {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--clr-primary);
+  letter-spacing: 0;
+}
+
 .brand-name-accent { color: var(--clr-primary); }
 
 .brand-name-primary { color: var(--clr-text-1); }
@@ -527,6 +536,7 @@
   .brand { gap: 0.5rem; flex-shrink: 1; min-width: 0; }
   .brand-logo { width: 34px; height: 34px; flex-shrink: 0; }
   .brand-name { font-size: 0.82rem; }
+  .brand-name--script { font-size: 1.1rem; }
   .brand-tag  { font-size: 0.58rem; }
 }
 
