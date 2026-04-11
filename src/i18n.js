@@ -24,18 +24,21 @@ const resources = {
   ru: { translation: ru },
 };
 
+const SUPPORTED_LANGUAGES = ['en', 'es', 'de', 'fr', 'ja', 'zh', 'ko', 'ar', 'ru'];
+
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources,
     fallbackLng: 'en',
-    supportedLngs: ['en', 'es', 'de', 'fr', 'ja', 'zh', 'ko', 'ar', 'ru'],
-    nonExplicitSupportedLngs: true,
+    supportedLngs: SUPPORTED_LANGUAGES,
+    nonExplicitSupportedLngs: false,
     debug: false,
 
     interpolation: {
-      escapeValue: false,
+      // React already escapes JSX — but enable for safety in non-JSX usage
+      escapeValue: true,
     },
 
     detection: {
@@ -43,5 +46,13 @@ i18n
       caches: ['localStorage'],
     },
   });
+
+// Validate language from localStorage and reset to English if tampered
+i18n.on('languageChanged', (lng) => {
+  if (!SUPPORTED_LANGUAGES.includes(lng)) {
+    try { localStorage.removeItem('i18nextLng'); } catch { /* ignore */ }
+    i18n.changeLanguage('en');
+  }
+});
 
 export default i18n;

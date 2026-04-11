@@ -39,6 +39,10 @@ app.set('trust proxy', 1);
 const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5174')
   .split(',')
   .map((origin) => origin.trim())
+  .filter(Boolean)
+  .map((origin) => {
+    try { return new URL(origin).origin; } catch { return null; }
+  })
   .filter(Boolean);
 
 // ─── Middleware ───────────────────────────────────────────────────────────────
@@ -72,9 +76,12 @@ app.use(express.json({ limit: '50kb' }));
 app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      return callback(null, true);
+    // Allow requests with no origin only in development (curl, Postman)
+    if (!origin) {
+      if (process.env.NODE_ENV !== 'production') return callback(null, true);
+      return callback(new Error('Origin header required'));
     }
+    if (allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error('Not allowed by CORS'));
   },
   methods: ['GET', 'POST', 'OPTIONS'],
@@ -84,7 +91,7 @@ app.use(cors({
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 120,
-  standardHeaders: true,
+  standardHeaders: false,
   legacyHeaders: false,
   message: { error: 'Too many requests. Please try again later.' },
 });
@@ -95,7 +102,7 @@ const enquiryLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
   message: { error: 'Too many enquiries submitted. Please try again later.' },
-  standardHeaders: true,
+  standardHeaders: false,
   legacyHeaders: false,
 });
 
@@ -113,6 +120,19 @@ const escapeHtml = (value) => String(value)
 
 const sanitizeBoolean = (value) => value === true || value === 'true' || value === 1 || value === '1';
 
+// Strip CRLF characters to prevent header/message injection
+const stripCRLF = (value) => String(value).replace(/[\r\n]/g, ' ');
+
+// Validate Google Place ID format (alphanumeric + underscore + dash, 20-50 chars)
+const isValidPlaceId = (id) => typeof id === 'string' && /^[a-zA-Z0-9_-]{20,50}$/.test(id);
+
+// Whitelist of allowed enquiry fields
+const ALLOWED_ENQUIRY_FIELDS = new Set([
+  'name', 'email', 'phone', 'country', 'startDate', 'endDate',
+  'noHotelRequired', 'hotelCategory', 'adults', 'children',
+  'message', 'tourName', 'tourPackages',
+]);
+
 // ─── MongoDB with reconnection ────────────────────────────────────────────────
 const MONGO_URI = process.env.MONGODB_URI;
 
@@ -129,7 +149,7 @@ const connectMongo = async (attempt = 1) => {
     console.log('[startup] Connected to MongoDB');
   } catch (err) {
     const delay = Math.min(1000 * 2 ** attempt, 30000); // exponential backoff, max 30s
-    console.error(`[startup] MongoDB connection error (attempt ${attempt}): ${err.message}`);
+    console.error(`[startup] MongoDB connection error (attempt ${attempt}): ${err.name || 'Error'}`);
     console.log(`[startup] Retrying MongoDB in ${delay / 1000}s...`);
     setTimeout(() => connectMongo(attempt + 1), delay);
   }
@@ -147,22 +167,22 @@ mongoose.connection.on('reconnected', () => {
 connectMongo();
 
 const enquirySchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  phone: String,
-  country: String,
-  startDate: String,
-  endDate: String,
+  name: { type: String, required: true, maxlength: 100 },
+  email: { type: String, required: true, maxlength: 200 },
+  phone: { type: String, required: true, maxlength: 30 },
+  country: { type: String, maxlength: 80 },
+  startDate: { type: String, maxlength: 20 },
+  endDate: { type: String, maxlength: 20 },
   noHotelRequired: { type: Boolean, default: false },
-  hotelCategory: String,
-  adults: { type: Number, default: 1 },
-  children: { type: Number, default: 0 },
-  tourPackages: [String],
-  tourName: String,
-  message: String,
+  hotelCategory: { type: String, maxlength: 50 },
+  adults: { type: Number, default: 1, min: 1, max: 50 },
+  children: { type: Number, default: 0, min: 0, max: 50 },
+  tourPackages: [{ type: String, maxlength: 150 }],
+  tourName: { type: String, maxlength: 150 },
+  message: { type: String, maxlength: 2000 },
   createdAt: { type: Date, default: Date.now },
-  status: { type: String, default: 'new' },
-});
+  status: { type: String, default: 'new', enum: ['new', 'in-progress', 'contacted', 'closed'] },
+}, { strict: true });
 
 const Enquiry = mongoose.model('Enquiry', enquirySchema);
 
@@ -334,16 +354,16 @@ async function sendWhatsApp({ name, email, phone, country, startDate, endDate, n
 
   const body =
     `🌍 *New Travel Enquiry*\n\n` +
-    (tourName ? `*Tour Package:* ${tourName}\n` : '') +
-    `*Name:* ${name}\n` +
-    `*Email:* ${email}\n` +
-    (country ? `*Country:* ${country}\n` : '') +
-    `*Phone/WhatsApp:* ${phone}\n` +
-    `*Travel Dates:* ${formatTravelDates(startDate, endDate)}\n` +
-    `*Hotel Preference:* ${formatHotelPreference(hotelCategory, noHotelRequired)}\n` +
+    (tourName ? `*Tour Package:* ${stripCRLF(tourName)}\n` : '') +
+    `*Name:* ${stripCRLF(name)}\n` +
+    `*Email:* ${stripCRLF(email)}\n` +
+    (country ? `*Country:* ${stripCRLF(country)}\n` : '') +
+    `*Phone/WhatsApp:* ${stripCRLF(phone)}\n` +
+    `*Travel Dates:* ${stripCRLF(formatTravelDates(startDate, endDate))}\n` +
+    `*Hotel Preference:* ${stripCRLF(formatHotelPreference(hotelCategory, noHotelRequired))}\n` +
     `*Adults:* ${adults}\n` +
     `*Children:* ${children}\n` +
-    `*Message:* ${message || 'No message provided'}`;
+    `*Message:* ${stripCRLF(message || 'No message provided')}`;
 
   await axios.post(
     `https://graph.facebook.com/v18.0/${WHATSAPP_PHONE_NUMBER_ID}/messages`,
@@ -365,6 +385,12 @@ async function sendWhatsApp({ name, email, phone, country, startDate, endDate, n
 
 // ─── Route ────────────────────────────────────────────────────────────────────
 app.post('/api/enquiry', enquiryLimiter, (req, res) => {
+  // Reject unexpected fields (mass assignment protection)
+  const unexpectedFields = Object.keys(req.body).filter(f => !ALLOWED_ENQUIRY_FIELDS.has(f));
+  if (unexpectedFields.length > 0) {
+    return res.status(400).json({ errors: { general: 'Unexpected fields in request.' } });
+  }
+
   const {
     name,
     email,
@@ -432,7 +458,7 @@ const reviewsLimiter = rateLimit({
   max: 10,
   skipSuccessfulRequests: false,
   message: { error: 'Too many review requests. Please try again later.' },
-  standardHeaders: true,
+  standardHeaders: false,
   legacyHeaders: false,
 });
 
@@ -468,13 +494,13 @@ app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
     process.env.GOOGLE_PLACES_API_KEY_ENC,
     'GOOGLE_PLACES_API_KEY_ENC'
   );
-  const placeId = (process.env.GOOGLE_PLACE_ID || '').trim().slice(0, 200);
+  const placeId = (process.env.GOOGLE_PLACE_ID || '').trim();
 
   if (!placesApiKey) {
     return res.status(503).json({ success: false, error: 'Google reviews not configured.' });
   }
-  if (!placeId) {
-    return res.status(503).json({ success: false, error: 'GOOGLE_PLACE_ID not configured.' });
+  if (!placeId || !isValidPlaceId(placeId)) {
+    return res.status(503).json({ success: false, error: 'Google reviews not configured.' });
   }
 
   try {
@@ -518,7 +544,7 @@ app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
     reviewsCacheAt = Date.now();
     return res.json({ success: true, data });
   } catch (err) {
-    console.error('Google reviews fetch error:', err);
+    console.error('Google reviews fetch error:', err?.name || 'Error');
     if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
     return res.status(500).json({ success: false, error: 'Failed to fetch Google reviews.' });
   }

@@ -164,8 +164,9 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    if (!validateForm() || isSubmitting || submitted) return; // prevent double-submit
     setIsSubmitting(true);
+    let mounted = true;
     try {
       const { res, data } = await postJsonWithRetry('/api/enquiry', {
         ...formData,
@@ -174,16 +175,18 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
         tourCategory,
       });
 
+      if (!mounted) return; // component unmounted mid-request, bail out
       if (res.ok && data.success) {
         setSubmitted(true);
-        autoCloseTimerRef.current = setTimeout(() => { onClose(); }, 3000);
+        autoCloseTimerRef.current = setTimeout(() => { if (mounted) onClose(); }, 3000);
       } else {
         setErrors(data.errors || { general: data.error || t('common.somethingWentWrong', { defaultValue: 'Something went wrong' }) });
       }
     } catch {
-      setErrors({ general: t('common.serverConnectionErrorShort', { defaultValue: 'Could not connect to server. Please try again.' }) });
+      if (mounted) setErrors({ general: t('common.serverConnectionErrorShort', { defaultValue: 'Could not connect to server. Please try again.' }) });
     } finally {
-      setIsSubmitting(false);
+      if (mounted) setIsSubmitting(false);
+      mounted = false;
     }
   };
 
