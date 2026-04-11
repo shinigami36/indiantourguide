@@ -41,14 +41,6 @@
 
 .brand:hover { opacity: 0.85; }
 
-.brand-logo {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display: block;
-  object-fit: cover;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-}
 
 .brand-copy {
   display: flex;
@@ -534,7 +526,6 @@
 
   .header-right { gap: 0.5rem; margin-left: auto; }
   .brand { gap: 0.5rem; flex-shrink: 1; min-width: 0; }
-  .brand-logo { width: 34px; height: 34px; flex-shrink: 0; }
   .brand-name { font-size: 0.82rem; }
   .brand-name--script { font-size: 1.1rem; }
   .brand-tag  { font-size: 0.58rem; }

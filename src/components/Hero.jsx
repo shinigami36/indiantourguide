@@ -56,6 +56,56 @@ const Hero = ({ onOpenEnquiry, onGetEstimate }) => {
         aria-hidden="true"
       />
       <div className="hero-overlay"></div>
+
+      {/* Questia Riga-style SVG route path overlay */}
+      <svg
+        className="hero-route-svg"
+        viewBox="0 0 1200 700"
+        preserveAspectRatio="xMidYMid slice"
+        aria-hidden="true"
+      >
+        {/* Curved travel route path */}
+        <path
+          className="hero-route-path"
+          d="M -50 600 C 150 550, 250 480, 380 420 C 480 370, 520 300, 600 260 C 680 220, 750 200, 860 180 C 940 165, 1020 155, 1150 130"
+          fill="none"
+          stroke="rgba(255,255,255,0.35)"
+          strokeWidth="2.5"
+          strokeDasharray="8 6"
+        />
+        {/* Start pin — bottom left */}
+        <g className="hero-pin hero-pin--start" transform="translate(378,418)">
+          <circle r="18" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.6)" strokeWidth="1.5"/>
+          <circle r="7" fill="#e87843"/>
+        </g>
+        {/* Mid pin */}
+        <g className="hero-pin hero-pin--mid" transform="translate(600,258)">
+          <circle r="14" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.5)" strokeWidth="1.5"/>
+          <circle r="5" fill="rgba(255,255,255,0.9)"/>
+        </g>
+        {/* End pin — top right */}
+        <g className="hero-pin hero-pin--end" transform="translate(858,178)">
+          <circle r="22" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.7)" strokeWidth="2"/>
+          {/* Map pin icon */}
+          <path d="M0 -9 C-4 -9,-7 -6,-7 -2 C-7 3,0 9,0 9 C0 9,7 3,7 -2 C7 -6,4 -9,0 -9 Z" fill="#e87843"/>
+          <circle cx="0" cy="-2" r="2.5" fill="white"/>
+        </g>
+
+        {/* Destination label bubbles */}
+        <g className="hero-route-label hero-route-label--1" transform="translate(320,395)">
+          <rect x="0" y="0" width="80" height="22" rx="11" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" strokeWidth="1"/>
+          <text x="40" y="15" textAnchor="middle" fill="white" fontSize="9" fontWeight="600" fontFamily="sans-serif">Agra</text>
+        </g>
+        <g className="hero-route-label hero-route-label--2" transform="translate(540,230)">
+          <rect x="0" y="0" width="80" height="22" rx="11" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" strokeWidth="1"/>
+          <text x="40" y="15" textAnchor="middle" fill="white" fontSize="9" fontWeight="600" fontFamily="sans-serif">Jaipur</text>
+        </g>
+        <g className="hero-route-label hero-route-label--3" transform="translate(870,148)">
+          <rect x="0" y="0" width="90" height="22" rx="11" fill="rgba(232,120,67,0.85)" stroke="rgba(232,120,67,0.4)" strokeWidth="1"/>
+          <text x="45" y="15" textAnchor="middle" fill="white" fontSize="9" fontWeight="700" fontFamily="sans-serif">New Delhi</text>
+        </g>
+      </svg>
+
       <div className="container hero-inner">
         <div className="hero-content">
           <p className="hero-subtitle">{t('hero.subtitle')}</p>
