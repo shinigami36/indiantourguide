@@ -76,17 +76,26 @@ app.use(express.json({ limit: '50kb' }));
 app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin only in development (curl, Postman)
-    if (!origin) {
-      if (process.env.NODE_ENV !== 'production') return callback(null, true);
-      return callback(new Error('Origin header required'));
-    }
+    // Allow no-origin requests (server-to-server, health checks, curl)
+    if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
     return callback(new Error('Not allowed by CORS'));
   },
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
+// Enforce Origin header only on state-changing POST requests from browsers
+app.use((req, res, next) => {
+  if (req.method === 'POST') {
+    const origin = req.get('origin');
+    // If request has an origin, it must be in the allowlist
+    if (origin && !allowedOrigins.includes(origin)) {
+      return res.status(403).json({ error: 'Origin not allowed.' });
+    }
+  }
+  return next();
+});
 
 const globalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
