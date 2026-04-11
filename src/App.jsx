@@ -9,6 +9,7 @@ import Reviews from './components/Reviews';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import EnquiryModal from './components/EnquiryModal';
+import OfflineBanner from './components/OfflineBanner';
 import { warmBackend } from './utils/api';
 import './App.css';
 
@@ -62,6 +63,7 @@ function App() {
 
   return (
     <div className="App">
+      <OfflineBanner />
       <Header currentPage={currentPage} onNavigate={setCurrentPage} onOpenEnquiry={() => setShowEnquiryModal(true)} />
       <main>
         {currentPage === 'attractions' ? (

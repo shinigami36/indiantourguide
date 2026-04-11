@@ -80,14 +80,38 @@ const escapeHtml = (value) => String(value)
 
 const sanitizeBoolean = (value) => value === true || value === 'true' || value === 1 || value === '1';
 
-// ─── MongoDB ──────────────────────────────────────────────────────────────────
-if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('[startup] Connected to MongoDB'))
-    .catch((err) => console.error('[startup] MongoDB connection error:', err.message));
-} else {
-  console.log('[startup] MONGODB_URI not set — enquiries will not be persisted');
-}
+// ─── MongoDB with reconnection ────────────────────────────────────────────────
+const MONGO_URI = process.env.MONGODB_URI;
+
+const connectMongo = async (attempt = 1) => {
+  if (!MONGO_URI) {
+    console.log('[startup] MONGODB_URI not set — enquiries will not be persisted');
+    return;
+  }
+  try {
+    await mongoose.connect(MONGO_URI, {
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+    });
+    console.log('[startup] Connected to MongoDB');
+  } catch (err) {
+    const delay = Math.min(1000 * 2 ** attempt, 30000); // exponential backoff, max 30s
+    console.error(`[startup] MongoDB connection error (attempt ${attempt}): ${err.message}`);
+    console.log(`[startup] Retrying MongoDB in ${delay / 1000}s...`);
+    setTimeout(() => connectMongo(attempt + 1), delay);
+  }
+};
+
+mongoose.connection.on('disconnected', () => {
+  console.warn('[mongo] Disconnected — attempting reconnect...');
+  setTimeout(() => connectMongo(), 3000);
+});
+
+mongoose.connection.on('reconnected', () => {
+  console.log('[mongo] Reconnected to MongoDB');
+});
+
+connectMongo();
 
 const enquirySchema = new mongoose.Schema({
   name: String,
@@ -460,14 +484,52 @@ app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
 });
 
 // Health check
-app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/api/health', (req, res) => {
+  const dbState = mongoose.connection.readyState;
+  const dbStatus = ['disconnected', 'connected', 'connecting', 'disconnecting'][dbState] || 'unknown';
+  const emailConfigured = !!process.env.RESEND_API_KEY;
+  const googleConfigured = !!(process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACE_ID);
 
-app.listen(PORT, '0.0.0.0', () => {
+  const healthy = dbState === 1;
+  res.status(healthy ? 200 : 503).json({
+    status: healthy ? 'ok' : 'degraded',
+    db: dbStatus,
+    email: emailConfigured ? 'configured' : 'not configured',
+    googleReviews: googleConfigured ? 'configured' : 'not configured',
+    uptime: Math.floor(process.uptime()),
+  });
+});
+
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`indiatourguide API running on http://localhost:${PORT}`);
 
   // Ping self every 14 minutes to prevent Render free tier spin-down
   const SELF_URL = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
-  setInterval(() => {
+  const pingInterval = setInterval(() => {
     axios.get(`${SELF_URL}/api/health`).catch(() => {});
   }, 14 * 60 * 1000);
+
+  // Graceful shutdown on SIGTERM (Render sends this before stopping)
+  const shutdown = async (signal) => {
+    console.log(`[shutdown] ${signal} received — shutting down gracefully`);
+    clearInterval(pingInterval);
+    server.close(async () => {
+      console.log('[shutdown] HTTP server closed');
+      try {
+        await mongoose.connection.close();
+        console.log('[shutdown] MongoDB connection closed');
+      } catch (err) {
+        console.error('[shutdown] Error closing MongoDB:', err.message);
+      }
+      process.exit(0);
+    });
+    // Force exit after 10s if graceful shutdown hangs
+    setTimeout(() => {
+      console.error('[shutdown] Forced exit after timeout');
+      process.exit(1);
+    }, 10000);
+  };
+
+  process.on('SIGTERM', () => shutdown('SIGTERM'));
+  process.on('SIGINT', () => shutdown('SIGINT'));
 });
