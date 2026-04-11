@@ -79,17 +79,17 @@ app.use(cors({
     // Allow no-origin requests (server-to-server, health checks, curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error('Not allowed by CORS'));
+    // Silently deny — do NOT throw an Error (avoids red Render log noise)
+    return callback(null, false);
   },
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-// Enforce Origin header only on state-changing POST requests from browsers
+// Block state-changing requests from non-allowlisted browser origins
 app.use((req, res, next) => {
   if (req.method === 'POST') {
     const origin = req.get('origin');
-    // If request has an origin, it must be in the allowlist
     if (origin && !allowedOrigins.includes(origin)) {
       return res.status(403).json({ error: 'Origin not allowed.' });
     }
@@ -158,8 +158,11 @@ const connectMongo = async (attempt = 1) => {
     console.log('[startup] Connected to MongoDB');
   } catch (err) {
     const delay = Math.min(1000 * 2 ** attempt, 30000); // exponential backoff, max 30s
-    console.error(`[startup] MongoDB connection error (attempt ${attempt}): ${err.name || 'Error'}`);
-    console.log(`[startup] Retrying MongoDB in ${delay / 1000}s...`);
+    const hint = err.message && err.message.includes('whitelist')
+      ? ' (check Atlas IP whitelist — add 0.0.0.0/0)'
+      : '';
+    console.error(`[mongo] Connection failed (attempt ${attempt}): ${err.name || 'Error'}${hint}`);
+    console.log(`[mongo] Retrying in ${delay / 1000}s...`);
     setTimeout(() => connectMongo(attempt + 1), delay);
   }
 };
