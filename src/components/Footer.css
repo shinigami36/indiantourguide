@@ -46,17 +46,17 @@
 .footer-brand .logo img {
   display: block;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 58px;
+  height: 58px;
   object-fit: contain;
 }
 
 .footer-brand-name {
   display: block;
   font-family: 'Dancing Script', cursive;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 700;
-  color: var(--clr-primary);
+  color: #1a1a2e;
   line-height: 1.1;
 }
 
