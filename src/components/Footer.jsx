@@ -16,7 +16,7 @@ const Footer = ({ onNavigate }) => {
           <div className="footer-brand">
             <button type="button" className="logo" onClick={() => onNavigate('home')}>
               <img
-                src="/assets/images/icons/Screenshot%202026-02-19%20at%208.32.35%E2%80%AFPM.png"
+                src="/assets/images/logo.png"
                 alt="India Tours Guide Logo"
                 width="40"
                 height="40"

@@ -70,7 +70,7 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
         >
           <img
             className="brand-logo"
-            src="/assets/images/icons/Screenshot%202026-02-19%20at%208.32.35%E2%80%AFPM.png"
+            src="/assets/images/logo.png"
             alt="India Tours Guide logo"
           />
           <span className="brand-copy">
