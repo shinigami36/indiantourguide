@@ -1,15 +1,15 @@
-require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
-const axios = require('axios');
 const rateLimit = require('express-rate-limit');
 const { Resend } = require('resend');
-const mongoose = require('mongoose');
 const { decryptSecret } = require('../tools/decrypt-secret');
+require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3001;
+const useMongoDb = process.env.USE_MONGODB === 'true' && Boolean(process.env.MONGODB_URI);
 const encryptionKey = process.env.ENC_MASTER_KEY || '';
 
 const resolveSecret = (plainValue, encryptedValue, secretName) => {
@@ -23,480 +23,383 @@ const resolveSecret = (plainValue, encryptedValue, secretName) => {
     return '';
   }
 };
-// ─── Global error handlers ────────────────────────────────────────────────────
-process.on('unhandledRejection', (reason) => {
-  console.error('[critical] Unhandled promise rejection:', reason instanceof Error ? reason.message : reason);
-});
-
-process.on('uncaughtException', (err) => {
-  console.error('[critical] Uncaught exception:', err.message);
-  process.exit(1);
-});
 
 app.disable('x-powered-by');
 app.set('trust proxy', 1);
 
-const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5174')
+const configuredOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173,http://127.0.0.1:5173')
   .split(',')
   .map((origin) => origin.trim())
-  .filter(Boolean)
-  .map((origin) => {
-    try { return new URL(origin).origin; } catch { return null; }
-  })
   .filter(Boolean);
+const allowAllOrigins = configuredOrigins.includes('*');
+const allowedOrigins = new Set(configuredOrigins.filter((origin) => origin !== '*'));
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
+// Security middleware
 app.use(helmet({
   referrerPolicy: { policy: 'no-referrer' },
-  hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
-  frameguard: { action: 'deny' },
-  noSniff: true,
-  xssFilter: true,
-  hidePoweredBy: true,
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'"],
-      imgSrc: ["'self'", 'https:', 'data:'],
-      connectSrc: [
-        "'self'",
-        'https://maps.googleapis.com',
-        'https://graph.facebook.com',
-      ],
-      fontSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      frameSrc: ["'none'"],
-      baseUri: ["'self'"],
-      formAction: ["'self'"],
-    },
-  },
 }));
-app.use(express.json({ limit: '50kb' }));
-app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow no-origin requests (server-to-server, health checks, curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    // Silently deny — do NOT throw an Error (avoids red Render log noise)
-    return callback(null, false);
+    if (!origin || allowAllOrigins || allowedOrigins.has(origin)) {
+      return callback(null, true);
+    }
+
+    const corsError = new Error(`Origin ${origin} is not allowed by CORS`);
+    corsError.status = 403;
+    return callback(corsError);
   },
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Admin-Token'],
 }));
 
-// Block state-changing requests from non-allowlisted browser origins
-app.use((req, res, next) => {
-  if (req.method === 'POST') {
-    const origin = req.get('origin');
-    if (origin && !allowedOrigins.includes(origin)) {
-      return res.status(403).json({ error: 'Origin not allowed.' });
-    }
-  }
-  return next();
-});
-
-const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 120,
-  standardHeaders: false,
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 150,
+  standardHeaders: true,
   legacyHeaders: false,
-  message: { error: 'Too many requests. Please try again later.' },
+  message: { success: false, error: 'Too many requests. Please try again later.' },
 });
-app.use(globalLimiter);
+app.use(limiter);
 
-// Rate limit: max 5 enquiries per IP per 15 minutes
 const enquiryLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 5,
-  message: { error: 'Too many enquiries submitted. Please try again later.' },
-  standardHeaders: false,
+  max: 10,
+  standardHeaders: true,
   legacyHeaders: false,
+  message: { success: false, error: 'Too many enquiries. Please try again later.' },
 });
 
-const sanitizeText = (value, max = 500) => {
+const reviewsLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many review requests. Please try again later.' },
+});
+
+// Body parsing middleware — 50 kb is plenty for enquiry forms
+app.use(express.json({ limit: '50kb' }));
+app.use(express.urlencoded({ extended: true, limit: '50kb' }));
+
+// Connect to MongoDB only when explicitly enabled
+if (useMongoDb) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch((err) => console.error('MongoDB connection error:', err));
+} else {
+  console.log('MongoDB disabled (running in email-only mode)');
+}
+
+const resendApiKey = resolveSecret(process.env.RESEND_API_KEY, process.env.RESEND_API_KEY_ENC, 'RESEND_API_KEY_ENC');
+
+// Resend client — null when not configured so the server still starts without it
+const resendClient = resendApiKey ? new Resend(resendApiKey) : null;
+
+const sanitizeText = (value, maxLen = 500) => {
   if (typeof value !== 'string') return '';
-  return value.trim().slice(0, max);
+  return value.trim().slice(0, maxLen);
 };
 
-const escapeHtml = (value) => String(value)
-  .replace(/&/g, '&amp;')
-  .replace(/</g, '&lt;')
-  .replace(/>/g, '&gt;')
-  .replace(/"/g, '&quot;')
-  .replace(/'/g, '&#39;');
-
+// Escape HTML to prevent XSS in email body
+const escapeHtml = (str) =>
+  String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 const sanitizeBoolean = (value) => value === true || value === 'true' || value === 1 || value === '1';
 
-// Strip CRLF characters to prevent header/message injection
-const stripCRLF = (value) => String(value).replace(/[\r\n]/g, ' ');
-
-// Validate Google Place ID format (alphanumeric + underscore + dash, 20-50 chars)
-const isValidPlaceId = (id) => typeof id === 'string' && /^[a-zA-Z0-9_-]{20,50}$/.test(id);
-
-// Whitelist of allowed enquiry fields
-const ALLOWED_ENQUIRY_FIELDS = new Set([
-  'name', 'email', 'phone', 'country', 'startDate', 'endDate',
-  'noHotelRequired', 'hotelCategory', 'adults', 'children',
-  'message', 'tourName', 'tourPackages',
-]);
-
-// ─── MongoDB with reconnection ────────────────────────────────────────────────
-const MONGO_URI = process.env.MONGODB_URI;
-
-const connectMongo = async (attempt = 1) => {
-  if (!MONGO_URI) {
-    console.log('[startup] MONGODB_URI not set — enquiries will not be persisted');
-    return;
-  }
-  try {
-    await mongoose.connect(MONGO_URI, {
-      serverSelectionTimeoutMS: 10000,
-      socketTimeoutMS: 45000,
-    });
-    console.log('[startup] Connected to MongoDB');
-  } catch (err) {
-    const delay = Math.min(1000 * 2 ** attempt, 30000); // exponential backoff, max 30s
-    const hint = err.message && err.message.includes('whitelist')
-      ? ' (check Atlas IP whitelist — add 0.0.0.0/0)'
-      : '';
-    console.error(`[mongo] Connection failed (attempt ${attempt}): ${err.name || 'Error'}${hint}`);
-    console.log(`[mongo] Retrying in ${delay / 1000}s...`);
-    setTimeout(() => connectMongo(attempt + 1), delay);
-  }
+const sanitizeTourPackages = (value) => {
+  if (!Array.isArray(value)) return [];
+  return value
+    .slice(0, 10)
+    .map(item => sanitizeText(item))
+    .filter(Boolean);
 };
 
-mongoose.connection.on('disconnected', () => {
-  console.warn('[mongo] Disconnected — attempting reconnect...');
-  setTimeout(() => connectMongo(), 3000);
-});
+const normalizeWhatsAppNumber = (value) => sanitizeText(value).replace(/\D/g, '');
 
-mongoose.connection.on('reconnected', () => {
-  console.log('[mongo] Reconnected to MongoDB');
-});
-
-connectMongo();
-
-const enquirySchema = new mongoose.Schema({
-  name: { type: String, required: true, maxlength: 100 },
-  email: { type: String, required: true, maxlength: 200 },
-  phone: { type: String, required: true, maxlength: 30 },
-  country: { type: String, maxlength: 80 },
-  startDate: { type: String, maxlength: 20 },
-  endDate: { type: String, maxlength: 20 },
-  noHotelRequired: { type: Boolean, default: false },
-  hotelCategory: { type: String, maxlength: 50 },
-  adults: { type: Number, default: 1, min: 1, max: 50 },
-  children: { type: Number, default: 0, min: 0, max: 50 },
-  tourPackages: [{ type: String, maxlength: 150 }],
-  tourName: { type: String, maxlength: 150 },
-  message: { type: String, maxlength: 2000 },
-  createdAt: { type: Date, default: Date.now },
-  status: { type: String, default: 'new', enum: ['new', 'in-progress', 'contacted', 'closed'] },
-}, { strict: true });
-
-const Enquiry = mongoose.model('Enquiry', enquirySchema);
-
-// ─── Resend email client ──────────────────────────────────────────────────────
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-console.log('[startup] Email notifications:', resend ? 'configured' : 'not configured');
-console.log('[startup] Notify email:', process.env.NOTIFY_EMAIL ? 'configured' : 'not configured');
-
-// ─── Validation ──────────────────────────────────────────────────────────────
-function validateEnquiry({ name, email, phone, startDate, endDate, hotelCategory, noHotelRequired }) {
-  const errors = {};
-  if (!name || sanitizeText(name).length < 2) {
-    errors.name = 'Full name is required (min 2 characters).';
-  }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sanitizeText(email, 200))) {
-    errors.email = 'A valid email address is required.';
-  }
-  if (!phone || sanitizeText(phone, 30).replace(/\D/g, '').length < 6) {
-    errors.phone = 'A valid phone/WhatsApp number is required.';
-  }
-
-  if (!startDate) {
-    errors.startDate = 'Start date is required.';
-  }
-
-  if (!endDate) {
-    errors.endDate = 'End date is required.';
-  }
-
-  if (startDate && endDate) {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end < start) {
-      errors.endDate = 'End date must be on or after start date.';
-    }
-  }
-
-  const wantsNoHotel = sanitizeBoolean(noHotelRequired);
-  if (!wantsNoHotel && !sanitizeText(hotelCategory)) {
-    errors.hotelCategory = 'Please select a hotel option or choose No Hotel Required.';
-  }
-
-  return errors;
-}
-
-function formatTravelDates(startDate, endDate) {
+const formatTravelDates = (startDate, endDate) => {
   if (!startDate || !endDate) return 'Not provided';
   return `${startDate} to ${endDate}`;
-}
+};
 
-function formatHotelPreference(hotelCategory, noHotelRequired) {
-  const wantsNoHotel = noHotelRequired === true || noHotelRequired === 'true' || noHotelRequired === 1 || noHotelRequired === '1';
-  return wantsNoHotel ? 'No Hotel Required' : (hotelCategory || 'Not selected');
-}
-
-// ─── Send Email ───────────────────────────────────────────────────────────────
-async function sendEmail({ name, email, phone, country, startDate, endDate, noHotelRequired, hotelCategory, adults, children, message, tourName, tourPackages }) {
-  if (!resend) {
-    throw new Error('Email credentials are not configured');
-  }
-
-  const toursArray = Array.isArray(tourPackages) && tourPackages.length > 0
-    ? tourPackages
-    : tourName ? [tourName] : [];
-
-  const tourBullets = toursArray.length > 0
-    ? toursArray.map(t => `• ${t}`).join('\n')
-    : '• (No specific tour selected)';
-
-  const tourBulletsHtml = toursArray.length > 0
-    ? toursArray.map(t => `<li style="margin:4px 0;color:#1f2937;">${escapeHtml(t)}</li>`).join('')
-    : '<li style="margin:4px 0;color:#9ca3af;font-style:italic;">No specific tour selected</li>';
-
-  const safeName = escapeHtml(name);
-  const safeEmail = escapeHtml(email);
-  const safePhone = escapeHtml(phone);
-  const safeCountry = escapeHtml(country || '');
-  const safeDates = escapeHtml(formatTravelDates(startDate, endDate));
-  const safeHotelPreference = escapeHtml(formatHotelPreference(hotelCategory, noHotelRequired));
-  const safeAdults = escapeHtml(String(adults));
-  const safeChildren = escapeHtml(String(children));
-  const safeMessage = escapeHtml(message || '');
-
-  const toAddress = process.env.NOTIFY_EMAIL || 'Indiatoursguide.work@gmail.com';
-
-  const { error } = await resend.emails.send({
-    from: 'indiatourguide <onboarding@resend.dev>',
-    to: toAddress,
-    reply_to: email,
-    subject: 'New Tour Enquiry – indiatourguide.com',
-    html: `
-      <div style="font-family:sans-serif;max-width:580px;margin:0 auto;background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;">
-        <!-- Header -->
-        <div style="background:linear-gradient(135deg,#0ea5e9 0%,#a78bfa 100%);padding:28px 32px;">
-          <h1 style="margin:0;color:#ffffff;font-size:1.4rem;font-weight:700;letter-spacing:0.3px;">New Travel Enquiry Received</h1>
-          <p style="margin:6px 0 0;color:rgba(255,255,255,0.85);font-size:0.9rem;">indiatourguide.com</p>
-        </div>
-
-        <div style="padding:28px 32px;">
-          <!-- Customer Details -->
-          <h2 style="margin:0 0 16px;font-size:1rem;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid #f3f4f6;padding-bottom:8px;">Customer Details</h2>
-          <table style="width:100%;border-collapse:collapse;margin-bottom:28px;">
-            <tr>
-              <td style="padding:7px 0;color:#6b7280;width:140px;font-size:0.9rem;">Name</td>
-              <td style="padding:7px 0;font-weight:600;color:#1f2937;">${safeName}</td>
-            </tr>
-            <tr>
-              <td style="padding:7px 0;color:#6b7280;font-size:0.9rem;">Email</td>
-              <td style="padding:7px 0;font-weight:600;color:#1f2937;"><a href="mailto:${safeEmail}" style="color:#0ea5e9;text-decoration:none;">${safeEmail}</a></td>
-            </tr>
-            <tr>
-              <td style="padding:7px 0;color:#6b7280;font-size:0.9rem;">Phone / WhatsApp</td>
-              <td style="padding:7px 0;font-weight:600;color:#1f2937;">${safePhone}</td>
-            </tr>
-            ${country ? `<tr>
-              <td style="padding:7px 0;color:#6b7280;font-size:0.9rem;">Country</td>
-              <td style="padding:7px 0;font-weight:600;color:#1f2937;">${safeCountry}</td>
-            </tr>` : ''}
-            <tr>
-              <td style="padding:7px 0;color:#6b7280;font-size:0.9rem;">Travel Dates</td>
-              <td style="padding:7px 0;font-weight:600;color:#1f2937;">${safeDates}</td>
-            </tr>
-            <tr>
-              <td style="padding:7px 0;color:#6b7280;font-size:0.9rem;">Hotel Preference</td>
-              <td style="padding:7px 0;font-weight:600;color:#1f2937;">${safeHotelPreference}</td>
-            </tr>
-            <tr>
-              <td style="padding:7px 0;color:#6b7280;font-size:0.9rem;">Adults</td>
-              <td style="padding:7px 0;font-weight:600;color:#1f2937;">${safeAdults}</td>
-            </tr>
-            <tr>
-              <td style="padding:7px 0;color:#6b7280;font-size:0.9rem;">Children</td>
-              <td style="padding:7px 0;font-weight:600;color:#1f2937;">${safeChildren}</td>
-            </tr>
-          </table>
-
-          <!-- Interested Tours -->
-          <h2 style="margin:0 0 12px;font-size:1rem;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid #f3f4f6;padding-bottom:8px;">Interested Tours</h2>
-          <ul style="margin:0 0 28px;padding-left:20px;">${tourBulletsHtml}</ul>
-
-          <!-- Customer Message -->
-          <h2 style="margin:0 0 12px;font-size:1rem;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:0.5px;border-bottom:2px solid #f3f4f6;padding-bottom:8px;">Customer Message</h2>
-          <blockquote style="margin:0 0 28px;padding:14px 18px;background:#f8fafc;border-left:4px solid #0ea5e9;border-radius:0 8px 8px 0;color:#374151;font-style:italic;line-height:1.6;">
-            ${safeMessage || '<span style="color:#9ca3af;">No message provided</span>'}
-          </blockquote>
-        </div>
-
-        <!-- Footer -->
-        <div style="padding:16px 32px;background:#f8fafc;border-top:1px solid #e2e8f0;">
-          <p style="margin:0;color:#9ca3af;font-size:0.8rem;">Source: <strong>indiatourguide.com</strong> contact form &nbsp;·&nbsp; Reply to this email to respond to the customer</p>
-        </div>
-      </div>
-    `,
-  });
-  if (error) {
-    throw new Error(error.message);
-  }
-}
-
-// ─── Send WhatsApp via Meta Cloud API ────────────────────────────────────────
-// Setup: Create a Meta App at developers.facebook.com, enable WhatsApp,
-// then set WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_BUSINESS_NUMBER in .env
-async function sendWhatsApp({ name, email, phone, country, startDate, endDate, noHotelRequired, hotelCategory, adults, children, message, tourName }) {
-  const { WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_BUSINESS_NUMBER } = process.env;
-  if (!WHATSAPP_ACCESS_TOKEN || !WHATSAPP_PHONE_NUMBER_ID || !WHATSAPP_BUSINESS_NUMBER) {
-    console.warn('WhatsApp: credentials not configured, skipping.');
-    return;
-  }
-
-  const body =
-    `🌍 *New Travel Enquiry*\n\n` +
-    (tourName ? `*Tour Package:* ${stripCRLF(tourName)}\n` : '') +
-    `*Name:* ${stripCRLF(name)}\n` +
-    `*Email:* ${stripCRLF(email)}\n` +
-    (country ? `*Country:* ${stripCRLF(country)}\n` : '') +
-    `*Phone/WhatsApp:* ${stripCRLF(phone)}\n` +
-    `*Travel Dates:* ${stripCRLF(formatTravelDates(startDate, endDate))}\n` +
-    `*Hotel Preference:* ${stripCRLF(formatHotelPreference(hotelCategory, noHotelRequired))}\n` +
-    `*Adults:* ${adults}\n` +
-    `*Children:* ${children}\n` +
-    `*Message:* ${stripCRLF(message || 'No message provided')}`;
-
-  await axios.post(
-    `https://graph.facebook.com/v18.0/${WHATSAPP_PHONE_NUMBER_ID}/messages`,
-    {
-      messaging_product: 'whatsapp',
-      to: WHATSAPP_BUSINESS_NUMBER,
-      type: 'text',
-      text: { body },
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${WHATSAPP_ACCESS_TOKEN}`,
-        'Content-Type': 'application/json',
-      },
-      timeout: 10000,
-    }
-  );
-}
-
-// ─── Route ────────────────────────────────────────────────────────────────────
-app.post('/api/enquiry', enquiryLimiter, (req, res) => {
-  // Reject unexpected fields (mass assignment protection)
-  const unexpectedFields = Object.keys(req.body).filter(f => !ALLOWED_ENQUIRY_FIELDS.has(f));
-  if (unexpectedFields.length > 0) {
-    return res.status(400).json({ errors: { general: 'Unexpected fields in request.' } });
-  }
-
-  const {
-    name,
-    email,
-    phone,
-    country,
-    startDate,
-    endDate,
-    noHotelRequired,
-    hotelCategory,
-    adults,
-    children,
-    message,
-    tourName,
-    tourPackages,
-  } = req.body;
-
-  // Validate
-  const errors = validateEnquiry({ name, email, phone, startDate, endDate, hotelCategory, noHotelRequired });
-  if (Object.keys(errors).length > 0) {
-    return res.status(400).json({ errors });
-  }
-
-  const wantsNoHotel = sanitizeBoolean(noHotelRequired);
-
-  const data = {
-    name: sanitizeText(name, 100),
-    email: sanitizeText(email, 200).toLowerCase(),
-    phone: sanitizeText(phone, 30),
-    country: sanitizeText(country, 80),
-    startDate: sanitizeText(startDate, 20),
-    endDate: sanitizeText(endDate, 20),
-    noHotelRequired: wantsNoHotel,
-    hotelCategory: wantsNoHotel ? '' : sanitizeText(hotelCategory, 50),
-    adults: Math.max(1, Math.min(50, parseInt(adults, 10) || 1)),
-    children: Math.max(0, Math.min(50, parseInt(children, 10) || 0)),
-    message: sanitizeText(message, 2000),
-    tourName: sanitizeText(tourName, 150),
-    tourPackages: Array.isArray(tourPackages) ? tourPackages.map((item) => sanitizeText(item, 150)).filter(Boolean) : [],
-  };
-
-  // Respond immediately so the user sees confirmation right away
-  res.status(200).json({
-    success: true,
-    message: 'Thank you for your enquiry. Our travel expert will contact you shortly.',
-  });
-
-  // Save to MongoDB in background
-  if (mongoose.connection.readyState === 1) {
-    new Enquiry(data).save()
-      .then(() => console.log('[enquiry] saved to MongoDB'))
-      .catch(err => console.error('[enquiry] MongoDB save failed:', err.message));
-  }
-
-  // Fire email notification in background (non-blocking)
-  console.log('[enquiry] sending email notification | resend client:', !!resend);
-  sendEmail(data)
-    .then(() => console.log('[enquiry] email sent OK'))
-    .catch(err => console.error('[enquiry] Email failed:', err.message));
-  // WhatsApp dispatch is disabled for this rollout.
-});
-
-// ── Google Reviews — 24-hour server-side cache ────────────────────────────────
-const reviewsLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 10,
-  skipSuccessfulRequests: false,
-  message: { error: 'Too many review requests. Please try again later.' },
-  standardHeaders: false,
-  legacyHeaders: false,
-});
-
-let reviewsCache = null;
-let reviewsCacheAt = 0;
-const REVIEWS_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
+const formatHotelPreference = (enquiry) => {
+  if (enquiry.noHotelRequired) return 'No Hotel Required';
+  return enquiry.hotelCategory || 'Not selected';
+};
 
 const normalizeGoogleReview = (review, index) => {
-  const authorName = (review?.author_name || 'Google User').trim().slice(0, 120);
-  const text = (review?.text || '').trim().slice(0, 1600);
+  const authorName = sanitizeText(review?.author_name || 'Google User', 120);
+  const text = sanitizeText(review?.text || '', 1600);
   const rating = Number.isFinite(Number(review?.rating))
     ? Math.max(1, Math.min(5, Number(review.rating)))
     : 5;
   const timeEpoch = Number.isFinite(Number(review?.time)) ? Number(review.time) : null;
+
   return {
     id: `${timeEpoch || Date.now()}-${index}`,
     name: authorName,
     rating,
     text,
-    relativeTimeDescription: (review?.relative_time_description || '').trim(),
-    profilePhotoUrl: (review?.profile_photo_url || '').trim().slice(0, 1000),
+    relativeTimeDescription: sanitizeText(review?.relative_time_description || ''),
+    profilePhotoUrl: sanitizeText(review?.profile_photo_url || '', 1000),
     time: timeEpoch,
   };
 };
 
+const resolvePlaceIdFromQuery = async (placesApiKey, queryText) => {
+  const query = sanitizeText(queryText, 220);
+  if (!query) return '';
+
+  const endpoint = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(query)}&inputtype=textquery&fields=place_id,name&key=${encodeURIComponent(placesApiKey)}`;
+  const response = await fetch(endpoint, { method: 'GET' });
+  if (!response.ok) return '';
+
+  const payload = await response.json();
+  const candidate = Array.isArray(payload?.candidates) ? payload.candidates[0] : null;
+  return sanitizeText(candidate?.place_id || '', 200);
+};
+
+const requireMongo = (req, res, next) => {
+  if (!useMongoDb || mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ success: false, error: 'Database is not enabled on this server.' });
+  }
+  return next();
+};
+
+const requireAdminToken = (req, res, next) => {
+  const configuredToken = process.env.ADMIN_API_TOKEN;
+  if (!configuredToken) {
+    return res.status(503).json({ success: false, error: 'Admin API token is not configured' });
+  }
+
+  const authHeader = req.headers.authorization || '';
+  const bearerToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : '';
+  const headerToken = req.headers['x-admin-token'];
+  const token = bearerToken || headerToken;
+
+  if (token !== configuredToken) {
+    return res.status(401).json({ success: false, error: 'Unauthorized' });
+  }
+
+  return next();
+};
+
+const formatTravellerSummary = (enquiry) => `${enquiry.adults || 1} adult(s), ${enquiry.children || 0} child(ren)`;
+
+const formatEnquiryMessage = (enquiry) => {
+  const selectedTours = enquiry.tourPackages?.length ? enquiry.tourPackages.join(', ') : (enquiry.tourName || 'General enquiry');
+
+  return [
+    'New Travel Enquiry',
+    `Name: ${enquiry.name}`,
+    `Email: ${enquiry.email}`,
+    `Country: ${enquiry.country || 'Not provided'}`,
+    `Phone: ${enquiry.phone}`,
+    `Travel Dates: ${formatTravelDates(enquiry.startDate, enquiry.endDate)}`,
+    `Hotel Preference: ${formatHotelPreference(enquiry)}`,
+    `Adults: ${enquiry.adults || 1}`,
+    `Children: ${enquiry.children || 0}`,
+    `Tour Category: ${enquiry.tourCategory || 'Not specified'}`,
+    `Tour: ${selectedTours}`,
+    `Message: ${enquiry.message || 'No message provided'}`,
+  ].join('\n');
+};
+
+const sendEmailNotification = async (enquiry) => {
+  if (!resendClient) {
+    return { sent: false, skipped: true, reason: 'RESEND_API_KEY not configured' };
+  }
+
+  const selectedTours = enquiry.tourPackages?.length ? enquiry.tourPackages.join(', ') : (enquiry.tourName || 'General enquiry');
+  const hotelPref = escapeHtml(formatHotelPreference(enquiry));
+  const textMessage = [
+    'New Travel Enquiry',
+    `Name: ${enquiry.name}`,
+    `Email: ${enquiry.email}`,
+    `Country: ${enquiry.country || 'Not provided'}`,
+    `Phone: ${enquiry.phone}`,
+    `Travel Dates: ${formatTravelDates(enquiry.startDate, enquiry.endDate)}`,
+    `Hotel Preference: ${formatHotelPreference(enquiry)}`,
+    `Adults: ${enquiry.adults || 1}`,
+    `Children: ${enquiry.children || 0}`,
+    `Tour: ${selectedTours}`,
+    `Message: ${enquiry.message || 'No message provided'}`,
+  ].join('\n');
+  const submittedAt = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', dateStyle: 'medium', timeStyle: 'short' });
+
+  const row = (label, value) => `
+    <tr>
+      <td style="padding:10px 14px;background:#f8fafc;color:#64748b;font-size:13px;font-weight:600;white-space:nowrap;border-bottom:1px solid #e2e8f0;width:38%;">${label}</td>
+      <td style="padding:10px 14px;color:#1e293b;font-size:13px;border-bottom:1px solid #e2e8f0;">${value}</td>
+    </tr>`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:32px 16px;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+        <!-- Header -->
+        <tr>
+          <td style="background:linear-gradient(135deg,#0ea5e9 0%,#818cf8 100%);padding:28px 32px;text-align:center;">
+            <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.75);">Travel Website</p>
+            <h1 style="margin:0;font-size:22px;font-weight:800;color:#ffffff;letter-spacing:-0.3px;">New Tour Enquiry</h1>
+            <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.8);">Submitted ${submittedAt} IST</p>
+          </td>
+        </tr>
+
+        <!-- Alert badge -->
+        <tr>
+          <td style="padding:20px 32px 0;text-align:center;">
+            <span style="display:inline-block;background:#fef3c7;color:#92400e;font-size:12px;font-weight:700;padding:6px 16px;border-radius:20px;letter-spacing:0.04em;">ACTION REQUIRED — Review &amp; Reply to Guest</span>
+          </td>
+        </tr>
+
+        <!-- Guest info -->
+        <tr>
+          <td style="padding:20px 32px 8px;">
+            <p style="margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0ea5e9;">Guest Details</p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-radius:10px;overflow:hidden;border:1px solid #e2e8f0;">
+              ${row('Full Name', escapeHtml(enquiry.name))}
+              ${row('Email', `<a href="mailto:${escapeHtml(enquiry.email)}" style="color:#0ea5e9;text-decoration:none;">${escapeHtml(enquiry.email)}</a>`)}
+              ${row('Phone', `<a href="tel:${escapeHtml(enquiry.phone.replace(/\D/g,''))}" style="color:#0ea5e9;text-decoration:none;">${escapeHtml(enquiry.phone)}</a>`)}
+              ${row('Country', escapeHtml(enquiry.country || 'Not provided'))}
+            </table>
+          </td>
+        </tr>
+
+        <!-- Trip info -->
+        <tr>
+          <td style="padding:16px 32px 8px;">
+            <p style="margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0ea5e9;">Trip Details</p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="border-radius:10px;overflow:hidden;border:1px solid #e2e8f0;">
+              ${row('Tour Category', escapeHtml(enquiry.tourCategory || 'Not specified'))}
+              ${row('Tour Package(s)', escapeHtml(selectedTours))}
+              ${row('Travel Dates', escapeHtml(formatTravelDates(enquiry.startDate, enquiry.endDate)))}
+              ${row('Travelers', `${escapeHtml(String(enquiry.adults || 1))} adult(s), ${escapeHtml(String(enquiry.children || 0))} child(ren)`)}
+              ${row('Hotel Preference', hotelPref)}
+            </table>
+          </td>
+        </tr>
+
+        <!-- Message -->
+        <tr>
+          <td style="padding:16px 32px 8px;">
+            <p style="margin:0 0 10px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#0ea5e9;">Message</p>
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;color:#374151;font-size:13px;line-height:1.65;">
+              ${escapeHtml(enquiry.message || 'No message provided.')}
+            </div>
+          </td>
+        </tr>
+
+        <!-- CTA buttons -->
+        <tr>
+          <td style="padding:20px 32px;">
+            <table cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="padding-right:10px;">
+                  <a href="mailto:${escapeHtml(enquiry.email)}" style="display:inline-block;background:linear-gradient(135deg,#0ea5e9,#818cf8);color:#ffffff;font-size:13px;font-weight:700;padding:11px 22px;border-radius:8px;text-decoration:none;">Reply via Email</a>
+                </td>
+                <td>
+                  <a href="tel:${escapeHtml(enquiry.phone.replace(/\D/g,''))}" style="display:inline-block;background:#0f172a;color:#ffffff;font-size:13px;font-weight:700;padding:11px 22px;border-radius:8px;text-decoration:none;">Call Guest</a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:16px 32px;text-align:center;">
+            <p style="margin:0;font-size:11px;color:#94a3b8;">This email was sent automatically by Travel Website · Do not reply to this email</p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+
+  const fromAddress = process.env.RESEND_FROM || 'India Tours Guide <onboarding@resend.dev>';
+  const toAddress = process.env.ADMIN_EMAIL;
+
+  if (!toAddress) {
+    return { sent: false, skipped: true, reason: 'ADMIN_EMAIL not configured' };
+  }
+
+  const { error } = await resendClient.emails.send({
+    from: fromAddress,
+    to: toAddress,
+    subject: `New Enquiry from ${enquiry.name} — ${selectedTours}`,
+    text: textMessage,
+    html,
+  });
+
+  if (error) {
+    throw new Error(`Resend error: ${error.message}`);
+  }
+
+  return { sent: true };
+};
+
+// Enquiry Schema
+const enquirySchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  phone: { type: String, required: true },
+  country: { type: String },
+  startDate: { type: String },
+  endDate: { type: String },
+  noHotelRequired: { type: Boolean, default: false },
+  hotelCategory: { type: String },
+  adults: { type: Number, default: 1 },
+  children: { type: Number, default: 0 },
+  tourPackages: [{ type: String }],
+  tourName: { type: String },
+  tourCategory: { type: String },
+  message: { type: String },
+  createdAt: { type: Date, default: Date.now },
+  status: { type: String, default: 'new' }
+});
+
+const Enquiry = mongoose.model('Enquiry', enquirySchema);
+
+// Tour Schema
+const tourSchema = new mongoose.Schema({
+  id: { type: String, required: true, unique: true },
+  titleKey: { type: String, required: true },
+  durationKey: { type: String, required: true },
+  locationsKey: { type: String, required: true },
+  descriptionKey: { type: String, required: true },
+  itineraryKey: { type: String, required: true },
+  includesKey: { type: String, required: true },
+  video: { type: String },
+  rating: { type: Number, default: 4.5 },
+  active: { type: Boolean, default: true }
+});
+
+const Tour = mongoose.model('Tour', tourSchema);
+
+// Routes
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', message: 'Backend is running' });
+});
+
+// ── 24-hour server-side cache for Google reviews ──────────────────
+let reviewsCache = null;
+let reviewsCacheAt = 0;
+const REVIEWS_CACHE_TTL = 24 * 60 * 60 * 1000; // 1 day in ms
+
 app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
+  // Serve cached response if still fresh (< 24 hours old)
   if (reviewsCache && Date.now() - reviewsCacheAt < REVIEWS_CACHE_TTL) {
     return res.json({ success: true, data: reviewsCache, cached: true });
   }
@@ -506,109 +409,335 @@ app.get('/api/google-reviews', reviewsLimiter, async (req, res) => {
     process.env.GOOGLE_PLACES_API_KEY_ENC,
     'GOOGLE_PLACES_API_KEY_ENC'
   );
-  const placeId = (process.env.GOOGLE_PLACE_ID || '').trim();
+  let placeId = sanitizeText(process.env.GOOGLE_PLACE_ID || '', 200);
+  const placeQuery = sanitizeText(process.env.GOOGLE_PLACE_QUERY || '', 220);
 
   if (!placesApiKey) {
-    return res.status(503).json({ success: false, error: 'Google reviews not configured.' });
-  }
-  if (!placeId || !isValidPlaceId(placeId)) {
-    return res.status(503).json({ success: false, error: 'Google reviews not configured.' });
+    return res.status(503).json({
+      success: false,
+      error: 'Google reviews are not configured. Set GOOGLE_PLACES_API_KEY.',
+    });
   }
 
   try {
-    const fields = 'name,rating,user_ratings_total,reviews,url';
-    const endpoint = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=${encodeURIComponent(fields)}&reviews_sort=newest&key=${encodeURIComponent(placesApiKey)}`;
-
-    const fetchController = new AbortController();
-    const fetchTimeout = setTimeout(() => fetchController.abort(), 10000);
-    let response;
-    try {
-      response = await fetch(endpoint, { signal: fetchController.signal });
-    } finally {
-      clearTimeout(fetchTimeout);
+    if (!placeId && placeQuery) {
+      placeId = await resolvePlaceIdFromQuery(placesApiKey, placeQuery);
     }
+
+    if (!placeId) {
+      return res.status(503).json({
+        success: false,
+        error: 'Google reviews are not configured. Set GOOGLE_PLACE_ID or GOOGLE_PLACE_QUERY.',
+      });
+    }
+
+    const fields = 'name,rating,user_ratings_total,reviews,url';
+    const reviewsSort = 'newest';
+    const endpoint = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=${encodeURIComponent(fields)}&reviews_sort=${reviewsSort}&key=${encodeURIComponent(placesApiKey)}`;
+
+    const response = await fetch(endpoint, { method: 'GET' });
     if (!response.ok) {
-      if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
-      return res.status(502).json({ success: false, error: 'Failed to reach Google Places API.' });
+      return res.status(502).json({
+        success: false,
+        error: 'Failed to reach Google Places API.',
+      });
     }
 
     const payload = await response.json();
     if (payload?.status !== 'OK' || !payload?.result) {
-      if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
-      return res.status(502).json({ success: false, error: 'Reviews service temporarily unavailable.' });
+      return res.status(502).json({
+        success: false,
+        error: `Google Places API error: ${payload?.status || 'unknown'}`,
+      });
     }
 
     const place = payload.result;
     const reviews = Array.isArray(place.reviews)
-      ? place.reviews.map(normalizeGoogleReview).filter(r => r.text)
+      ? place.reviews.map(normalizeGoogleReview).filter((review) => review.text)
       : [];
 
     const data = {
-      businessName: (place.name || 'indiatoursguide').trim().slice(0, 140),
+      businessName: sanitizeText(place.name || 'indiatoursguide', 140),
       rating: Number.isFinite(Number(place.rating)) ? Number(place.rating) : null,
       totalReviews: Number.isFinite(Number(place.user_ratings_total)) ? Number(place.user_ratings_total) : 0,
-      googleUrl: (place.url || '').trim().slice(0, 2000),
+      googleUrl: sanitizeText(place.url || '', 2000),
       reviews,
       fetchedAt: new Date().toISOString(),
     };
 
+    // Store in cache
     reviewsCache = data;
     reviewsCacheAt = Date.now();
+
     return res.json({ success: true, data });
-  } catch (err) {
-    console.error('Google reviews fetch error:', err?.name || 'Error');
-    if (reviewsCache) return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
-    return res.status(500).json({ success: false, error: 'Failed to fetch Google reviews.' });
+  } catch (error) {
+    console.error('Failed to fetch Google reviews:', error);
+    // Return stale cache if available rather than failing
+    if (reviewsCache) {
+      return res.json({ success: true, data: reviewsCache, cached: true, stale: true });
+    }
+    return res.status(500).json({ success: false, error: 'Failed to fetch Google reviews' });
   }
 });
 
-// Health check
-app.get('/api/health', globalLimiter, (req, res) => {
-  const dbState = mongoose.connection.readyState;
-  const dbStatus = ['disconnected', 'connected', 'connecting', 'disconnecting'][dbState] || 'unknown';
-  const emailConfigured = !!process.env.RESEND_API_KEY;
-  const googleConfigured = !!(process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACE_ID);
+// Enquiry submission endpoint
+app.post('/api/enquiry', enquiryLimiter, async (req, res) => {
+  try {
+    const {
+      name,
+      email,
+      phone,
+      country,
+      startDate,
+      endDate,
+      noHotelRequired,
+      hotelCategory,
+      adults,
+      children,
+      message,
+      tourPackages,
+      tourName,
+      tourCategory,
+    } = req.body;
 
-  const healthy = dbState === 1;
-  res.status(healthy ? 200 : 503).json({
-    status: healthy ? 'ok' : 'degraded',
-    db: dbStatus,
-    email: emailConfigured ? 'configured' : 'not configured',
-    googleReviews: googleConfigured ? 'configured' : 'not configured',
-    uptime: Math.floor(process.uptime()),
-  });
+    // Validation
+    if (!name || !email || !phone || !startDate || !endDate) {
+      return res.status(400).json({
+        success: false,
+        error: 'Name, email, phone, start date, and end date are required'
+      });
+    }
+
+    if (String(name).length > 100 || String(email).length > 200) {
+      return res.status(400).json({ success: false, error: 'Input too long' });
+    }
+
+    // Validate phone: allow formatted strings (spaces, dashes, parens, +) but
+    // the actual digit count must be 6–15 to cover all international numbers (E.164).
+    const phoneDigits = String(phone).replace(/\D/g, '');
+    if (phoneDigits.length < 6 || phoneDigits.length > 15) {
+      return res.status(400).json({
+        success: false,
+        error: 'Phone number must contain between 6 and 15 digits.',
+      });
+    }
+
+    if (message && String(message).length > 2000) {
+      return res.status(400).json({ success: false, error: 'Message must be 2000 characters or fewer' });
+    }
+
+    const parsedStartDate = new Date(startDate);
+    const parsedEndDate = new Date(endDate);
+    if (Number.isNaN(parsedStartDate.getTime()) || Number.isNaN(parsedEndDate.getTime()) || parsedEndDate < parsedStartDate) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid travel dates. End date must be on or after start date.'
+      });
+    }
+
+    const wantsNoHotel = sanitizeBoolean(noHotelRequired);
+    if (!wantsNoHotel && !sanitizeText(hotelCategory)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Please select a hotel category or choose No Hotel Required.'
+      });
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid email format'
+      });
+    }
+
+    const enquiryPayload = {
+      name: sanitizeText(name),
+      email: sanitizeText(email),
+      phone: sanitizeText(phone),
+      country: sanitizeText(country),
+      startDate: sanitizeText(startDate),
+      endDate: sanitizeText(endDate),
+      noHotelRequired: wantsNoHotel,
+      hotelCategory: wantsNoHotel ? '' : sanitizeText(hotelCategory),
+      adults: Number.isFinite(Number(adults)) ? Math.max(1, Number(adults)) : 1,
+      children: Number.isFinite(Number(children)) ? Math.max(0, Number(children)) : 0,
+      tourPackages: sanitizeTourPackages(tourPackages),
+      tourName: sanitizeText(tourName),
+      tourCategory: sanitizeText(tourCategory),
+      message: sanitizeText(message),
+      createdAt: new Date(),
+    };
+
+    const enquiry = new Enquiry(enquiryPayload);
+
+    if (useMongoDb && mongoose.connection.readyState === 1) {
+      try {
+        await enquiry.save();
+      } catch (saveError) {
+        console.warn('Enquiry persistence skipped:', saveError.message);
+      }
+    } else {
+      console.warn('Enquiry persistence skipped: database disabled or not connected');
+    }
+
+    res.json({
+      success: true,
+      message: 'Thank you for your enquiry! We will contact you soon.'
+    });
+
+    // Email is intentionally sent in the background to keep UI response fast.
+    void sendEmailNotification(enquiry)
+      .then((emailResult) => {
+        if (emailResult?.skipped) {
+          console.warn('Email notification skipped:', emailResult.reason);
+        }
+      })
+      .catch((emailError) => {
+        console.error('Email sending failed:', emailError);
+      });
+
+  } catch (error) {
+    console.error('Enquiry submission error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error. Please try again.'
+    });
+  }
 });
 
-const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`indiatourguide API running on http://localhost:${PORT}`);
+// Get all enquiries (for admin)
+app.get('/api/enquiries', requireAdminToken, requireMongo, async (req, res) => {
+  try {
+    const enquiries = await Enquiry.find().sort({ createdAt: -1 });
+    res.json({ success: true, data: enquiries });
+  } catch (error) {
+    console.error('Error fetching enquiries:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch enquiries' });
+  }
+});
 
-  // Ping self every 14 minutes to prevent Render free tier spin-down
-  const SELF_URL = process.env.RENDER_EXTERNAL_URL || `http://localhost:${PORT}`;
-  const pingInterval = setInterval(() => {
-    axios.get(`${SELF_URL}/api/health`).catch(() => {});
-  }, 14 * 60 * 1000);
+// Update enquiry status (for admin)
+app.patch('/api/enquiries/:id', requireAdminToken, requireMongo, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const allowedStatuses = ['new', 'in-progress', 'contacted', 'closed'];
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ success: false, error: 'Invalid status value' });
+    }
 
-  // Graceful shutdown on SIGTERM (Render sends this before stopping)
-  const shutdown = async (signal) => {
-    console.log(`[shutdown] ${signal} received — shutting down gracefully`);
-    clearInterval(pingInterval);
-    server.close(async () => {
-      console.log('[shutdown] HTTP server closed');
-      try {
-        await mongoose.connection.close();
-        console.log('[shutdown] MongoDB connection closed');
-      } catch (err) {
-        console.error('[shutdown] Error closing MongoDB:', err.message);
-      }
-      process.exit(0);
+    const enquiry = await Enquiry.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!enquiry) {
+      return res.status(404).json({ success: false, error: 'Enquiry not found' });
+    }
+
+    res.json({ success: true, data: enquiry });
+  } catch (error) {
+    console.error('Error updating enquiry:', error);
+    res.status(500).json({ success: false, error: 'Failed to update enquiry' });
+  }
+});
+
+
+// Tours endpoints
+app.get('/api/tours', requireMongo, async (req, res) => {
+  try {
+    const tours = await Tour.find({ active: true });
+    res.json({ success: true, data: tours });
+  } catch (error) {
+    console.error('Error fetching tours:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch tours' });
+  }
+});
+
+app.get('/api/tours/:id', requireMongo, async (req, res) => {
+  try {
+    const tour = await Tour.findOne({ id: req.params.id, active: true });
+    if (!tour) {
+      return res.status(404).json({ success: false, error: 'Tour not found' });
+    }
+    res.json({ success: true, data: tour });
+  } catch (error) {
+    console.error('Error fetching tour:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch tour' });
+  }
+});
+
+const sanitizeTourBody = (body) => ({
+  id: sanitizeText(body.id, 80),
+  titleKey: sanitizeText(body.titleKey, 120),
+  durationKey: sanitizeText(body.durationKey, 120),
+  locationsKey: sanitizeText(body.locationsKey, 120),
+  descriptionKey: sanitizeText(body.descriptionKey, 120),
+  itineraryKey: sanitizeText(body.itineraryKey, 120),
+  includesKey: sanitizeText(body.includesKey, 120),
+  video: sanitizeText(body.video || '', 500),
+  rating: Number.isFinite(Number(body.rating)) ? Math.max(1, Math.min(5, Number(body.rating))) : 4.5,
+  active: sanitizeBoolean(body.active !== undefined ? body.active : true),
+});
+
+// Admin tours endpoints
+app.post('/api/tours', requireAdminToken, requireMongo, async (req, res) => {
+  try {
+    const tourData = sanitizeTourBody(req.body);
+    if (!tourData.id || !tourData.titleKey) {
+      return res.status(400).json({ success: false, error: 'id and titleKey are required' });
+    }
+    const tour = new Tour(tourData);
+    await tour.save();
+    res.status(201).json({ success: true, data: tour });
+  } catch (error) {
+    console.error('Error creating tour:', error);
+    if (error.code === 11000) {
+      res.status(400).json({ success: false, error: 'Tour ID already exists' });
+    } else {
+      res.status(500).json({ success: false, error: 'Failed to create tour' });
+    }
+  }
+});
+
+app.put('/api/tours/:id', requireAdminToken, requireMongo, async (req, res) => {
+  try {
+    const updates = sanitizeTourBody(req.body);
+    const tour = await Tour.findOneAndUpdate(
+      { id: req.params.id },
+      updates,
+      { new: true }
+    );
+    if (!tour) {
+      return res.status(404).json({ success: false, error: 'Tour not found' });
+    }
+    res.json({ success: true, data: tour });
+  } catch (error) {
+    console.error('Error updating tour:', error);
+    res.status(500).json({ success: false, error: 'Failed to update tour' });
+  }
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  if (err.status === 403) {
+    return res.status(403).json({
+      success: false,
+      error: 'This website origin is not allowed. Update FRONTEND_URL in backend/.env to include this domain.'
     });
-    // Force exit after 10s if graceful shutdown hangs
-    setTimeout(() => {
-      console.error('[shutdown] Forced exit after timeout');
-      process.exit(1);
-    }, 10000);
-  };
+  }
 
-  process.on('SIGTERM', () => shutdown('SIGTERM'));
-  process.on('SIGINT', () => shutdown('SIGINT'));
+  return res.status(500).json({ success: false, error: 'Something went wrong!' });
+});
+
+// 404 handler
+app.use('*', (req, res) => {
+  res.status(404).json({ success: false, error: 'Route not found' });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
