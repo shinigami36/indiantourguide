@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { postJsonWithRetry } from '../utils/api';
+import { getApiBaseUrl, postJsonWithRetry } from '../utils/api';
 import './SiteReviews.css';
 
 const GOOGLE_MAPS_URL =
@@ -58,7 +58,7 @@ export default function SiteReviews() {
 
   const load = useCallback(async () => {
     try {
-      const res  = await fetch(`/api/reviews?skip=0&limit=${INITIAL_LIMIT}`);
+      const res  = await fetch(`${getApiBaseUrl()}/api/reviews?skip=0&limit=${INITIAL_LIMIT}`);
       const json = await res.json();
       if (json.success) {
         setReviews(json.data.reviews);
@@ -75,7 +75,7 @@ export default function SiteReviews() {
   const loadMore = async () => {
     setLoadingMore(true);
     try {
-      const res  = await fetch(`/api/reviews?skip=${reviews.length}&limit=${MORE_LIMIT}`);
+      const res  = await fetch(`${getApiBaseUrl()}/api/reviews?skip=${reviews.length}&limit=${MORE_LIMIT}`);
       const json = await res.json();
       if (json.success) {
         setReviews((prev) => [...prev, ...json.data.reviews]);
