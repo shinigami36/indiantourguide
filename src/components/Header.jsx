@@ -29,6 +29,7 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
     { code: 'ko', name: '한국어' },
     { code: 'ar', name: 'العربية' },
     { code: 'ru', name: 'Русский' },
+    { code: 'th', name: 'ภาษาไทย' },
   ];
 
   // Close intl dropdown on outside click

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Block crawling of any admin/api surfaces that get mounted later
+Disallow: /api/
+Disallow: /admin/
+
+Sitemap: https://indiatoursguide.com/sitemap.xml

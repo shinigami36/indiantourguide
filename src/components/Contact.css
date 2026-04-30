@@ -35,7 +35,7 @@
   width: 100%;
   padding: 0.725rem 1rem;
   border: 1.5px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   background: var(--clr-bg-alt);
   font-size: 0.9rem;
   font-family: var(--font-sans);
@@ -58,19 +58,19 @@
 .form-group textarea:focus {
   outline: none;
   border-color: var(--clr-primary);
-  box-shadow: 0 0 0 3px rgba(234,76,137,0.1);
+  box-shadow: 0 0 0 3px var(--clr-primary-12);
   background: #ffffff;
 }
 
 .form-group input.error,
 .form-group textarea.error {
-  border-color: #f87171;
-  background: rgba(254,242,242,0.7);
+  border-color: var(--clr-error);
+  background: var(--clr-error-bg);
 }
 
 .form-group input.error:focus,
 .form-group textarea.error:focus {
-  box-shadow: 0 0 0 3px rgba(248,113,113,0.12);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.12);
 }
 
 /* ── Date row ────────────────────────────────────────────────── */
@@ -95,7 +95,7 @@
 /* ── Error message ───────────────────────────────────────────── */
 .error-message {
   font-size: 0.75rem;
-  color: #dc2626;
+  color: var(--clr-error);
   margin-top: 0.1rem;
   display: flex;
   align-items: center;
@@ -106,25 +106,25 @@
 .form-status {
   text-align: center;
   padding: 0.875rem 1.25rem;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   font-size: 0.875rem;
   font-weight: 600;
 }
 
 .form-status.error {
-  background: rgba(254,242,242,0.9);
-  color: #dc2626;
+  background: var(--clr-error-bg);
+  color: var(--clr-error);
   border: 1px solid rgba(252,165,165,0.6);
 }
 
 .form-status.success {
-  background: rgba(240,253,244,0.9);
-  color: #166534;
+  background: var(--clr-success-bg);
+  color: var(--clr-success);
   border: 1px solid rgba(134,239,172,0.6);
 }
 
 /* Country select (CountrySelect component) inside contact form — fix inner-box look */
-.form-group .cs-wrapper { border: 1.5px solid rgba(0,0,0,0.1); background: var(--clr-bg-alt); border-radius: 10px; }
+.form-group .cs-wrapper { border: 1.5px solid rgba(0,0,0,0.1); background: var(--clr-bg-alt); border-radius: var(--radius-sm); }
 .form-group .cs-input { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0.725rem 0 !important; width: auto !important; font-size: 0.9rem !important; }
 .form-group .cs-wrapper:focus-within { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(232,120,67,0.12); background: #fff; }
 
@@ -133,7 +133,7 @@
   width: 100%;
   padding: 0.725rem 1rem;
   border: 1.5px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   background: var(--clr-bg-alt);
   font-size: 0.9rem;
   font-family: var(--font-sans);
@@ -146,7 +146,7 @@
 .contact-select:focus {
   outline: none;
   border-color: var(--clr-primary);
-  box-shadow: 0 0 0 3px rgba(234,76,137,0.1);
+  box-shadow: 0 0 0 3px var(--clr-primary-12);
 }
 
 /* ── Hotel options ───────────────────────────────────────────── */
@@ -165,7 +165,7 @@
   flex: 1;
   padding: 0.6rem 0.5rem;
   border: 1.5px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   background: var(--clr-bg-alt);
   color: var(--clr-text-2);
   font-size: 0.85rem;
@@ -197,7 +197,7 @@
   gap: 0.6rem;
   padding: 0.625rem 1rem;
   border: 1.5px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   background: var(--clr-bg-alt);
   font-size: 0.875rem;
   color: var(--clr-text-2);
@@ -231,7 +231,7 @@
 
 .no-hotel-check:has(input:checked) {
   border-color: var(--clr-primary);
-  background: rgba(234,76,137,0.04);
+  background: var(--clr-primary-5);
   color: var(--clr-primary-dk);
 }
 
@@ -249,7 +249,7 @@
   align-items: center;
   justify-content: space-between;
   border: 1.5px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 0.6rem 0.875rem;
   background: var(--clr-bg-alt);
   gap: 0.5rem;
@@ -258,7 +258,7 @@
 
 .contact-traveler-field:focus-within {
   border-color: var(--clr-primary);
-  box-shadow: 0 0 0 3px rgba(234,76,137,0.08);
+  box-shadow: 0 0 0 3px var(--clr-primary-8);
 }
 
 .contact-traveler-label {
@@ -315,7 +315,7 @@
   min-width: 0;
   padding: 0.6rem 0.5rem;
   border: 1.5px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   background: var(--clr-bg-alt);
   color: var(--clr-text-3);
   font-size: 0.825rem;
@@ -351,7 +351,7 @@
   gap: 0.5rem;
   background: var(--clr-bg-alt);
   border: 1.5px solid rgba(0,0,0,0.1);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   color: var(--clr-text-1);
   font-size: 0.9rem;
   font-family: var(--font-sans);
@@ -367,7 +367,7 @@
 }
 
 .contact-multiselect-trigger.open {
-  box-shadow: 0 0 0 3px rgba(234,76,137,0.1);
+  box-shadow: 0 0 0 3px var(--clr-primary-12);
   border-color: var(--clr-primary);
 }
 
@@ -417,4 +417,23 @@
   .date-row          { grid-template-columns: 1fr; }
   .enquiry-form      { gap: 1rem; }
   .contact-travelers-row { flex-direction: column; gap: 0.5rem; }
+}
+
+/* Inline spinner shown next to the submit button label while the form is
+   posting to /api/enquiry. Keeps the user informed that the click worked
+   even if the backend is cold-starting (~5–15s on Render free tier). */
+.btn-spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  vertical-align: -0.15em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btn-spinner-rotate 0.7s linear infinite;
+}
+@keyframes btn-spinner-rotate { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .btn-spinner { animation-duration: 2s; }
 }

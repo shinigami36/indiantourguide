@@ -2,55 +2,26 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CountrySelect from './CountrySelect';
 import { postJsonWithRetry } from '../utils/api';
+import { HOTEL_OPTIONS, CATEGORY_OPTIONS, EMPTY_FORM } from '../constants/enquiryData';
+import { useEnquiryForm } from '../hooks/useEnquiryForm';
 import './Contact.css';
-
-const HOTEL_OPTIONS = [
-  { value: '3 Star', labelKey: 'contact.hotel.3star' },
-  { value: '4 Star', labelKey: 'contact.hotel.4star' },
-  { value: '5 Star', labelKey: 'contact.hotel.5star' },
-];
-
-const INDIA_TOUR_KEYS = [
-  'tours.goldenTriangle.title',
-  'tours.agraFullDay.title',
-  'tours.jaipurDay.title',
-  'tours.delhiOldHalfDay.title',
-  'tours.delhiNewHalfDay.title',
-  'tours.delhiFullDay.title',
-  'tours.goldenTriangleMumbai.title',
-  'tours.goldenTriangleVaranasi.title',
-];
-
-const INTL_TOUR_KEYS = [
-  'tours.turkishDelight9D.title',
-  'tours.istanbulCappadocia7D.title',
-  'tours.sevenChurches8D.title',
-];
-
-const ALL_TOUR_KEYS = [...INDIA_TOUR_KEYS, ...INTL_TOUR_KEYS];
-
-const CATEGORY_OPTIONS = [
-  { value: 'india',         label: '🇮🇳 India' },
-  { value: 'international', label: '🌍 International' },
-  { value: 'both',          label: '✈️ Both' },
-];
-
-const EMPTY_FORM = {
-  name: '', email: '', phone: '', country: '',
-  startDate: '', endDate: '', noHotelRequired: false,
-  hotelCategory: '', adults: 1, children: 0, message: '',
-};
 
 const Contact = () => {
   const { t } = useTranslation();
-  const [formData, setFormData] = useState(EMPTY_FORM);
-  const [tourCategory, setTourCategory] = useState('');
-  const [selectedTours, setSelectedTours] = useState([]);
+  const {
+    formData, setFormData,
+    selectedTours, setSelectedTours,
+    tourCategory, setTourCategory,
+    errors, setErrors,
+    isSubmitting, setIsSubmitting,
+    activeTourKeys,
+    handleChange, handleNoHotelToggle, toggleTour, handleCategoryChange,
+    validateForm,
+  } = useEnquiryForm();
+
   const [tourDropdownOpen, setTourDropdownOpen] = useState(false);
-  const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const tourDropdownRef = useRef(null);
 
   useEffect(() => {
@@ -63,21 +34,9 @@ const Contact = () => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const activeTourKeys = tourCategory === 'india'
-    ? INDIA_TOUR_KEYS
-    : tourCategory === 'international'
-      ? INTL_TOUR_KEYS
-      : ALL_TOUR_KEYS;
-
-  const handleCategoryChange = (cat) => {
-    setTourCategory(cat);
-    const validTitles = (cat === 'india' ? INDIA_TOUR_KEYS : cat === 'international' ? INTL_TOUR_KEYS : ALL_TOUR_KEYS).map(k => t(k));
-    setSelectedTours(prev => prev.filter(tour => validTitles.includes(tour)));
+  const onCategoryChange = (cat) => {
+    handleCategoryChange(cat);
     setTourDropdownOpen(false);
-  };
-
-  const toggleTour = (tour) => {
-    setSelectedTours(prev => prev.includes(tour) ? prev.filter(x => x !== tour) : [...prev, tour]);
   };
 
   const tourTriggerLabel = selectedTours.length === 0
@@ -85,57 +44,6 @@ const Contact = () => {
     : selectedTours.length === 1
       ? selectedTours[0]
       : t('enquiry.toursSelected', { count: selectedTours.length, defaultValue: `${selectedTours.length} tours selected` });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
-    if ((name === 'startDate' || name === 'endDate') && errors.endDate) {
-      setErrors(prev => ({ ...prev, endDate: '' }));
-    }
-  };
-
-  const handleNoHotelToggle = (event) => {
-    const checked = event.target.checked;
-    setFormData(prev => ({
-      ...prev,
-      noHotelRequired: checked,
-      hotelCategory: checked ? '' : prev.hotelCategory,
-    }));
-    setErrors(prev => ({ ...prev, hotelCategory: '' }));
-  };
-
-  const validateForm = () => {
-    const newErrors = {};
-    if (!formData.name.trim()) newErrors.name = t('contact.validation.nameRequired');
-    if (!formData.email.trim()) {
-      newErrors.email = t('contact.validation.emailRequired');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = t('contact.validation.emailInvalid');
-    }
-    if (!formData.phone.trim()) {
-      newErrors.phone = t('contact.validation.phoneRequired');
-    } else {
-      const digits = formData.phone.replace(/\D/g, '').length;
-      if (digits < 6 || digits > 15) {
-        newErrors.phone = t('contact.validation.phoneInvalid');
-      }
-    }
-    if (!formData.startDate) {
-      newErrors.startDate = t('enquiry.validation.startDateRequired', { defaultValue: 'Start date is required.' });
-    }
-    if (!formData.endDate) {
-      newErrors.endDate = t('enquiry.validation.endDateRequired', { defaultValue: 'End date is required.' });
-    }
-    if (formData.startDate && formData.endDate && formData.endDate < formData.startDate) {
-      newErrors.endDate = t('enquiry.validation.endDateBeforeStart', { defaultValue: 'End date cannot be earlier than start date.' });
-    }
-    if (!formData.noHotelRequired && !formData.hotelCategory) {
-      newErrors.hotelCategory = t('enquiry.validation.hotelPreferenceRequired', { defaultValue: 'Select a hotel option or choose No Hotel Required.' });
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -159,8 +67,8 @@ const Contact = () => {
         setFormData(EMPTY_FORM);
         setSelectedTours([]);
         setTourCategory('');
-      } else if (data.errors) {
-        setErrors(data.errors);
+      } else if (data.errors || data.fieldErrors) {
+        setErrors(data.errors || data.fieldErrors);
       } else {
         setStatus('error');
         setStatusMsg(data.error || t('common.somethingWentWrong', { defaultValue: 'Something went wrong. Please try again.' }));
@@ -256,7 +164,7 @@ const Contact = () => {
                   key={opt.value}
                   type="button"
                   className={`contact-category-pill ${tourCategory === opt.value ? 'active' : ''}`}
-                  onClick={() => handleCategoryChange(opt.value)}
+                  onClick={() => onCategoryChange(opt.value)}
                 >
                   {opt.label}
                 </button>
@@ -389,7 +297,12 @@ const Contact = () => {
           </div>
 
           <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-            {isSubmitting ? t('contact.form.sending', { defaultValue: 'Sending...' }) : t('contact.form.submit')}
+            {isSubmitting ? (
+              <>
+                <span className="btn-spinner" aria-hidden="true" />
+                {t('contact.form.sending', { defaultValue: 'Sending...' })}
+              </>
+            ) : t('contact.form.submit')}
           </button>
 
           {status === 'success' && <div className="form-status success">{statusMsg}</div>}

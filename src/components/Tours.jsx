@@ -1,19 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FOREIGN_TOURS } from '../data/foreignTours';
+import { INDIA_TOURS } from '../data/indiaTours';
 import './Tours.css';
-
-// Defined outside component so the array isn't recreated on every render
-const TOURS = [
-  { id: 'golden-triangle',         titleKey: 'tours.goldenTriangle.title',         durationKey: 'tours.goldenTriangle.duration',         locationsKey: 'tours.goldenTriangle.locations',         descriptionKey: 'tours.goldenTriangle.description',         itineraryKey: 'tours.goldenTriangle.itinerary',         includesKey: 'tours.goldenTriangle.includes',         video: '/assets/tour-videos/Golden%20Triangle%20Tour.mp4',                        rating: 4.9, mealsIncluded: true  },
-  { id: 'agra-full-day',           titleKey: 'tours.agraFullDay.title',             durationKey: 'tours.agraFullDay.duration',             locationsKey: 'tours.agraFullDay.locations',             descriptionKey: 'tours.agraFullDay.description',             itineraryKey: 'tours.agraFullDay.itinerary',             includesKey: 'tours.agraFullDay.includes',             video: '/assets/tour-videos/1DayAgraTour.mp4',                                    rating: 4.9, mealsIncluded: true  },
-  { id: 'jaipur-1-day',            titleKey: 'tours.jaipurDay.title',               durationKey: 'tours.jaipurDay.duration',               locationsKey: 'tours.jaipurDay.locations',               descriptionKey: 'tours.jaipurDay.description',               itineraryKey: 'tours.jaipurDay.itinerary',               includesKey: 'tours.jaipurDay.includes',               video: '/assets/tour-videos/1DayJaipurTour.mp4',                                  rating: 4.7, mealsIncluded: true  },
-  { id: 'delhi-old-half-day',      titleKey: 'tours.delhiOldHalfDay.title',         durationKey: 'tours.delhiOldHalfDay.duration',         locationsKey: 'tours.delhiOldHalfDay.locations',         descriptionKey: 'tours.delhiOldHalfDay.description',         itineraryKey: 'tours.delhiOldHalfDay.itinerary',         includesKey: 'tours.delhiOldHalfDay.includes',         video: '/assets/tour-videos/old_delhi_tour.mp4',                                  rating: 4.6, mealsIncluded: false },
-  { id: 'delhi-new-half-day',      titleKey: 'tours.delhiNewHalfDay.title',         durationKey: 'tours.delhiNewHalfDay.duration',         locationsKey: 'tours.delhiNewHalfDay.locations',         descriptionKey: 'tours.delhiNewHalfDay.description',         itineraryKey: 'tours.delhiNewHalfDay.itinerary',         includesKey: 'tours.delhiNewHalfDay.includes',         video: '/assets/tour-videos/Half%20day%20new%20delhi%20tour.mp4',                rating: 4.6, mealsIncluded: false },
-  { id: 'delhi-full-day',          titleKey: 'tours.delhiFullDay.title',            durationKey: 'tours.delhiFullDay.duration',            locationsKey: 'tours.delhiFullDay.locations',            descriptionKey: 'tours.delhiFullDay.description',            itineraryKey: 'tours.delhiFullDay.itinerary',            includesKey: 'tours.delhiFullDay.includes',            video: '/assets/tour-videos/Delhi%20Day%20Tour.mp4',                              rating: 4.7, mealsIncluded: true  },
-  { id: 'golden-triangle-mumbai',  titleKey: 'tours.goldenTriangleMumbai.title',   durationKey: 'tours.goldenTriangleMumbai.duration',   locationsKey: 'tours.goldenTriangleMumbai.locations',   descriptionKey: 'tours.goldenTriangleMumbai.description',   itineraryKey: 'tours.goldenTriangleMumbai.itinerary',   includesKey: 'tours.goldenTriangleMumbai.includes',   video: '/assets/tour-videos/Golden%20Triangle%20With%20Mumbai.mp4',               rating: 4.8, mealsIncluded: true  },
-  { id: 'golden-triangle-varanasi',titleKey: 'tours.goldenTriangleVaranasi.title', durationKey: 'tours.goldenTriangleVaranasi.duration', locationsKey: 'tours.goldenTriangleVaranasi.locations', descriptionKey: 'tours.goldenTriangleVaranasi.description', itineraryKey: 'tours.goldenTriangleVaranasi.itinerary', includesKey: 'tours.goldenTriangleVaranasi.includes', video: '/assets/tour-videos/Golden%20Triangle%20Tour%20with%20Varanasi.mp4',      rating: 4.9, mealsIncluded: true  },
-];
 
 
 const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
@@ -56,7 +45,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
     };
   }, [selectedTourId]);
 
-  const tours = TOURS;
+  const tours = INDIA_TOURS;
   const foreignTours = FOREIGN_TOURS;
 
   const toggleDesc = (tourId) => {

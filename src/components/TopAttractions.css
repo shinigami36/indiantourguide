@@ -19,7 +19,7 @@
 
 /* ── Refined header ───────────────────────────────────────────── */
 .ta-header {
-  padding: 4.5rem 0 2.5rem;
+  padding: 5rem 0 2.5rem;
 }
 
 /* Small orange pill tag */
@@ -30,8 +30,8 @@
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--clr-primary);
-  background: rgba(232,120,67,0.08);
-  border: 1px solid rgba(232,120,67,0.18);
+  background: var(--clr-primary-8);
+  border: 1px solid var(--clr-primary-20);
   border-radius: 999px;
   padding: 0.28rem 0.85rem;
   margin-bottom: 1rem;
@@ -152,7 +152,7 @@
 
 /* Info panel */
 .ta-card-body {
-  padding: 1.125rem 1.25rem 1.375rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;

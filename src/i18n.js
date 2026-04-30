@@ -11,6 +11,7 @@ import zh from './locales/zh.json';
 import ko from './locales/ko.json';
 import ar from './locales/ar.json';
 import ru from './locales/ru.json';
+import th from './locales/th.json';
 
 const resources = {
   en: { translation: en },
@@ -22,9 +23,10 @@ const resources = {
   ko: { translation: ko },
   ar: { translation: ar },
   ru: { translation: ru },
+  th: { translation: th },
 };
 
-const SUPPORTED_LANGUAGES = ['en', 'es', 'de', 'fr', 'ja', 'zh', 'ko', 'ar', 'ru'];
+const SUPPORTED_LANGUAGES = ['en', 'es', 'de', 'fr', 'ja', 'zh', 'ko', 'ar', 'ru', 'th'];
 
 i18n
   .use(LanguageDetector)

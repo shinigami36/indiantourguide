@@ -3,71 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { fetchGoogleReviews } from '../utils/api';
 import './Reviews.css';
 
-const FALLBACK_REVIEWS = [
-  {
-    id: 1,
-    name: 'James Anderson',
-    country: 'United Kingdom',
-    avatar: 'JA',
-    rating: 5,
-    date: 'February 2026',
-    text: 'Absolutely incredible experience! Our guide was knowledgeable, the itinerary was perfectly paced, and the Taj Mahal at sunrise is something I will never forget. India Tours Guide made every detail seamless.',
-  },
-  {
-    id: 2,
-    name: 'Sophie Laurent',
-    country: 'France',
-    avatar: 'SL',
-    rating: 5,
-    date: 'January 2026',
-    text: 'From the Golden Triangle to Jaipur, every moment was magical. The private driver was punctual and professional, and the hotels were beautifully chosen. I would book with them again without hesitation.',
-  },
-  {
-    id: 3,
-    name: 'Michael Chen',
-    country: 'Australia',
-    avatar: 'MC',
-    rating: 5,
-    date: 'December 2025',
-    text: 'Best travel experience of my life. The team responded instantly to all my questions before the trip and the on-ground support was exceptional. Highly recommended for first-time India visitors.',
-  },
-  {
-    id: 4,
-    name: 'Maria Santos',
-    country: 'Brazil',
-    avatar: 'MS',
-    rating: 5,
-    date: 'November 2025',
-    text: 'We did the Golden Triangle with Varanasi — the sunset boat ride on the Ganges was breathtaking. Every guide was passionate about sharing their culture. A truly transformative journey.',
-  },
-  {
-    id: 5,
-    name: 'David Müller',
-    country: 'Germany',
-    avatar: 'DM',
-    rating: 5,
-    date: 'October 2025',
-    text: 'Excellent organisation and very personal service. The customised itinerary matched our interest in history and architecture perfectly. Amber Fort and Fatehpur Sikri were highlights we will treasure forever.',
-  },
-  {
-    id: 6,
-    name: 'Yuki Tanaka',
-    country: 'Japan',
-    avatar: 'YT',
-    rating: 5,
-    date: 'September 2025',
-    text: 'Professional, friendly, and genuinely caring. Our guide spoke excellent English and shared wonderful stories behind every monument. The Red Fort tour was spectacular. We will definitely return!',
-  },
-  {
-    id: 7,
-    name: 'Emma Wilson',
-    country: 'Canada',
-    avatar: 'EW',
-    rating: 5,
-    date: 'August 2025',
-    text: 'Booked the Jaipur day tour and was blown away. The elephant safari at Amber Fort and the City Palace were incredible. The team was flexible when I wanted to extend the tour — top-class service.',
-  },
-];
+// Number of skeleton cards to render while real Google Reviews are loading.
+// No fake reviews are ever shown — if the API is unavailable we display a
+// "See all reviews on Google" CTA instead.
+const SKELETON_COUNT = 4;
 
 const toAvatar = (name) => {
   if (!name) return 'GU';
@@ -106,11 +45,15 @@ const Stars = ({ count }) => (
 const Reviews = () => {
   const { t } = useTranslation();
   const scrollRef = useRef(null);
-  const [reviews, setReviews] = useState(FALLBACK_REVIEWS);
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
+  // Start with null numeric fields so the UI doesn't show a fabricated
+  // rating/count before the Google Places API responds.
   const [summary, setSummary] = useState({
     businessName: 'India Tours Guide',
-    rating: 4.9,
-    totalReviews: 128,
+    rating: null,
+    totalReviews: null,
     googleUrl: '',
   });
 
@@ -126,41 +69,36 @@ const Reviews = () => {
         ? payload.reviews
             .map(mapGoogleReviewToCard)
             .filter((review) => review.text)
-            .slice(0, 6)
+            .slice(0, 10)
         : [];
 
-      if (mapped.length > 0) {
-        setReviews(mapped);
-      }
-
+      setReviews(mapped);
       setSummary({
         businessName: payload?.businessName || 'India Tours Guide',
-        rating: Number.isFinite(Number(payload?.rating)) ? Number(payload.rating) : 4.9,
+        rating: Number.isFinite(Number(payload?.rating)) ? Number(payload.rating) : null,
         totalReviews: Number.isFinite(Number(payload?.totalReviews)) ? Number(payload.totalReviews) : mapped.length,
         googleUrl: payload?.googleUrl || '',
       });
+      setLoadFailed(false);
     } catch {
-      // Keep fallback data when backend is not configured or unavailable.
+      // Backend not configured / API unreachable — surface an honest CTA
+      // instead of fake reviews.
+      setLoadFailed(true);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
   useEffect(() => {
+    // Fetch once on mount only. The backend caches the Google Places payload
+    // for 24h (file-backed across restarts) and serves it with Cache-Control
+    // headers, so the browser will 304 almost every request. No client-side
+    // polling needed — it just wastes requests for users who leave a tab open.
     let active = true;
-
-    const safeLoad = async () => {
-      if (!active) return;
-      await loadReviews();
-    };
-
-    safeLoad();
-
-    // Poll once per day to keep API usage very low.
-    const intervalId = window.setInterval(safeLoad, 24 * 60 * 60 * 1000);
-
-    return () => {
-      active = false;
-      window.clearInterval(intervalId);
-    };
+    (async () => {
+      if (active) await loadReviews();
+    })();
+    return () => { active = false; };
   }, [loadReviews]);
 
   const badgeCountText = useMemo(() => {
@@ -169,6 +107,10 @@ const Reviews = () => {
     }
     return `${summary.totalReviews} Google Reviews`;
   }, [summary.totalReviews, t]);
+
+  const hasLiveRating = Number.isFinite(Number(summary.rating));
+  const showSkeleton = loading && reviews.length === 0;
+  const showEmptyState = !loading && reviews.length === 0;
 
   return (
     <section className="reviews-section" aria-labelledby="reviews-title">
@@ -194,14 +136,26 @@ const Reviews = () => {
               </svg>
               <span>Verified on Google</span>
             </div>
-            <div className="reviews-badge-rating">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-              </svg>
-              <span className="reviews-badge-score">{summary.rating.toFixed(1)}</span>
-              <span className="reviews-badge-max">/ 5</span>
-            </div>
-            <p className="reviews-badge-count">{badgeCountText}</p>
+            {hasLiveRating ? (
+              <div className="reviews-badge-rating">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#f59e0b" aria-hidden="true">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+                <span className="reviews-badge-score">{Number(summary.rating).toFixed(1)}</span>
+                <span className="reviews-badge-max">/ 5</span>
+              </div>
+            ) : (
+              <div className="reviews-badge-rating reviews-badge-rating--loading" aria-hidden={!loading}>
+                <span className="reviews-skeleton reviews-skeleton--score" />
+              </div>
+            )}
+            {summary.totalReviews ? (
+              <p className="reviews-badge-count">{badgeCountText}</p>
+            ) : (
+              <p className="reviews-badge-count reviews-badge-count--muted">
+                {loading ? 'Loading reviews…' : 'Google Reviews'}
+              </p>
+            )}
             <div className="reviews-google-logo" aria-label={t('reviews.googleAria', { defaultValue: 'Google' })}>
               <span style={{ color: '#4285F4' }}>G</span>
               <span style={{ color: '#EA4335' }}>o</span>
@@ -222,20 +176,60 @@ const Reviews = () => {
           </button>
 
           <div className="reviews-scroll" ref={scrollRef}>
-            {reviews.map(review => (
-              <article key={review.id} className="review-card">
-                <div className="review-card-top">
-                  <div className="review-avatar" aria-hidden="true">{review.avatar}</div>
-                  <div className="review-meta">
-                    <p className="review-name">{review.name}</p>
-                    <p className="review-country">{review.country}</p>
-                  </div>
-                </div>
-                <Stars count={review.rating} />
-                <p className="review-text">"{review.text}"</p>
-                <p className="review-date">{review.date}</p>
-              </article>
-            ))}
+            {showSkeleton
+              ? Array.from({ length: SKELETON_COUNT }, (_, i) => (
+                  <article key={`skeleton-${i}`} className="review-card review-card--skeleton" aria-hidden="true">
+                    <div className="review-card-top">
+                      <div className="reviews-skeleton reviews-skeleton--avatar" />
+                      <div className="review-meta">
+                        <div className="reviews-skeleton reviews-skeleton--line reviews-skeleton--line-short" />
+                        <div className="reviews-skeleton reviews-skeleton--line reviews-skeleton--line-shorter" />
+                      </div>
+                    </div>
+                    <div className="reviews-skeleton reviews-skeleton--stars" />
+                    <div className="reviews-skeleton reviews-skeleton--line" />
+                    <div className="reviews-skeleton reviews-skeleton--line" />
+                    <div className="reviews-skeleton reviews-skeleton--line reviews-skeleton--line-short" />
+                  </article>
+                ))
+              : showEmptyState
+                ? (
+                  <article className="review-card review-card--empty">
+                    <p className="review-text">
+                      {loadFailed
+                        ? 'Live Google reviews are temporarily unavailable. Please visit our Google profile to read the latest traveler stories.'
+                        : 'No reviews to display yet.'}
+                    </p>
+                    {summary.googleUrl ? (
+                      <a className="reviews-view-link" href={summary.googleUrl} target="_blank" rel="noopener noreferrer">
+                        Read reviews on Google ↗
+                      </a>
+                    ) : (
+                      <a
+                        className="reviews-view-link"
+                        href="https://www.google.com/maps/place/indiatoursguide"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Read reviews on Google ↗
+                      </a>
+                    )}
+                  </article>
+                )
+                : reviews.map(review => (
+                    <article key={review.id} className="review-card">
+                      <div className="review-card-top">
+                        <div className="review-avatar" aria-hidden="true">{review.avatar}</div>
+                        <div className="review-meta">
+                          <p className="review-name">{review.name}</p>
+                          <p className="review-country">{review.country}</p>
+                        </div>
+                      </div>
+                      <Stars count={review.rating} />
+                      <p className="review-text">"{review.text}"</p>
+                      <p className="review-date">{review.date}</p>
+                    </article>
+                  ))}
           </div>
 
           <button className="review-arrow review-arrow-right" onClick={() => nudge(1)} aria-label={t('reviews.scrollRightAria', { defaultValue: 'Scroll reviews right' })}>

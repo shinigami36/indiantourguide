@@ -16,14 +16,26 @@
   --clr-text-muted:#9c9aaa;
 
   /* Brand / accent */
-  --clr-primary:   #E87843;
-  --clr-primary-dk:#d45f28;
-  --clr-accent:    #0d0c22;
-  --clr-gold:      #f59e0b;
+  --clr-primary:     #E87843;
+  --clr-primary-dk:  #d45f28;
+  --clr-primary-5:   rgba(232,120,67,0.05);
+  --clr-primary-8:   rgba(232,120,67,0.08);
+  --clr-primary-12:  rgba(232,120,67,0.12);
+  --clr-primary-20:  rgba(232,120,67,0.20);
+  --clr-accent:      #0d0c22;
+  --clr-gold:        #f59e0b;
+  --clr-gold-bg:     rgba(245,158,11,0.1);
+
+  /* Semantic */
+  --clr-error:       #dc2626;
+  --clr-error-bg:    #fee2e2;
+  --clr-success:     #16a34a;
+  --clr-success-bg:  #dcfce7;
 
   /* Borders */
   --clr-border:       rgba(0, 0, 0, 0.08);
-  --clr-border-hover: rgba(234, 76, 137, 0.35);
+  --clr-border-md:    rgba(0, 0, 0, 0.12);
+  --clr-border-hover: rgba(232,120,67,0.3);
 
   /* Buttons */
   --btn-bg:           #0d0c22;
@@ -172,33 +184,36 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   color: var(--clr-primary);
-  margin-bottom: 1rem;
-  padding: 0.3rem 0.875rem;
-  background: rgba(232,120,67,0.08);
-  border: 1px solid rgba(232,120,67,0.2);
+  margin-bottom: 1.1rem;
+  padding: 0.32rem 0.9rem;
+  background: var(--clr-primary-8);
+  border: 1px solid var(--clr-primary-20);
   border-radius: 999px;
+  font-family: var(--font-sans);
 }
 
 .section-title {
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(1.9rem, 3.8vw, 2.75rem);
   font-weight: 800;
   color: var(--clr-text-1);
-  margin: 0 0 0.6rem;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  margin: 0 0 0.7rem;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+  font-family: var(--font-sans);
 }
 
 .section-subtitle {
   font-size: 1.05rem;
   color: var(--clr-text-3);
   margin: 0;
-  line-height: 1.65;
-  max-width: 520px;
+  line-height: 1.7;
+  max-width: 540px;
+  font-family: var(--font-sans);
 }
 
 .section-header {

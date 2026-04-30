@@ -247,3 +247,81 @@
 
   .reviews-badge { align-self: flex-start; }
 }
+
+/* ── Skeleton loader + empty state ─────────────────────────── */
+/* Shown while Google Reviews are being fetched; never shows fake names. */
+@keyframes reviews-skeleton-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.reviews-skeleton {
+  display: block;
+  background: #e5e7eb;
+  background-image: linear-gradient(90deg, #e5e7eb 0px, #f3f4f6 40px, #e5e7eb 80px);
+  background-size: 400px 100%;
+  background-repeat: no-repeat;
+  border-radius: 6px;
+  animation: reviews-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.reviews-skeleton--avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.reviews-skeleton--line {
+  height: 10px;
+  width: 100%;
+  margin: 4px 0;
+}
+
+.reviews-skeleton--line-short   { width: 60%; }
+.reviews-skeleton--line-shorter { width: 40%; }
+
+.reviews-skeleton--stars {
+  height: 14px;
+  width: 88px;
+}
+
+.reviews-skeleton--score {
+  height: 22px;
+  width: 70px;
+  margin: 0 auto;
+}
+
+.review-card--skeleton { pointer-events: none; }
+
+.review-card--empty {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 180px;
+}
+
+.reviews-badge-rating--loading {
+  justify-content: center;
+  min-height: 28px;
+}
+
+.reviews-badge-count--muted {
+  color: #9ca3af;
+  font-style: italic;
+}
+
+.reviews-view-link {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.8rem;
+  color: #4285F4;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.reviews-view-link:hover { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reviews-skeleton { animation: none; }
+}

@@ -23,7 +23,7 @@
 /* ── Modal card ── */
 .enquiry-modal-content {
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: var(--radius-xl);
   width: 100%;
   max-width: 440px;
   padding: 0;
@@ -52,7 +52,7 @@
   right: 0;
   height: 3px;
   background: var(--clr-primary);
-  border-radius: 20px 20px 0 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   pointer-events: none;
   z-index: 1;
 }
@@ -67,8 +67,8 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(241, 245, 249, 0.9);
-  border: 1px solid rgba(226,232,240,0.7);
+  background: var(--clr-bg-muted);
+  border: 1px solid var(--clr-border);
   font-size: 1.1rem;
   cursor: pointer;
   color: var(--clr-text-3);
@@ -85,7 +85,7 @@
 }
 
 .enquiry-modal-close:hover {
-  background: rgba(226, 232, 240, 0.9);
+  background: var(--clr-bg-alt);
   color: var(--clr-text-1);
   transform: rotate(90deg);
 }
@@ -141,7 +141,7 @@
   border: 1px solid rgba(252, 165, 165, 0.6);
   border-radius: var(--radius-sm);
   font-size: 0.85rem;
-  color: #dc2626;
+  color: var(--clr-error);
 }
 
 /* ── Modal Form ── */
@@ -167,7 +167,7 @@
 }
 
 /* Country select inside modal — reset inner input so it looks like one unified box */
-.modal-form .form-group .cs-wrapper { border: 1.5px solid rgba(0,0,0,0.1); background: #f8f8fc; }
+.modal-form .form-group .cs-wrapper { border: 1.5px solid rgba(0,0,0,0.1); background: var(--clr-bg-alt); }
 .modal-form .form-group .cs-input { background: transparent !important; border: none !important; box-shadow: none !important; padding: 0.7rem 0 !important; width: auto !important; }
 .modal-form .form-group .cs-wrapper:focus-within { border-color: var(--clr-primary); box-shadow: 0 0 0 3px rgba(232,120,67,0.12); background: #fff; }
 
@@ -175,7 +175,7 @@
 .modal-form .form-group input,
 .modal-form .form-group textarea {
   width: 100%;
-  padding: 0.7rem 0.975rem;
+  padding: 0.725rem 1rem;
   border: 1.5px solid rgba(0,0,0,0.1);
   border-radius: var(--radius-sm);
   font-size: 0.925rem;
@@ -193,7 +193,7 @@
 
 .modal-form .form-group input:hover,
 .modal-form .form-group textarea:hover {
-  border-color: rgba(232,120,67,0.4);
+  border-color: var(--clr-border-md);
 }
 
 .modal-form .form-group input:focus,
@@ -205,8 +205,8 @@
 }
 
 .modal-form .form-group input.error {
-  border-color: #f87171;
-  background: rgba(254, 242, 242, 0.7);
+  border-color: var(--clr-error);
+  background: var(--clr-error-bg);
 }
 
 .modal-form .form-group input.error:focus {
@@ -216,7 +216,7 @@
 /* ── Error message ── */
 .error-message {
   font-size: 0.775rem;
-  color: #dc2626;
+  color: var(--clr-error);
   margin-top: 0.15rem;
 }
 
@@ -238,7 +238,7 @@
   border-radius: var(--radius-sm);
   font-size: 0.925rem;
   font-family: var(--font-sans);
-  background: #f8f8fc;
+  background: var(--clr-bg-alt);
   color: var(--clr-text-1);
   cursor: pointer;
   transition: border-color 0.22s ease, box-shadow 0.22s ease;
@@ -273,7 +273,7 @@
   padding: 0.58rem 0.4rem;
   border: 1.5px solid rgba(0,0,0,0.1);
   border-radius: var(--radius-sm);
-  background: #f8f8fc;
+  background: var(--clr-bg-alt);
   color: var(--clr-text-2);
   font-size: 0.875rem;
   font-weight: 600;
@@ -336,7 +336,7 @@
 
 .no-hotel-check:hover {
   border-color: var(--clr-primary);
-  background: rgba(240, 249, 255, 0.9);
+  background: var(--clr-bg-alt);
 }
 
 .no-hotel-check:focus-within {
@@ -363,7 +363,7 @@
   border: 1.5px solid rgba(0,0,0,0.1);
   border-radius: var(--radius-sm);
   padding: 0.58rem 0.8rem;
-  background: #f8f8fc;
+  background: var(--clr-bg-alt);
   gap: 0.5rem;
   transition: border-color 0.22s ease;
 }
@@ -380,9 +380,9 @@
 .stepper-btn {
   width: 30px;
   height: 30px;
-  border: 1.5px solid rgba(226, 232, 240, 0.8);
+  border: 1.5px solid var(--clr-border-md);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--clr-surface);
   color: var(--clr-text-2);
   font-size: 1.1rem;
   line-height: 1;
@@ -422,7 +422,7 @@
   padding: 0.58rem 0.5rem;
   border: 1.5px solid rgba(0,0,0,0.1);
   border-radius: var(--radius-sm);
-  background: #f8f8fc;
+  background: var(--clr-bg-alt);
   color: var(--clr-text-3);
   font-size: 0.82rem;
   font-weight: 600;
@@ -448,11 +448,11 @@
 .multiselect-trigger {
   width: 100%;
   padding: 0.7rem 0.975rem;
-  border: 1.5px solid rgba(226, 232, 240, 0.8);
+  border: 1.5px solid var(--clr-border);
   border-radius: var(--radius-sm);
   font-size: 0.925rem;
   font-family: inherit;
-  background: rgba(248, 250, 252, 0.7);
+  background: var(--clr-bg-alt);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -470,7 +470,7 @@
 }
 
 .multiselect-trigger.open {
-  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.13);
+  box-shadow: 0 0 0 3px var(--clr-primary-12);
 }
 
 .multiselect-trigger .placeholder { color: var(--clr-text-muted); }
@@ -650,4 +650,20 @@
   .date-row           { grid-template-columns: 1fr; }
   .travelers-row      { flex-direction: column; gap: 0.5rem; }
   .submit-btn         { font-size: 0.9rem; padding: 0.75rem 1.5rem; }
+}
+
+.btn-spinner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  vertical-align: -0.15em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: btn-spinner-rotate 0.7s linear infinite;
+}
+@keyframes btn-spinner-rotate { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .btn-spinner { animation-duration: 2s; }
 }
