@@ -372,6 +372,19 @@ const enquirySchema = new mongoose.Schema({
 
 const Enquiry = mongoose.model('Enquiry', enquirySchema);
 
+// Review Schema
+const reviewSchema = new mongoose.Schema({
+  name: { type: String, required: true, maxlength: 100 },
+  email: { type: String, required: true, maxlength: 200 },
+  rating: { type: Number, required: true, min: 1, max: 5 },
+  title: { type: String, required: true, maxlength: 150 },
+  content: { type: String, required: true, maxlength: 2000 },
+  status: { type: String, enum: ['pending', 'approved', 'rejected'], default: 'pending' },
+  createdAt: { type: Date, default: Date.now },
+});
+
+const Review = mongoose.model('Review', reviewSchema);
+
 // Tour Schema
 const tourSchema = new mongoose.Schema({
   id: { type: String, required: true, unique: true },
@@ -717,6 +730,140 @@ app.put('/api/tours/:id', requireAdminToken, requireMongo, async (req, res) => {
   } catch (error) {
     console.error('Error updating tour:', error);
     res.status(500).json({ success: false, error: 'Failed to update tour' });
+  }
+});
+
+// ── Site Reviews ─────────────────────────────────────────────────
+
+const reviewSubmitLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { success: false, error: 'Too many review submissions. Please try again later.' },
+});
+
+// Submit a new review (goes into pending for moderation)
+app.post('/api/reviews', reviewSubmitLimiter, requireMongo, async (req, res) => {
+  try {
+    const { name, email, rating, title, content } = req.body;
+
+    if (!name || !email || !rating || !title || !content) {
+      return res.status(400).json({ success: false, error: 'Name, email, rating, title and content are required.' });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ success: false, error: 'Invalid email address.' });
+    }
+
+    const parsedRating = Number(rating);
+    if (!Number.isFinite(parsedRating) || parsedRating < 1 || parsedRating > 5) {
+      return res.status(400).json({ success: false, error: 'Rating must be between 1 and 5.' });
+    }
+
+    const review = new Review({
+      name: sanitizeText(name, 100),
+      email: sanitizeText(email, 200),
+      rating: Math.round(parsedRating),
+      title: sanitizeText(title, 150),
+      content: sanitizeText(content, 2000),
+    });
+
+    await review.save();
+
+    return res.status(201).json({
+      success: true,
+      message: 'Thank you for your review! It will appear after moderation.',
+    });
+  } catch (err) {
+    console.error('Review submission error:', err);
+    return res.status(500).json({ success: false, error: 'Failed to submit review.' });
+  }
+});
+
+// Fetch approved reviews + aggregate stats (paginated)
+// Query params: ?skip=0&limit=6
+app.get('/api/reviews', reviewsLimiter, requireMongo, async (req, res) => {
+  try {
+    const skip  = Math.max(0, parseInt(req.query.skip,  10) || 0);
+    const limit = Math.min(50, Math.max(1, parseInt(req.query.limit, 10) || 6));
+
+    // Run page fetch + aggregate in parallel
+    const [page, agg] = await Promise.all([
+      Review.find({ status: 'approved' })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .select('-email')
+        .lean(),
+      Review.aggregate([
+        { $match: { status: 'approved' } },
+        { $group: {
+          _id: null,
+          total:   { $sum: 1 },
+          sum:     { $sum: '$rating' },
+          count5:  { $sum: { $cond: [{ $eq: ['$rating', 5] }, 1, 0] } },
+          count4:  { $sum: { $cond: [{ $eq: ['$rating', 4] }, 1, 0] } },
+          count3:  { $sum: { $cond: [{ $eq: ['$rating', 3] }, 1, 0] } },
+          count2:  { $sum: { $cond: [{ $eq: ['$rating', 2] }, 1, 0] } },
+          count1:  { $sum: { $cond: [{ $eq: ['$rating', 1] }, 1, 0] } },
+        }},
+      ]),
+    ]);
+
+    const aggRow   = agg[0] || { total: 0, sum: 0, count5: 0, count4: 0, count3: 0, count2: 0, count1: 0 };
+    const total    = aggRow.total;
+    const avgRating = total > 0 ? Math.round((aggRow.sum / total) * 10) / 10 : null;
+    const breakdown = { 5: aggRow.count5, 4: aggRow.count4, 3: aggRow.count3, 2: aggRow.count2, 1: aggRow.count1 };
+
+    return res.json({
+      success: true,
+      data: {
+        reviews: page,
+        hasMore: skip + page.length < total,
+        stats: { total, avgRating, breakdown },
+      },
+    });
+  } catch (err) {
+    console.error('Error fetching reviews:', err);
+    return res.status(500).json({ success: false, error: 'Failed to fetch reviews.' });
+  }
+});
+
+// Admin: list pending reviews
+app.get('/api/reviews/pending', requireAdminToken, requireMongo, async (req, res) => {
+  try {
+    const reviews = await Review.find({ status: 'pending' }).sort({ createdAt: -1 }).lean();
+    return res.json({ success: true, data: reviews });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Failed to fetch pending reviews.' });
+  }
+});
+
+// Admin: approve or reject a review
+app.patch('/api/reviews/:id', requireAdminToken, requireMongo, async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (!['approved', 'rejected'].includes(status)) {
+      return res.status(400).json({ success: false, error: 'Status must be approved or rejected.' });
+    }
+    const review = await Review.findByIdAndUpdate(req.params.id, { status }, { new: true });
+    if (!review) return res.status(404).json({ success: false, error: 'Review not found.' });
+    return res.json({ success: true, data: review });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Failed to update review.' });
+  }
+});
+
+// Admin: delete a review
+app.delete('/api/reviews/:id', requireAdminToken, requireMongo, async (req, res) => {
+  try {
+    const review = await Review.findByIdAndDelete(req.params.id);
+    if (!review) return res.status(404).json({ success: false, error: 'Review not found.' });
+    return res.json({ success: true, message: 'Review deleted.' });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: 'Failed to delete review.' });
   }
 });
 
