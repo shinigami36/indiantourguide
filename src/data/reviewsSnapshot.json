@@ -1,0 +1,76 @@
+{
+  "reviews": [
+    {
+      "_id": "69f38ab247bece07c66a5264",
+      "name": "Juliana Osei",
+      "rating": 5,
+      "title": "First class experience",
+      "content": "India Tours Guide organised our Jaipur Day Tour and we were incredibly impressed at every stage. Professional drivers, expert guides, well chosen hotels and restaurants. The whole family had an amazing time. Our children particularly loved the rickshaw ride through Old Delhi. Absolutely recommend this company.",
+      "status": "approved",
+      "createdAt": "2025-03-28T09:55:16.542Z",
+      "__v": 0
+    },
+    {
+      "_id": "69f38ab247bece07c66a52a7",
+      "name": "Priya Thompson",
+      "rating": 2,
+      "title": "Some issues but guide was helpful",
+      "content": "Had mixed feelings about our Golden Triangle with Varanasi. The guide was helpful and the monuments themselves were extraordinary. However there were organisational hiccups that caused unnecessary stress, and one vehicle had air conditioning issues on a hot day. The team resolved problems when raised but we expected smoother execution for the price paid.",
+      "status": "approved",
+      "createdAt": "2025-03-26T14:28:16.138Z",
+      "__v": 0
+    },
+    {
+      "_id": "69f38ab247bece07c66a526e",
+      "name": "Sunita Morozov",
+      "rating": 5,
+      "title": "We felt like royalty",
+      "content": "The Golden Triangle with Mumbai was everything we hoped for and so much more. Our guide was warm, professional and genuinely passionate about sharing India's culture with us. Every meal arrangement, every transfer, every site visit was perfectly coordinated. We felt completely safe and cared for throughout. Already planning our next trip with India Tours Guide.",
+      "status": "approved",
+      "createdAt": "2025-03-24T08:34:45.038Z",
+      "__v": 0
+    },
+    {
+      "_id": "69f38ab247bece07c66a5288",
+      "name": "Laura Fischer",
+      "rating": 4,
+      "title": "Highly recommend this company",
+      "content": "The Full Day Agra Tour was well organised and our guide was excellent. Knowledgeable, punctual and genuinely helpful throughout. The hotels were good quality and the food recommendations were spot on. A minor logistical issue on the last day was handled professionally. Very happy overall and would book with India Tours Guide again.",
+      "status": "approved",
+      "createdAt": "2025-03-20T00:02:49.945Z",
+      "__v": 0
+    },
+    {
+      "_id": "69f38ab247bece07c66a5375",
+      "name": "Yan Darko",
+      "rating": 5,
+      "title": "Cannot recommend highly enough",
+      "content": "We have used many tour companies over the years but India Tours Guide stands apart on our Full Day Agra Tour. The guides depth of historical knowledge was impressive, the vehicle was comfortable for long journeys, and every logistical detail was handled seamlessly. India is now one of our favourite destinations and this company is the reason.",
+      "status": "approved",
+      "createdAt": "2025-03-18T22:22:36.402Z",
+      "__v": 0
+    },
+    {
+      "_id": "69f38ab247bece07c66a52f7",
+      "name": "Michael Huang",
+      "rating": 4,
+      "title": "Very positive experience",
+      "content": "India Tours Guide delivered a high quality Half Day Old Delhi Tour experience. From the airport pickup to the final drop off everything was professionally managed. Our guide was engaging and helpful. A couple of optional add ons felt slightly overpriced but the core tour was excellent value. Would absolutely use them again.",
+      "status": "approved",
+      "createdAt": "2025-03-18T10:49:02.662Z",
+      "__v": 0
+    }
+  ],
+  "hasMore": true,
+  "stats": {
+    "total": 442,
+    "avgRating": 4.8,
+    "breakdown": {
+      "1": 2,
+      "2": 2,
+      "3": 9,
+      "4": 58,
+      "5": 371
+    }
+  }
+}

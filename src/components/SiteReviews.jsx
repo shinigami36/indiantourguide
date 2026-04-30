@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getApiBaseUrl, postJsonWithRetry } from '../utils/api';
+import snapshot from '../data/reviewsSnapshot.json';
 import './SiteReviews.css';
 
 const GOOGLE_MAPS_URL =
@@ -42,10 +43,11 @@ const StarPicker = ({ value, onChange }) => (
 const EMPTY_FORM = { name: '', email: '', rating: 0, title: '', content: '' };
 
 export default function SiteReviews() {
-  const [reviews, setReviews]         = useState([]);
-  const [stats, setStats]             = useState(null);
-  const [hasMore, setHasMore]         = useState(false);
-  const [loading, setLoading]         = useState(true);
+  // Seed from bundled snapshot so cards render instantly — no skeleton wait
+  const [reviews, setReviews]         = useState(snapshot.reviews);
+  const [stats, setStats]             = useState(snapshot.stats);
+  const [hasMore, setHasMore]         = useState(snapshot.hasMore);
+  const [loading, setLoading]         = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showForm, setShowForm]       = useState(false);
   const [form, setForm]               = useState(EMPTY_FORM);
@@ -56,6 +58,7 @@ export default function SiteReviews() {
   const formRef    = useRef(null);
   const moreAnchor = useRef(null);
 
+  // Background refresh — silently updates cards + stats with live data
   const load = useCallback(async () => {
     try {
       const res  = await fetch(`${getApiBaseUrl()}/api/reviews?skip=0&limit=${INITIAL_LIMIT}`);
@@ -65,9 +68,7 @@ export default function SiteReviews() {
         setStats(json.data.stats);
         setHasMore(json.data.hasMore);
       }
-    } catch { /* silent */ } finally {
-      setLoading(false);
-    }
+    } catch { /* keep snapshot data on network error */ }
   }, []);
 
   useEffect(() => { load(); }, [load]);
@@ -283,23 +284,7 @@ export default function SiteReviews() {
 
         {/* ── Review cards ─────────────────────── */}
         <div className="sr-cards">
-          {loading
-            ? [1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="sr-card sr-card--skel" aria-hidden="true">
-                  <div className="sr-card-top">
-                    <div className="sr-skel sr-skel--avatar" />
-                    <div className="sr-card-meta">
-                      <div className="sr-skel sr-skel--line sr-skel--short" />
-                      <div className="sr-skel sr-skel--line sr-skel--shorter" />
-                    </div>
-                  </div>
-                  <div className="sr-skel sr-skel--stars" />
-                  <div className="sr-skel sr-skel--line" />
-                  <div className="sr-skel sr-skel--line" />
-                  <div className="sr-skel sr-skel--line sr-skel--short" />
-                </div>
-              ))
-            : reviews.length === 0
+          {reviews.length === 0
               ? (
                 <div className="sr-empty">
                   <p>No reviews yet — be the first to share your experience!</p>
