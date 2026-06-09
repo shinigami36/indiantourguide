@@ -402,6 +402,18 @@
       "handpicked": "Handpicked tours & experiences",
       "personalized": "Personalized itineraries",
       "guidance": "Expert local guidance"
+    },
+    "travelDates": "여행 날짜",
+    "startDate": "시작일",
+    "endDate": "종료일",
+    "noHotelRequired": "호텔 불필요",
+    "tourType": "관심 있는 투어",
+    "successBodyNoWhatsapp": "저희 여행 전문가가 곧 연락드리겠습니다.",
+    "validation": {
+      "startDateRequired": "시작일을 입력해 주세요.",
+      "endDateRequired": "종료일을 입력해 주세요.",
+      "endDateBeforeStart": "종료일은 시작일보다 빠를 수 없습니다.",
+      "hotelPreferenceRequired": "호텔 옵션을 선택하거나 '호텔 불필요'를 선택해 주세요."
     }
   },
   "common": {

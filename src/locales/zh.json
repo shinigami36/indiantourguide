@@ -402,6 +402,18 @@
       "handpicked": "Handpicked tours & experiences",
       "personalized": "Personalized itineraries",
       "guidance": "Expert local guidance"
+    },
+    "travelDates": "出行日期",
+    "startDate": "开始日期",
+    "endDate": "结束日期",
+    "noHotelRequired": "无需酒店",
+    "tourType": "我感兴趣的是",
+    "successBodyNoWhatsapp": "我们的旅行专家将很快与您联系。",
+    "validation": {
+      "startDateRequired": "请填写开始日期。",
+      "endDateRequired": "请填写结束日期。",
+      "endDateBeforeStart": "结束日期不能早于开始日期。",
+      "hotelPreferenceRequired": "请选择酒店选项或选择无需酒店。"
     }
   },
   "common": {

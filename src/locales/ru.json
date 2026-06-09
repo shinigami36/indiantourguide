@@ -402,6 +402,18 @@
       "handpicked": "Handpicked tours & experiences",
       "personalized": "Personalized itineraries",
       "guidance": "Expert local guidance"
+    },
+    "travelDates": "Даты поездки",
+    "startDate": "Дата начала",
+    "endDate": "Дата окончания",
+    "noHotelRequired": "Отель не требуется",
+    "tourType": "Меня интересует",
+    "successBodyNoWhatsapp": "Наш эксперт по путешествиям свяжется с вами в ближайшее время.",
+    "validation": {
+      "startDateRequired": "Укажите дату начала.",
+      "endDateRequired": "Укажите дату окончания.",
+      "endDateBeforeStart": "Дата окончания не может быть раньше даты начала.",
+      "hotelPreferenceRequired": "Выберите вариант отеля или укажите «Отель не требуется»."
     }
   },
   "common": {

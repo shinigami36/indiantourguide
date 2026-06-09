@@ -402,6 +402,18 @@
       "handpicked": "Handpicked tours & experiences",
       "personalized": "Personalized itineraries",
       "guidance": "Expert local guidance"
+    },
+    "travelDates": "تواريخ السفر",
+    "startDate": "تاريخ البداية",
+    "endDate": "تاريخ النهاية",
+    "noHotelRequired": "لا حاجة لفندق",
+    "tourType": "أنا مهتم بـ",
+    "successBodyNoWhatsapp": "سيتواصل معك خبير السفر لدينا قريباً.",
+    "validation": {
+      "startDateRequired": "تاريخ البداية مطلوب.",
+      "endDateRequired": "تاريخ النهاية مطلوب.",
+      "endDateBeforeStart": "لا يمكن أن يكون تاريخ النهاية قبل تاريخ البداية.",
+      "hotelPreferenceRequired": "اختر خيار الفندق أو حدد \"لا حاجة لفندق\"."
     }
   },
   "common": {

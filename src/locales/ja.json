@@ -402,6 +402,18 @@
       "handpicked": "Handpicked tours & experiences",
       "personalized": "Personalized itineraries",
       "guidance": "Expert local guidance"
+    },
+    "travelDates": "旅行日程",
+    "startDate": "開始日",
+    "endDate": "終了日",
+    "noHotelRequired": "ホテル不要",
+    "tourType": "興味のあるツアー",
+    "successBodyNoWhatsapp": "担当の旅行エキスパートがまもなくご連絡いたします。",
+    "validation": {
+      "startDateRequired": "開始日を入力してください。",
+      "endDateRequired": "終了日を入力してください。",
+      "endDateBeforeStart": "終了日は開始日より前にできません。",
+      "hotelPreferenceRequired": "ホテルのオプションを選択するか、「ホテル不要」を選んでください。"
     }
   },
   "common": {

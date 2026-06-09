@@ -340,6 +340,18 @@
       "handpicked": "Handpicked tours & experiences",
       "personalized": "Personalized itineraries",
       "guidance": "Expert local guidance"
+    },
+    "travelDates": "Travel Dates",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "noHotelRequired": "No Hotel Required",
+    "tourType": "I am interested in",
+    "successBodyNoWhatsapp": "Our travel expert will contact you shortly.",
+    "validation": {
+      "startDateRequired": "Start date is required.",
+      "endDateRequired": "End date is required.",
+      "endDateBeforeStart": "End date cannot be earlier than start date.",
+      "hotelPreferenceRequired": "Select a hotel option or choose No Hotel Required."
     }
   },
   "contact": {
