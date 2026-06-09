@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -5,6 +6,7 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { Resend } = require('resend');
 const { decryptSecret } = require('../tools/decrypt-secret');
+const sendWhatsApp = require('./sendWhatsApp');
 require('dotenv').config();
 
 const app = express();
@@ -171,6 +173,15 @@ const requireMongo = (req, res, next) => {
   return next();
 };
 
+// Constant-time comparison so response timing can't leak the token
+// prefix/length to an attacker probing the admin endpoints.
+const safeTokenEqual = (a, b) => {
+  const bufA = Buffer.from(String(a));
+  const bufB = Buffer.from(String(b));
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
+};
+
 const requireAdminToken = (req, res, next) => {
   const configuredToken = process.env.ADMIN_API_TOKEN;
   if (!configuredToken) {
@@ -182,7 +193,7 @@ const requireAdminToken = (req, res, next) => {
   const headerToken = req.headers['x-admin-token'];
   const token = bearerToken || headerToken;
 
-  if (token !== configuredToken) {
+  if (!token || !safeTokenEqual(token, configuredToken)) {
     return res.status(401).json({ success: false, error: 'Unauthorized' });
   }
 
@@ -350,22 +361,27 @@ const sendEmailNotification = async (enquiry) => {
   return { sent: true };
 };
 
-// Enquiry Schema
+// Enquiry Schema — maxlength caps are defense-in-depth: the endpoint already
+// truncates via sanitizeText, but the schema must hold even if a new code
+// path writes Enquiry documents directly.
 const enquirySchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true },
-  phone: { type: String, required: true },
-  country: { type: String },
-  startDate: { type: String },
-  endDate: { type: String },
+  name: { type: String, required: true, maxlength: 100 },
+  email: { type: String, required: true, maxlength: 200 },
+  phone: { type: String, required: true, maxlength: 30 },
+  country: { type: String, maxlength: 100 },
+  startDate: { type: String, maxlength: 30 },
+  endDate: { type: String, maxlength: 30 },
   noHotelRequired: { type: Boolean, default: false },
-  hotelCategory: { type: String },
+  hotelCategory: { type: String, maxlength: 30 },
   adults: { type: Number, default: 1 },
   children: { type: Number, default: 0 },
-  tourPackages: [{ type: String }],
-  tourName: { type: String },
-  tourCategory: { type: String },
-  message: { type: String },
+  tourPackages: {
+    type: [{ type: String, maxlength: 500 }],
+    validate: { validator: (arr) => arr.length <= 10, message: 'Too many tour packages' },
+  },
+  tourName: { type: String, maxlength: 600 },
+  tourCategory: { type: String, maxlength: 40 },
+  message: { type: String, maxlength: 2000 },
   createdAt: { type: Date, default: Date.now },
   status: { type: String, default: 'new' }
 });
@@ -609,6 +625,18 @@ app.post('/api/enquiry', enquiryLimiter, async (req, res) => {
       })
       .catch((emailError) => {
         console.error('Email sending failed:', emailError);
+      });
+
+    // WhatsApp runs in parallel, also best-effort. Log only the API error
+    // message — the full axios error carries the bearer token in its headers.
+    void sendWhatsApp(enquiry)
+      .then((waResult) => {
+        if (waResult?.skipped) {
+          console.warn('WhatsApp notification skipped:', waResult.reason);
+        }
+      })
+      .catch((waError) => {
+        console.error('WhatsApp sending failed:', waError?.response?.data?.error?.message || waError.message);
       });
 
   } catch (error) {
