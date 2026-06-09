@@ -47,7 +47,6 @@ export default function SiteReviews() {
   const [reviews, setReviews]         = useState(snapshot.reviews);
   const [stats, setStats]             = useState(snapshot.stats);
   const [hasMore, setHasMore]         = useState(snapshot.hasMore);
-  const [loading, setLoading]         = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [showForm, setShowForm]       = useState(false);
   const [form, setForm]               = useState(EMPTY_FORM);
@@ -318,7 +317,7 @@ export default function SiteReviews() {
         </div>
 
         {/* ── Show more / Show less / counter ─────── */}
-        {!loading && reviews.length > 0 && (
+        {reviews.length > 0 && (
           <div className="sr-footer">
             <p className="sr-shown-count">
               Showing {reviews.length.toLocaleString()} of {(stats?.total ?? reviews.length).toLocaleString()} reviews
@@ -342,7 +341,7 @@ export default function SiteReviews() {
                   onClick={() => {
                     setReviews((prev) => prev.slice(0, INITIAL_LIMIT));
                     setHasMore(true);
-                    window.scrollTo({ top: document.getElementById('sr-title')?.offsetTop - 100 ?? 0, behavior: 'smooth' });
+                    window.scrollTo({ top: (document.getElementById('sr-title')?.offsetTop ?? 100) - 100, behavior: 'smooth' });
                   }}
                   aria-label="Show fewer reviews"
                 >

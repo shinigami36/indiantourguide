@@ -5,7 +5,9 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // server/ and tools/ are CommonJS Node code with their own runtime —
+  // this config covers only the browser React app.
+  globalIgnores(['dist', 'server', 'tools']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Tours from './components/Tours';
@@ -17,17 +18,40 @@ import './App.css';
 const Attractions = lazy(() => import('./components/Attractions'));
 const InternationalTours = lazy(() => import('./components/InternationalTours'));
 
+const PAGE_TITLES = {
+  '/attractions': 'Attractions | India Tours Guide',
+  '/international': 'International Tours | India Tours Guide',
+};
+const DEFAULT_TITLE = 'India Tours Guide | Private India & World Tours';
+
 const PageFallback = () => (
   <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
     <div className="btn-spinner" aria-label="Loading" style={{ width: 32, height: 32, borderWidth: 3, color: '#c2410c' }} />
   </div>
 );
 
+const HomePage = ({ onOpenEnquiry, onGetEstimate, onEnquireTour }) => (
+  <>
+    <Hero
+      onOpenEnquiry={onOpenEnquiry}
+      onGetEstimate={onGetEstimate}
+      onScrollToTours={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
+    />
+    <Tours
+      onOpenEnquiry={onOpenEnquiry}
+      onEnquireTour={onEnquireTour}
+    />
+    <TopAttractions />
+    <SiteReviews />
+    <Contact />
+  </>
+);
+
 function App() {
   const [showEnquiryModal, setShowEnquiryModal] = useState(false);
   const [initialTour, setInitialTour] = useState(null);
   const [initialAdults, setInitialAdults] = useState(null);
-  const [currentPage, setCurrentPage] = useState('home');
+  const { pathname } = useLocation();
   // Track whether we've already auto-opened the enquiry modal this session.
   // Both the exit-intent and the scroll-depth triggers read this so we
   // only interrupt the user once — re-opening would feel spammy.
@@ -92,17 +116,11 @@ function App() {
     };
   }, []);
 
-  // Scroll to top whenever page changes
+  // Scroll to top and align the tab title whenever the route changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [currentPage]);
-
-  // Keep browser tab title aligned with current page context
-  useEffect(() => {
-    if (currentPage === 'attractions') document.title = 'Attractions | India Tours Guide';
-    else if (currentPage === 'international') document.title = 'International Tours | India Tours Guide';
-    else document.title = 'India Tours Guide | Private India & World Tours';
-  }, [currentPage]);
+    document.title = PAGE_TITLES[pathname] || DEFAULT_TITLE;
+  }, [pathname]);
 
   const handleEnquireTour = useCallback((tourName) => {
     setInitialTour(tourName);
@@ -121,44 +139,32 @@ function App() {
     setInitialAdults(null);
   }, []);
 
+  const openEnquiry = useCallback(() => setShowEnquiryModal(true), []);
+
   return (
     <div className="App">
       <OfflineBanner />
-      <Header currentPage={currentPage} onNavigate={setCurrentPage} onOpenEnquiry={() => setShowEnquiryModal(true)} />
-      <main>
-        {currentPage === 'attractions' ? (
-          <Suspense fallback={<PageFallback />}>
-            <Attractions
-              onEnquireTour={handleEnquireTour}
-              onNavigateHome={() => setCurrentPage('home')}
+      <Header onOpenEnquiry={openEnquiry} />
+      <main id="main">
+        <Suspense fallback={<PageFallback />}>
+          <Routes>
+            <Route
+              path="/"
+              element={(
+                <HomePage
+                  onOpenEnquiry={openEnquiry}
+                  onGetEstimate={handleGetEstimate}
+                  onEnquireTour={handleEnquireTour}
+                />
+              )}
             />
-          </Suspense>
-        ) : currentPage === 'international' ? (
-          <Suspense fallback={<PageFallback />}>
-            <InternationalTours
-              onEnquireTour={handleEnquireTour}
-              onNavigateHome={() => setCurrentPage('home')}
-              onOpenEnquiry={() => setShowEnquiryModal(true)}
-            />
-          </Suspense>
-        ) : (
-          <>
-            <Hero
-              onOpenEnquiry={() => setShowEnquiryModal(true)}
-              onGetEstimate={handleGetEstimate}
-              onScrollToTours={() => document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })}
-            />
-            <Tours
-              onOpenEnquiry={() => setShowEnquiryModal(true)}
-              onEnquireTour={handleEnquireTour}
-            />
-            <TopAttractions onNavigateAttractions={() => setCurrentPage('attractions')} />
-            <SiteReviews />
-            <Contact />
-          </>
-        )}
+            <Route path="/attractions" element={<Attractions onEnquireTour={handleEnquireTour} />} />
+            <Route path="/international" element={<InternationalTours onEnquireTour={handleEnquireTour} />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </main>
-      <Footer onNavigate={setCurrentPage} />
+      <Footer />
       <EnquiryModal
         isOpen={showEnquiryModal}
         onClose={handleCloseModal}

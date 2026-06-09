@@ -132,11 +132,9 @@
   background: var(--clr-bg-muted);
 }
 
-.nav-links a[aria-current="page"] {
-  color: var(--clr-text-1);
-  font-weight: 600;
-  background: var(--clr-bg-muted);
-}
+/* Active state is styled via .nav-page-link.active (pill border) — do not
+   re-introduce an [aria-current] background rule here or it will override
+   the pill's transparent background. */
 
 .nav-page-link {
   display: inline-block;

@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import attractionsData from '../data/attractions.json';
 import './Attractions.css';
@@ -16,8 +17,9 @@ const CATEGORIES = [
 
 const PAGE_SIZE = 12;
 
-const Attractions = ({ onEnquireTour, onNavigateHome }) => {
+const Attractions = ({ onEnquireTour }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('all');
   const [currentPage, setCurrentPage]       = useState(1);
   const [expandedId, setExpandedId]         = useState(null);
@@ -53,7 +55,7 @@ const Attractions = ({ onEnquireTour, onNavigateHome }) => {
         <div className="container">
           <button
             className="attractions-back-btn"
-            onClick={onNavigateHome}
+            onClick={() => navigate('/')}
             aria-label={t('attractions.backHomeAria', { defaultValue: 'Back to home' })}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"

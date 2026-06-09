@@ -1,11 +1,14 @@
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Footer.css';
 
-const Footer = ({ onNavigate }) => {
+const Footer = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const goToSection = (sectionId) => {
-    onNavigate('home');
+    if (pathname !== '/') navigate('/');
     setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 80);
   };
 
@@ -14,7 +17,7 @@ const Footer = ({ onNavigate }) => {
       <div className="footer-main-content">
         <div className="footer-content">
           <div className="footer-brand">
-            <button type="button" className="logo" onClick={() => onNavigate('home')}>
+            <Link to="/" className="logo">
               <img
                 src="/assets/images/logo.png"
                 alt="India Tours Guide Logo"
@@ -25,7 +28,7 @@ const Footer = ({ onNavigate }) => {
                 <span className="footer-brand-name">India Tours Guide</span>
                 <small className="footer-brand-tag">Authentic India &amp; World Travel</small>
               </div>
-            </button>
+            </Link>
             <p>{t('footer.brand')}</p>
             <div className="social-links">
               <a href="https://www.facebook.com/share/1MhrNAYwni/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook">

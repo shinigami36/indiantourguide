@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Header.css';
 
@@ -12,12 +13,14 @@ const COMING_SOON = [
   { flag: '🇱🇰', name: 'Sri Lanka' },
 ];
 
-const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
+const Header = ({ onOpenEnquiry }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [sectionActive, setSectionActive] = useState('');
   const [intlDropdownOpen, setIntlDropdownOpen] = useState(false);
   const { t, i18n } = useTranslation();
   const intlDropdownRef = useRef(null);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const languages = [
     { code: 'en', name: 'English' },
@@ -45,15 +48,15 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
 
   const closeMenu = () => setIsMenuOpen(false);
 
-  const navigatePage = (page) => {
-    onNavigate(page);
+  // Shared cleanup when any nav link is followed
+  const handleNavClick = () => {
     setSectionActive('');
     setIntlDropdownOpen(false);
     closeMenu();
   };
 
   const goToSection = (sectionId) => {
-    onNavigate('home');
+    if (pathname !== '/') navigate('/');
     setSectionActive(sectionId);
     closeMenu();
     setTimeout(() => document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' }), 80);
@@ -63,11 +66,11 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
     <header className="site-header">
       <div className="container header-inner">
 
-        <button
-          type="button"
+        <Link
+          to="/"
           className="brand"
           aria-label="India Tours Guide Home"
-          onClick={() => { onNavigate('home'); closeMenu(); }}
+          onClick={handleNavClick}
         >
           <img
             className="brand-logo"
@@ -78,7 +81,7 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
             <span className="brand-name brand-name--script">India Tours Guide</span>
             <small className="brand-tag">{t('header.brandTag', { defaultValue: 'Authentic India & World Travel' })}</small>
           </span>
-        </button>
+        </Link>
 
         <button
           className="menu-toggle"
@@ -95,13 +98,14 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
         <nav className="primary-nav" aria-label="Primary">
           <ul className={`nav-links ${isMenuOpen ? 'open' : ''}`} id="primaryNav">
             <li>
-              <button
-                className={`nav-page-link ${currentPage === 'home' && !sectionActive ? 'active' : ''}`}
-                onClick={() => navigatePage('home')}
-                aria-current={currentPage === 'home' && !sectionActive ? 'page' : undefined}
+              <Link
+                to="/"
+                className={`nav-page-link ${pathname === '/' && !sectionActive ? 'active' : ''}`}
+                onClick={handleNavClick}
+                aria-current={pathname === '/' && !sectionActive ? 'page' : undefined}
               >
                 {t('nav.home')}
-              </button>
+              </Link>
             </li>
             <li>
               <button
@@ -115,7 +119,7 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
             {/* International Tours with dropdown */}
             <li className="dropdown" ref={intlDropdownRef}>
               <button
-                className={`dropdown-toggle nav-page-link ${currentPage === 'international' ? 'active' : ''}`}
+                className={`dropdown-toggle nav-page-link ${pathname === '/international' ? 'active' : ''}`}
                 onClick={() => setIntlDropdownOpen(prev => !prev)}
                 aria-haspopup="true"
                 aria-expanded={intlDropdownOpen}
@@ -138,7 +142,7 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
                     <button
                       className="intl-dest-btn"
                       role="menuitem"
-                      onClick={() => navigatePage('international')}
+                      onClick={() => { handleNavClick(); navigate('/international'); }}
                     >
                       <span className="intl-dest-flag">🇹🇷</span>
                       <span className="intl-dest-name">Turkey</span>
@@ -170,13 +174,14 @@ const Header = ({ currentPage, onNavigate, onOpenEnquiry }) => {
             </li>
 
             <li>
-              <button
-                className={`nav-page-link ${currentPage === 'attractions' ? 'active' : ''}`}
-                onClick={() => navigatePage('attractions')}
-                aria-current={currentPage === 'attractions' ? 'page' : undefined}
+              <Link
+                to="/attractions"
+                className={`nav-page-link ${pathname === '/attractions' ? 'active' : ''}`}
+                onClick={handleNavClick}
+                aria-current={pathname === '/attractions' ? 'page' : undefined}
               >
                 {t('nav.attractions', { defaultValue: 'Attractions' })}
-              </button>
+              </Link>
             </li>
             <li className="mobile-only-nav-item">
               <select

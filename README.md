@@ -1,26 +1,63 @@
-# React + Vite
+# India Tours Guide — indiatoursguide.com
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 18 + Vite single-page site for a private India & world tour operator, with an
+Express/MongoDB backend for enquiries, site reviews, and Google-reviews proxying.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-
-## Environment
-
-Create a `.env` file in this folder (or copy from `.env.example`) and set:
+## Repository layout
 
 ```
-VITE_API_URL=http://localhost:3001
+.                  React frontend (Vite)
+├── src/           Components, hooks, data, i18n locales (10 languages)
+├── public/        Static assets (tour videos, attraction images, sitemap, robots)
+├── server/        Express backend — deployed to Render (api.indiatoursguide.com)
+└── tools/         AES-256-GCM helpers to encrypt/decrypt secret env values
 ```
 
-For production deployment, set `VITE_API_URL` to your deployed backend URL.
+## Frontend
+
+```bash
+npm install
+npm run dev      # http://localhost:5173 — proxies /api → http://localhost:3001
+npm run build    # production bundle in dist/
+npm run lint
+```
+
+Create `.env` (or copy `.env.example`) and set `VITE_API_URL` — empty for local dev
+(the Vite proxy handles `/api`), or the deployed backend URL in production builds.
+
+### Routes
+
+Real URLs served by react-router: `/` (home), `/attractions`, `/international`.
+Unknown paths redirect to `/`.
+
+## Backend (`server/`)
+
+```bash
+cd server
+npm install
+cp .env.example .env   # then fill in real values
+npm run dev            # nodemon on :3001
+npm run seed           # legacy: seed Tour collection (admin API only)
+npm run seed:reviews   # seed 12 approved site reviews
+```
+
+See `server/.env.example` for every supported key. MongoDB is optional
+(`USE_MONGODB=false` runs in email-only mode); WhatsApp notifications activate
+automatically when `WHATSAPP_TOKEN` / `WHATSAPP_PHONE_ID` / `WHATSAPP_TO` are set.
+
+## Deployment
+
+**Backend** — Render auto-deploys from this repo on push to `main`
+(start command runs `server/index.js`; env vars live in the Render dashboard,
+including `ADMIN_API_TOKEN` for the admin endpoints).
+
+**Frontend** — the host MUST rewrite all paths to `index.html` (SPA fallback),
+otherwise deep links like `/attractions` 404 on hard refresh:
+
+- **Vercel** — covered by `vercel.json` in the repo root.
+- **Netlify / Cloudflare Pages** — covered by `public/_redirects`
+  (copied into `dist/` at build time).
+- **Other hosts** — configure the equivalent: every path that isn't an existing
+  file must serve `/index.html` with a 200 status.
+
+After deploying, verify by cold-loading `https://indiatoursguide.com/attractions`.

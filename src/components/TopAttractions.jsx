@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './TopAttractions.css';
 
@@ -42,8 +43,10 @@ const featured = [
 
 const VISIBLE = 4; // cards visible at once on desktop
 
-const TopAttractions = ({ onNavigateAttractions }) => {
+const TopAttractions = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const goToAttractions = () => navigate('/attractions');
   const scrollRef = useRef(null);
   const [canScrollLeft, setCanScrollLeft]   = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -76,7 +79,7 @@ const TopAttractions = ({ onNavigateAttractions }) => {
             <h2 className="ta-title">
               {t('topAttractions.title', { defaultValue: 'Iconic India' })}
             </h2>
-            <button className="ta-see-all" onClick={onNavigateAttractions}>
+            <button className="ta-see-all" onClick={goToAttractions}>
               {t('topAttractions.viewAll', { defaultValue: 'View all' })}
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
@@ -98,7 +101,7 @@ const TopAttractions = ({ onNavigateAttractions }) => {
             <button
               key={item.id}
               className="ta-card"
-              onClick={onNavigateAttractions}
+              onClick={goToAttractions}
               aria-label={`Explore ${item.name}`}
             >
               <div
