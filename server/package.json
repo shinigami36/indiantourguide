@@ -7,6 +7,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "seed": "node seed.js",
+    "seed:reviews": "node seed-reviews.js",
     "encrypt:secret": "node ../tools/encrypt-secret.js",
     "decrypt:secret": "node ../tools/decrypt-secret.js"
   },
