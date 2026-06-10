@@ -165,7 +165,7 @@ const InternationalTours = ({ onEnquireTour }) => {
                 <span className="intl-soon-badge">{t('internationalTours.comingSoon', { defaultValue: 'Coming Soon' })}</span>
                 <button
                   className="btn btn-outline intl-notify-btn"
-                  onClick={() => onEnquireTour(`${country} Tour (Coming Soon)`)}
+                  onClick={() => onEnquireTour(`${country} Tour (Coming Soon)`, 'international')}
                 >
                   {t('internationalTours.notifyMe', { defaultValue: 'Register Interest' })}
                 </button>
@@ -228,7 +228,7 @@ const InternationalTours = ({ onEnquireTour }) => {
                 )}
 
                 <div className="tour-enquiry-section">
-                  <button className="btn btn-outline enquire-now-btn" onClick={() => { setSelectedTourId(null); onEnquireTour(selectedTourContent.title); }}>
+                  <button className="btn btn-outline enquire-now-btn" onClick={() => { setSelectedTourId(null); onEnquireTour(selectedTourContent.title, 'international'); }}>
                     {t('tours.enquireNow', { defaultValue: 'Enquire Now' })}
                   </button>
                 </div>

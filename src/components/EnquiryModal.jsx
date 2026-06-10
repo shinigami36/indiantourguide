@@ -35,7 +35,7 @@ const FIELD_CLASSES = {
   stepperValue: 'stepper-value',
 };
 
-const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
+const EnquiryModal = ({ isOpen, onClose, initialTour, initialCategory, initialAdults }) => {
   const { t } = useTranslation();
   const form = useEnquiryForm({ initialTour, initialAdults });
   const {
@@ -58,12 +58,15 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
     if (isOpen) {
       setFormData({ ...EMPTY_FORM, adults: initialAdults || 1 });
       setSelectedTours(initialTour ? [initialTour] : []);
-      setTourCategory(detectCategoryFromTour(initialTour, t));
+      // Callers that know the tour's category pass it explicitly; the
+      // title-matching detection only remains as a fallback (e.g. Hero's
+      // free-text destination estimate).
+      setTourCategory(initialCategory || detectCategoryFromTour(initialTour, t));
       setErrors({});
       setSubmitted(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen, initialTour, initialAdults]);
+  }, [isOpen, initialTour, initialCategory, initialAdults]);
 
   // Body scroll lock + Escape to close
   useEffect(() => {

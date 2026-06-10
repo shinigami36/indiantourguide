@@ -44,7 +44,7 @@ const Attractions = ({ onEnquireTour }) => {
   };
 
   const handlePlanTrip = (attraction) => {
-    onEnquireTour(attraction.tourLink || attraction.name);
+    onEnquireTour(attraction.tourLink || attraction.name, 'india');
   };
 
   return (

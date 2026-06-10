@@ -62,22 +62,16 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
   const renderStars = (rating) => '★'.repeat(Math.floor(rating));
 
   const renderItinerary = (tour) => {
-    if (
-      tour.id === 'golden-triangle' ||
-      tour.id === 'golden-triangle-mumbai' ||
-      tour.id === 'golden-triangle-varanasi'
-    ) {
+    // City-by-city itinerary, driven by the tour's itineraryCities data
+    if (Array.isArray(tour.itineraryCities)) {
       return (
         <>
-          <p><strong>Delhi:</strong> {t(`${tour.itineraryKey}.delhi`)}</p>
-          <p><strong>Jaipur:</strong> {t(`${tour.itineraryKey}.jaipur`)}</p>
-          <p><strong>Agra:</strong> {t(`${tour.itineraryKey}.agra`)}</p>
-          {tour.id === 'golden-triangle-mumbai' && (
-            <p><strong>Mumbai:</strong> {t(`${tour.itineraryKey}.mumbai`)}</p>
-          )}
-          {tour.id === 'golden-triangle-varanasi' && (
-            <p><strong>Varanasi:</strong> {t(`${tour.itineraryKey}.varanasi`)}</p>
-          )}
+          {tour.itineraryCities.map((city) => (
+            <p key={city}>
+              <strong>{city.charAt(0).toUpperCase() + city.slice(1)}:</strong>{' '}
+              {t(`${tour.itineraryKey}.${city}`)}
+            </p>
+          ))}
         </>
       );
     }
@@ -178,7 +172,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
                     </button>
                     <button
                       className="btn tour-book-btn"
-                      onClick={() => onEnquireTour(t(`tours.${tour.id}.title`, { defaultValue: tour.id }))}
+                      onClick={() => onEnquireTour(resolveTourContent(tour).title, tour.country ? 'international' : 'india')}
                     >
                       {t('tours.bookNow', { defaultValue: 'Book Now' })}
                     </button>
@@ -262,7 +256,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
                     </button>
                     <button
                       className="btn tour-book-btn"
-                      onClick={() => onEnquireTour(t(`tours.${tour.id}.title`, { defaultValue: tour.id }))}
+                      onClick={() => onEnquireTour(resolveTourContent(tour).title, tour.country ? 'international' : 'india')}
                     >
                       {t('tours.bookNow', { defaultValue: 'Book Now' })}
                     </button>
@@ -340,7 +334,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
                   )}
 
                   <div className="tour-enquiry-section">
-                    <button className="btn btn-primary enquire-now-btn" onClick={() => { closeDetails(); onEnquireTour(selectedTourContent.title); }}>
+                    <button className="btn btn-primary enquire-now-btn" onClick={() => { closeDetails(); onEnquireTour(selectedTourContent.title, selectedTour.country ? 'international' : 'india'); }}>
                       {t('tours.bookNow', { defaultValue: 'Book Now' })}
                     </button>
                   </div>

@@ -1,17 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { COMING_SOON_COUNTRIES } from '../data/foreignTours';
 import './Header.css';
-
-const COMING_SOON = [
-  { flag: '🇹🇭', name: 'Thailand' },
-  { flag: '🇯🇵', name: 'Japan' },
-  { flag: '🇰🇷', name: 'South Korea' },
-  { flag: '🇸🇬', name: 'Singapore' },
-  { flag: '🇲🇾', name: 'Malaysia' },
-  { flag: '🇳🇵', name: 'Nepal' },
-  { flag: '🇱🇰', name: 'Sri Lanka' },
-];
 
 const Header = ({ onOpenEnquiry }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -152,12 +143,12 @@ const Header = ({ onOpenEnquiry }) => {
 
                   <li role="none" className="intl-dropdown-divider" />
 
-                  {/* Coming soon destinations */}
-                  {COMING_SOON.map(dest => (
-                    <li key={dest.name} role="none" className="intl-dropdown-item">
+                  {/* Coming soon destinations — same source as the International page */}
+                  {COMING_SOON_COUNTRIES.map(dest => (
+                    <li key={dest.country} role="none" className="intl-dropdown-item">
                       <div className="intl-dest-row">
                         <span className="intl-dest-flag">{dest.flag}</span>
-                        <span className="intl-dest-name">{dest.name}</span>
+                        <span className="intl-dest-name">{dest.country}</span>
                         <span className="intl-dest-badge intl-dest-badge--soon">Coming Soon</span>
                       </div>
                       <button

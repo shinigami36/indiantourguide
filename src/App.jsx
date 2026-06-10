@@ -50,6 +50,7 @@ const HomePage = ({ onOpenEnquiry, onGetEstimate, onEnquireTour }) => (
 function App() {
   const [showEnquiryModal, setShowEnquiryModal] = useState(false);
   const [initialTour, setInitialTour] = useState(null);
+  const [initialCategory, setInitialCategory] = useState(null);
   const [initialAdults, setInitialAdults] = useState(null);
   const { pathname } = useLocation();
   // Track whether we've already auto-opened the enquiry modal this session.
@@ -122,8 +123,9 @@ function App() {
     document.title = PAGE_TITLES[pathname] || DEFAULT_TITLE;
   }, [pathname]);
 
-  const handleEnquireTour = useCallback((tourName) => {
+  const handleEnquireTour = useCallback((tourName, category) => {
     setInitialTour(tourName);
+    setInitialCategory(category || null);
     setShowEnquiryModal(true);
   }, []);
 
@@ -136,6 +138,7 @@ function App() {
   const handleCloseModal = useCallback(() => {
     setShowEnquiryModal(false);
     setInitialTour(null);
+    setInitialCategory(null);
     setInitialAdults(null);
   }, []);
 
@@ -169,6 +172,7 @@ function App() {
         isOpen={showEnquiryModal}
         onClose={handleCloseModal}
         initialTour={initialTour}
+        initialCategory={initialCategory}
         initialAdults={initialAdults}
       />
     </div>
