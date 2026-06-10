@@ -1,0 +1,15 @@
+# Weekly security/patch PRs for both package.json files. Versions are
+# intentionally pinned conservative (Vite 4 / React 18 / Mongoose 7), so
+# review major-version PRs carefully rather than merging on green.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+  - package-ecosystem: npm
+    directory: "/server"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

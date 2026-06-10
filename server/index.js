@@ -923,6 +923,12 @@ app.use('*', (req, res) => {
   res.status(404).json({ success: false, error: 'Route not found' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Listen only when run directly (node index.js); tests import the app
+// via supertest without binding a port.
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
