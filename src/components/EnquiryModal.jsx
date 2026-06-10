@@ -1,32 +1,54 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import CountrySelect from './CountrySelect';
 import { postJsonWithRetry } from '../utils/api';
-import {
-  HOTEL_OPTIONS,
-  CATEGORY_OPTIONS,
-  EMPTY_FORM,
-  detectCategoryFromTour,
-} from '../constants/enquiryData';
+import { EMPTY_FORM, detectCategoryFromTour } from '../constants/enquiryData';
 import { useEnquiryForm } from '../hooks/useEnquiryForm';
+import {
+  NameField,
+  EmailField,
+  PhoneField,
+  CountryField,
+  TravelDatesFields,
+  CategoryPills,
+  TourMultiSelect,
+  HotelPreference,
+  TravellersStepper,
+  MessageField,
+} from './enquiry/EnquiryFields';
 import './EnquiryModal.css';
+
+// Class names the shared field components should use in this form —
+// EnquiryModal.css styles the unprefixed variants.
+const FIELD_CLASSES = {
+  pills: 'tour-category-pills',
+  pill: 'category-pill',
+  msTrigger: 'multiselect-trigger',
+  msDropdown: 'multiselect-dropdown',
+  msOption: 'multiselect-option',
+  hotelOptions: 'hotel-options',
+  hotelBtn: 'hotel-option-btn',
+  travelersRow: 'travelers-row',
+  travelerField: 'traveler-field',
+  travelerLabel: 'traveler-label',
+  stepper: 'stepper',
+  stepperBtn: 'stepper-btn',
+  stepperValue: 'stepper-value',
+};
 
 const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
   const { t } = useTranslation();
+  const form = useEnquiryForm({ initialTour, initialAdults });
   const {
-    formData, setFormData,
+    formData,
+    setFormData,
     selectedTours, setSelectedTours,
     tourCategory, setTourCategory,
     errors, setErrors,
     isSubmitting, setIsSubmitting,
-    activeTourKeys,
-    handleChange, handleNoHotelToggle, toggleTour, handleCategoryChange,
     validateForm,
-  } = useEnquiryForm({ initialTour, initialAdults });
+  } = form;
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const dropdownRef = useRef(null);
   const autoCloseTimerRef = useRef(null);
 
   // Reset all state whenever the modal opens (or initialTour changes).
@@ -39,20 +61,9 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
       setTourCategory(detectCategoryFromTour(initialTour, t));
       setErrors({});
       setSubmitted(false);
-      setDropdownOpen(false);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, initialTour, initialAdults]);
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, []);
 
   // Body scroll lock + Escape to close
   useEffect(() => {
@@ -72,11 +83,6 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
       clearTimeout(autoCloseTimerRef.current);
     };
   }, [isOpen, onClose]);
-
-  const onCategoryChange = (cat) => {
-    handleCategoryChange(cat);
-    setDropdownOpen(false);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,12 +114,6 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
 
   if (!isOpen) return null;
 
-  const triggerLabel = selectedTours.length === 0
-    ? t('enquiry.selectTourPackages', { defaultValue: 'Select tour packages...' })
-    : selectedTours.length === 1
-      ? selectedTours[0]
-      : t('enquiry.toursSelected', { count: selectedTours.length, defaultValue: `${selectedTours.length} tours selected` });
-
   return (
     <div className="enquiry-modal-overlay" onClick={onClose}>
       <div className="enquiry-modal-content" onClick={(e) => e.stopPropagation()}>
@@ -136,164 +136,21 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialAdults }) => {
             {errors.general && <div className="error-message general-error">{errors.general}</div>}
 
             <form onSubmit={handleSubmit} className="modal-form" noValidate>
-              <div className="form-group">
-                <label htmlFor="modal-name">{t('contact.form.name') || 'Full Name'} *</label>
-                <input type="text" id="modal-name" name="name" value={formData.name} onChange={handleChange} className={errors.name ? 'error' : ''} placeholder={t('contact.form.namePlaceholder', { defaultValue: 'John Doe' })} />
-                {errors.name && <span className="error-message">{errors.name}</span>}
-              </div>
+              <NameField form={form} idPrefix="modal-" />
+              <EmailField form={form} idPrefix="modal-" />
+              <PhoneField form={form} idPrefix="modal-" />
+              <CountryField form={form} idPrefix="modal-" />
 
-              <div className="form-group">
-                <label htmlFor="modal-email">{t('contact.form.email') || 'Email'} *</label>
-                <input type="email" id="modal-email" name="email" value={formData.email} onChange={handleChange} className={errors.email ? 'error' : ''} placeholder={t('contact.form.emailPlaceholder', { defaultValue: 'you@example.com' })} />
-                {errors.email && <span className="error-message">{errors.email}</span>}
-              </div>
+              <TravelDatesFields form={form} idPrefix="modal-" />
 
-              <div className="form-group">
-                <label htmlFor="modal-phone">{t('contact.form.phone') || 'WhatsApp / Phone'} *</label>
-                <input type="tel" id="modal-phone" name="phone" value={formData.phone} onChange={handleChange} className={errors.phone ? 'error' : ''} placeholder={t('contact.form.phonePlaceholder', { defaultValue: '+91 XXXXX XXXXX' })} />
-                {errors.phone && <span className="error-message">{errors.phone}</span>}
-              </div>
+              <CategoryPills form={form} classes={FIELD_CLASSES} />
+              <TourMultiSelect form={form} classes={FIELD_CLASSES} />
 
-              <div className="form-group">
-                <label htmlFor="modal-country">{t('contact.form.country', { defaultValue: 'Country' })}</label>
-                <CountrySelect
-                  id="modal-country"
-                  name="country"
-                  value={formData.country}
-                  onChange={handleChange}
-                />
-              </div>
+              <HotelPreference form={form} classes={FIELD_CLASSES} idPrefix="modal-" stackClass="hotel-preference-stack" />
 
-              <div className="form-group date-group">
-                <label>{t('enquiry.travelDates', { defaultValue: 'Travel Dates' })} *</label>
-                <div className="date-row">
-                  <div className="date-field">
-                    <label htmlFor="modal-startDate" className="date-label">{t('enquiry.startDate', { defaultValue: 'Start Date' })}</label>
-                    <input
-                      type="date"
-                      id="modal-startDate"
-                      name="startDate"
-                      value={formData.startDate}
-                      onChange={handleChange}
-                      className={errors.startDate ? 'error' : ''}
-                      required
-                    />
-                    {errors.startDate && <span className="error-message">{errors.startDate}</span>}
-                  </div>
-                  <div className="date-field">
-                    <label htmlFor="modal-endDate" className="date-label">{t('enquiry.endDate', { defaultValue: 'End Date' })}</label>
-                    <input
-                      type="date"
-                      id="modal-endDate"
-                      name="endDate"
-                      min={formData.startDate || undefined}
-                      value={formData.endDate}
-                      onChange={handleChange}
-                      className={errors.endDate ? 'error' : ''}
-                      required
-                    />
-                    {errors.endDate && <span className="error-message">{errors.endDate}</span>}
-                  </div>
-                </div>
-              </div>
+              <TravellersStepper form={form} classes={FIELD_CLASSES} />
 
-              <div className="form-group">
-                <label>{t('enquiry.tourType', { defaultValue: 'I am interested in' })}</label>
-                <div className="tour-category-pills">
-                  {CATEGORY_OPTIONS.map(opt => (
-                    <button
-                      key={opt.value}
-                      type="button"
-                      className={`category-pill ${tourCategory === opt.value ? 'active' : ''}`}
-                      onClick={() => onCategoryChange(opt.value)}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {tourCategory && (
-                <div className="form-group" ref={dropdownRef}>
-                  <label>{t('enquiry.tourPackages', { defaultValue: 'Tour Package(s)' })}</label>
-                  <button type="button" className={`multiselect-trigger ${dropdownOpen ? 'open' : ''}`} onClick={() => setDropdownOpen(o => !o)}>
-                    <span className={selectedTours.length === 0 ? 'placeholder' : ''}>{triggerLabel}</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d={dropdownOpen ? 'M18 15l-6-6-6 6' : 'M6 9l6 6 6-6'} />
-                    </svg>
-                  </button>
-                  {dropdownOpen && (
-                    <div className="multiselect-dropdown">
-                      {activeTourKeys.map(tourKey => {
-                        const tourLabel = t(tourKey);
-                        return (
-                          <label key={tourKey} className="multiselect-option">
-                            <input type="checkbox" checked={selectedTours.includes(tourLabel)} onChange={() => toggleTour(tourLabel)} />
-                            <span>{tourLabel}</span>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <div className="form-group">
-                <label>{t('contact.form.hotelAccommodation', { defaultValue: 'Hotel Accommodation' })}</label>
-                <div className="hotel-preference-stack">
-                  <div className={`hotel-options${formData.noHotelRequired ? ' disabled' : ''}`}>
-                    {HOTEL_OPTIONS.map(opt => (
-                      <button
-                        key={opt.value}
-                        type="button"
-                        className={`hotel-option-btn ${formData.hotelCategory === opt.value ? 'active' : ''}`}
-                        onClick={() => setFormData(p => ({ ...p, noHotelRequired: false, hotelCategory: p.hotelCategory === opt.value ? '' : opt.value }))}
-                        disabled={formData.noHotelRequired}
-                      >
-                        {t(opt.labelKey, { defaultValue: opt.value })}
-                      </button>
-                    ))}
-                  </div>
-                  <label className="no-hotel-check" htmlFor="modal-noHotelRequired">
-                    <input
-                      id="modal-noHotelRequired"
-                      type="checkbox"
-                      name="noHotelRequired"
-                      checked={formData.noHotelRequired}
-                      onChange={handleNoHotelToggle}
-                    />
-                    <span>{t('enquiry.noHotelRequired', { defaultValue: 'No Hotel Required' })}</span>
-                  </label>
-                </div>
-                {errors.hotelCategory && <span className="error-message">{errors.hotelCategory}</span>}
-              </div>
-
-              <div className="form-group">
-                <label>{t('contact.form.travelers', { defaultValue: 'Number of Travelers' })}</label>
-                <div className="travelers-row">
-                  <div className="traveler-field">
-                    <span className="traveler-label">{t('contact.form.adults', { defaultValue: 'Adults' })}</span>
-                    <div className="stepper">
-                      <button type="button" className="stepper-btn" onClick={() => setFormData(p => ({ ...p, adults: Math.max(1, p.adults - 1) }))} aria-label={t('contact.form.decreaseAdults', { defaultValue: 'Decrease adults' })}>−</button>
-                      <span className="stepper-value">{formData.adults}</span>
-                      <button type="button" className="stepper-btn" onClick={() => setFormData(p => ({ ...p, adults: p.adults + 1 }))} aria-label={t('contact.form.increaseAdults', { defaultValue: 'Increase adults' })}>+</button>
-                    </div>
-                  </div>
-                  <div className="traveler-field">
-                    <span className="traveler-label">{t('contact.form.children', { defaultValue: 'Children' })}</span>
-                    <div className="stepper">
-                      <button type="button" className="stepper-btn" onClick={() => setFormData(p => ({ ...p, children: Math.max(0, p.children - 1) }))} aria-label={t('contact.form.decreaseChildren', { defaultValue: 'Decrease children' })}>−</button>
-                      <span className="stepper-value">{formData.children}</span>
-                      <button type="button" className="stepper-btn" onClick={() => setFormData(p => ({ ...p, children: p.children + 1 }))} aria-label={t('contact.form.increaseChildren', { defaultValue: 'Increase children' })}>+</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="modal-message">{t('contact.form.message') || 'Message'}</label>
-                <textarea id="modal-message" name="message" rows="3" value={formData.message} onChange={handleChange} placeholder={t('contact.form.messagePlaceholder') || 'Tell us about your travel preferences...'} />
-              </div>
+              <MessageField form={form} idPrefix="modal-" rows={3} />
 
               <button type="submit" className="submit-btn" disabled={isSubmitting}>
                 {isSubmitting ? (
