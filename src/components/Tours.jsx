@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FOREIGN_TOURS } from '../data/foreignTours';
 import { INDIA_TOURS } from '../data/indiaTours';
+import LazyVideo from './LazyVideo';
 import './Tours.css';
 
 
@@ -121,9 +122,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
             return (
               <article key={tour.id} className="tour-card">
                 <div className="tour-image">
-                  <video autoPlay muted loop playsInline>
-                    <source src={tour.video} type="video/mp4" />
-                  </video>
+                  <LazyVideo src={tour.video} />
                   <div className="tour-rating">
                     <span className="stars">{renderStars(tour.rating)}</span>
                     <span className="rating-text">{tour.rating}</span>
@@ -196,9 +195,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
               <article key={tour.id} className="tour-card">
                 <div className="tour-image">
                   {tour.video ? (
-                    <video autoPlay muted loop playsInline>
-                      <source src={tour.video} type="video/mp4" />
-                    </video>
+                    <LazyVideo src={tour.video} />
                   ) : (
                     <div
                       className="tour-country-banner"
@@ -282,9 +279,7 @@ const Tours = ({ onOpenEnquiry, onEnquireTour }) => {
 
               <div className="tour-modal-media">
                 {selectedTour.video ? (
-                  <video autoPlay muted loop playsInline>
-                    <source src={selectedTour.video} type="video/mp4" />
-                  </video>
+                  <LazyVideo src={selectedTour.video} />
                 ) : (
                   <div
                     className="tour-country-banner"

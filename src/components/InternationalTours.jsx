@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FOREIGN_TOURS, COMING_SOON_COUNTRIES } from '../data/foreignTours';
+import LazyVideo from './LazyVideo';
 import './InternationalTours.css';
 
 const InternationalTours = ({ onEnquireTour }) => {
@@ -98,9 +99,7 @@ const InternationalTours = ({ onEnquireTour }) => {
               <article key={tour.id} className="tour-card">
                 <div className="tour-image">
                   {tour.video ? (
-                    <video autoPlay muted loop playsInline className="tour-video">
-                      <source src={tour.video} type="video/mp4" />
-                    </video>
+                    <LazyVideo src={tour.video} className="tour-video" />
                   ) : (
                     <div className="tour-country-banner" style={{ background: tour.bannerGradient }}>
                       <span className="tour-country-flag">{tour.flag}</span>
@@ -184,9 +183,7 @@ const InternationalTours = ({ onEnquireTour }) => {
 
             <div className="tour-modal-media">
               {selectedTour.video ? (
-                <video autoPlay muted loop playsInline className="tour-video">
-                  <source src={selectedTour.video} type="video/mp4" />
-                </video>
+                <LazyVideo src={selectedTour.video} className="tour-video" />
               ) : (
                 <div className="tour-country-banner" style={{ background: selectedTour.bannerGradient }}>
                   <span className="tour-country-flag">{selectedTour.flag}</span>
