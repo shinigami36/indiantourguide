@@ -60,16 +60,16 @@ const Header = ({ onOpenEnquiry }) => {
         <Link
           to="/"
           className="brand"
-          aria-label="India Tours Guide Home"
+          aria-label="indiatoursguide home"
           onClick={handleNavClick}
         >
           <img
             className="brand-logo"
             src="/assets/images/logo.png"
-            alt="India Tours Guide logo"
+            alt="indiatoursguide logo"
           />
           <span className="brand-copy">
-            <span className="brand-name brand-name--script">India Tours Guide</span>
+            <span className="brand-name brand-name--script">indiatoursguide</span>
             <small className="brand-tag">{t('header.brandTag', { defaultValue: 'Authentic India & World Travel' })}</small>
           </span>
         </Link>

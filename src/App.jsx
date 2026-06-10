@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import EnquiryModal from './components/EnquiryModal';
 import OfflineBanner from './components/OfflineBanner';
 import { warmBackend } from './utils/api';
+import { initAnalytics, trackPageView, trackEvent } from './utils/analytics';
 import './App.css';
 
 // Secondary pages — only loaded when the user navigates to them. This
@@ -19,10 +20,10 @@ const Attractions = lazy(() => import('./components/Attractions'));
 const InternationalTours = lazy(() => import('./components/InternationalTours'));
 
 const PAGE_TITLES = {
-  '/attractions': 'Attractions | India Tours Guide',
-  '/international': 'International Tours | India Tours Guide',
+  '/attractions': 'Attractions | indiatoursguide',
+  '/international': 'International Tours | indiatoursguide',
 };
-const DEFAULT_TITLE = 'India Tours Guide | Private India & World Tours';
+const DEFAULT_TITLE = 'indiatoursguide | Private India & World Tours';
 
 const PageFallback = () => (
   <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -66,22 +67,25 @@ function App() {
   // users who actually consumed enough content to be interested, which
   // protects conversion rate and avoids annoying drive-by traffic.
   useEffect(() => {
-    const trigger = () => {
+    initAnalytics();
+
+    const trigger = (source) => {
       if (autoOpenedRef.current) return;
       autoOpenedRef.current = true;
+      trackEvent('enquiry_modal_open', { trigger: source });
       setShowEnquiryModal(true);
     };
 
     const onMouseOut = (e) => {
       // Desktop exit-intent: cursor moves above the viewport (toward tab bar)
       // and is leaving the document (relatedTarget is null).
-      if (!e.relatedTarget && e.clientY <= 0) trigger();
+      if (!e.relatedTarget && e.clientY <= 0) trigger('exit_intent');
     };
 
     const onScroll = () => {
       const scrolled = window.scrollY + window.innerHeight;
       const total = document.documentElement.scrollHeight;
-      if (total > 0 && scrolled / total >= 0.75) trigger();
+      if (total > 0 && scrolled / total >= 0.75) trigger('scroll_depth');
     };
 
     document.addEventListener('mouseout', onMouseOut);
@@ -121,11 +125,13 @@ function App() {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     document.title = PAGE_TITLES[pathname] || DEFAULT_TITLE;
+    trackPageView(pathname);
   }, [pathname]);
 
   const handleEnquireTour = useCallback((tourName, category) => {
     setInitialTour(tourName);
     setInitialCategory(category || null);
+    trackEvent('enquiry_modal_open', { trigger: 'tour_card' });
     setShowEnquiryModal(true);
   }, []);
 
@@ -142,7 +148,10 @@ function App() {
     setInitialAdults(null);
   }, []);
 
-  const openEnquiry = useCallback(() => setShowEnquiryModal(true), []);
+  const openEnquiry = useCallback(() => {
+    trackEvent('enquiry_modal_open', { trigger: 'cta' });
+    setShowEnquiryModal(true);
+  }, []);
 
   return (
     <div className="App">

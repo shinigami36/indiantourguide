@@ -24,6 +24,8 @@ npm run lint
 
 Create `.env` (or copy `.env.example`) and set `VITE_API_URL` — empty for local dev
 (the Vite proxy handles `/api`), or the deployed backend URL in production builds.
+Set `VITE_GA_MEASUREMENT_ID` (GA4) on the production build host to enable analytics —
+page views plus `enquiry_modal_open`, `enquiry_submit` and `review_submit` events.
 
 ### Routes
 

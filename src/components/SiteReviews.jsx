@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getApiBaseUrl, postJsonWithRetry } from '../utils/api';
+import { trackEvent } from '../utils/analytics';
 import snapshot from '../data/reviewsSnapshot.json';
 import './SiteReviews.css';
 
@@ -114,6 +115,7 @@ export default function SiteReviews() {
     try {
       const { res, data } = await postJsonWithRetry('/api/reviews', form);
       if (res.ok && data.success) {
+        trackEvent('review_submit');
         setSubmitStatus('success');
         setSubmitMsg(data.message || 'Thank you! Your review will appear after moderation.');
         setForm(EMPTY_FORM);
@@ -155,7 +157,7 @@ export default function SiteReviews() {
             href={GOOGLE_MAPS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="View India Tours Guide on Google Maps"
+            aria-label="View indiatoursguide on Google Maps"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>

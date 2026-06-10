@@ -12,7 +12,13 @@
     "title": "真实印度与世界旅行",
     "subtitle": "由真正关心旅行的人精心打造",
     "description": "与当地专家一起体验真实的印度，沉浸于真实的文化体验中。",
-    "cta": "探索旅游"
+    "cta": "探索旅游",
+    "destination": "目的地",
+    "selectDays": "选择天数",
+    "getEstimate": "获取报价",
+    "traveller": "位旅客",
+    "travellers": "位旅客",
+    "done": "完成"
   },
   "tours": {
     "title": "热门旅游",

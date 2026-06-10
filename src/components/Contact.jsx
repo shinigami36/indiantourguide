@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { postJsonWithRetry } from '../utils/api';
+import { trackEvent } from '../utils/analytics';
 import { EMPTY_FORM } from '../constants/enquiryData';
 import { useEnquiryForm } from '../hooks/useEnquiryForm';
 import {
@@ -14,6 +15,7 @@ import {
   HotelPreference,
   TravellersStepper,
   MessageField,
+  HoneypotField,
 } from './enquiry/EnquiryFields';
 import './Contact.css';
 
@@ -67,6 +69,7 @@ const Contact = () => {
       });
 
       if (res.ok && data.success) {
+        trackEvent('enquiry_submit', { source: 'contact_form' });
         setStatus('success');
         setStatusMsg(data.message || t('contact.success', { defaultValue: 'Enquiry sent successfully.' }));
         setFormData(EMPTY_FORM);
@@ -93,6 +96,8 @@ const Contact = () => {
         <p className="section-subtitle">{t('contact.subtitle')}</p>
 
         <form className="enquiry-form" onSubmit={handleSubmit} noValidate>
+
+          <HoneypotField form={form} />
 
           {/* Row 1: Name + Email */}
           <div className="form-row">

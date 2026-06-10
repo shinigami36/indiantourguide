@@ -12,7 +12,13 @@
     "title": "Inde Authentique & Voyage Mondial",
     "subtitle": "Des voyages créés par des personnes qui tiennent à vous",
     "description": "Découvrez la vraie Inde avec des experts locaux et des immersions culturelles authentiques.",
-    "cta": "Explorer les Tours"
+    "cta": "Explorer les Tours",
+    "destination": "Destination",
+    "selectDays": "Choisir les jours",
+    "getEstimate": "Obtenir un devis",
+    "traveller": "Voyageur",
+    "travellers": "Voyageurs",
+    "done": "Terminé"
   },
   "tours": {
     "title": "Tours Populaires",

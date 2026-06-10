@@ -20,12 +20,12 @@ const Footer = () => {
             <Link to="/" className="logo">
               <img
                 src="/assets/images/logo.png"
-                alt="India Tours Guide Logo"
+                alt="indiatoursguide logo"
                 width="40"
                 height="40"
               />
               <div>
-                <span className="footer-brand-name">India Tours Guide</span>
+                <span className="footer-brand-name">indiatoursguide</span>
                 <small className="footer-brand-tag">Authentic India &amp; World Travel</small>
               </div>
             </Link>
@@ -61,18 +61,18 @@ const Footer = () => {
               <li>{t('footer.whatsapp', { defaultValue: 'WhatsApp' })}: <a href="https://wa.me/917302028445" target="_blank" rel="noopener noreferrer">+91-730-202-8445</a></li>
               <li>{t('footer.facebook', { defaultValue: 'Facebook' })}: <a href="https://www.facebook.com/share/1MhrNAYwni/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">indiatoursguide</a></li>
               <li>{t('footer.instagram', { defaultValue: 'Instagram' })}: <a href="https://www.instagram.com/indiatoursguide_" target="_blank" rel="noopener noreferrer">indiatoursguide_</a></li>
-              <li>{t('footer.address')}: 12 Heritage Lane, New Delhi 110001, India</li>
+              <li>{t('footer.address')}: Near Hazrat Nizamuddin Railway Station, New Delhi 110013, India</li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} India Tours Guide. {t('footer.copyright')}</span>
+          <span>© {new Date().getFullYear()} indiatoursguide. {t('footer.copyright')}</span>
           <span>{t('footer.privacy')} · {t('footer.terms')}</span>
         </div>
       </div>
       <div className="footer-orange-bar">
-        Crafted with ♥ for India Travel · India Tours Guide.com
+        Crafted with ♥ for India Travel · indiatoursguide.com
       </div>
     </footer>
   );

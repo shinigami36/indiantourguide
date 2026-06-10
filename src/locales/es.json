@@ -12,7 +12,13 @@
     "title": "Viajes Auténticos por India y el Mundo",
     "subtitle": "Viajes creados por personas que se preocupan",
     "description": "Experimenta la India real con expertos locales e inmersiones culturales auténticas.",
-    "cta": "Explorar Excursiones"
+    "cta": "Explorar Excursiones",
+    "destination": "Destino",
+    "selectDays": "Selecciona días",
+    "getEstimate": "Obtener presupuesto",
+    "traveller": "Viajero",
+    "travellers": "Viajeros",
+    "done": "Listo"
   },
   "header": {
     "brandTag": "Viajes Auténticos por India y el Mundo",

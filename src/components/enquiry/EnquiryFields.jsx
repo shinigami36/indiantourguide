@@ -282,6 +282,26 @@ export const TravellersStepper = ({ form, classes }) => {
   );
 };
 
+// Honeypot anti-spam field. Visually hidden and unfocusable — humans never
+// fill it, naive bots do, and the server silently drops those submissions.
+export const HoneypotField = ({ form, idPrefix = '' }) => (
+  <div
+    style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, overflow: 'hidden' }}
+    aria-hidden="true"
+  >
+    <label htmlFor={`${idPrefix}website`}>Website</label>
+    <input
+      type="text"
+      id={`${idPrefix}website`}
+      name="website"
+      value={form.formData.website}
+      onChange={form.handleChange}
+      tabIndex={-1}
+      autoComplete="off"
+    />
+  </div>
+);
+
 export const MessageField = ({ form, idPrefix = '', rows = 4 }) => {
   const { t } = useTranslation();
   const id = `${idPrefix}message`;

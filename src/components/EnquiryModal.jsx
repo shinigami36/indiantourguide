@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { postJsonWithRetry } from '../utils/api';
+import { trackEvent } from '../utils/analytics';
 import { EMPTY_FORM, detectCategoryFromTour } from '../constants/enquiryData';
 import { useEnquiryForm } from '../hooks/useEnquiryForm';
 import {
@@ -14,6 +15,7 @@ import {
   HotelPreference,
   TravellersStepper,
   MessageField,
+  HoneypotField,
 } from './enquiry/EnquiryFields';
 import './EnquiryModal.css';
 
@@ -102,6 +104,7 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialCategory, initialAd
 
       if (!mounted) return; // component unmounted mid-request, bail out
       if (res.ok && data.success) {
+        trackEvent('enquiry_submit', { source: 'modal' });
         setSubmitted(true);
         autoCloseTimerRef.current = setTimeout(() => { if (mounted) onClose(); }, 3000);
       } else {
@@ -139,6 +142,7 @@ const EnquiryModal = ({ isOpen, onClose, initialTour, initialCategory, initialAd
             {errors.general && <div className="error-message general-error">{errors.general}</div>}
 
             <form onSubmit={handleSubmit} className="modal-form" noValidate>
+              <HoneypotField form={form} idPrefix="modal-" />
               <NameField form={form} idPrefix="modal-" />
               <EmailField form={form} idPrefix="modal-" />
               <PhoneField form={form} idPrefix="modal-" />

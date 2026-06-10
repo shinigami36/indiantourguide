@@ -45,6 +45,9 @@ export const EMPTY_FORM = {
   adults: 1,
   children: 0,
   message: '',
+  // Honeypot — hidden from humans; the server silently drops any
+  // submission where this is non-empty.
+  website: '',
 };
 
 // Given a localised tour *title* and the i18n t() function, decide whether the

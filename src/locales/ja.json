@@ -12,7 +12,13 @@
     "title": "本物のインドと世界旅行",
     "subtitle": "心を込めて作られた旅",
     "description": "地元の専門家と一緒に本物のインドを体験し、真の文化に浸りましょう。",
-    "cta": "ツアーを探す"
+    "cta": "ツアーを探す",
+    "destination": "目的地",
+    "selectDays": "日数を選択",
+    "getEstimate": "見積もりを取得",
+    "traveller": "名様",
+    "travellers": "名様",
+    "done": "完了"
   },
   "tours": {
     "title": "人気のツアー",

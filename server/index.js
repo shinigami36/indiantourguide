@@ -260,7 +260,7 @@ const sendEmailNotification = async (enquiry) => {
         <!-- Header -->
         <tr>
           <td style="background:linear-gradient(135deg,#0ea5e9 0%,#818cf8 100%);padding:28px 32px;text-align:center;">
-            <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.75);">Travel Website</p>
+            <p style="margin:0 0 4px;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.75);">indiatoursguide.com</p>
             <h1 style="margin:0;font-size:22px;font-weight:800;color:#ffffff;letter-spacing:-0.3px;">New Tour Enquiry</h1>
             <p style="margin:8px 0 0;font-size:13px;color:rgba(255,255,255,0.8);">Submitted ${submittedAt} IST</p>
           </td>
@@ -329,7 +329,7 @@ const sendEmailNotification = async (enquiry) => {
         <!-- Footer -->
         <tr>
           <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:16px 32px;text-align:center;">
-            <p style="margin:0;font-size:11px;color:#94a3b8;">This email was sent automatically by Travel Website · Do not reply to this email</p>
+            <p style="margin:0;font-size:11px;color:#94a3b8;">This email was sent automatically by indiatoursguide.com · Do not reply to this email</p>
           </td>
         </tr>
 
@@ -339,7 +339,7 @@ const sendEmailNotification = async (enquiry) => {
 </body>
 </html>`;
 
-  const fromAddress = process.env.RESEND_FROM || 'India Tours Guide <onboarding@resend.dev>';
+  const fromAddress = process.env.RESEND_FROM || 'indiatoursguide <onboarding@resend.dev>';
   const toAddress = process.env.ADMIN_EMAIL;
 
   if (!toAddress) {
@@ -528,6 +528,16 @@ app.post('/api/enquiry', enquiryLimiter, async (req, res) => {
       tourName,
       tourCategory,
     } = req.body;
+
+    // Honeypot: the form ships a visually-hidden "website" field humans
+    // never see. Bots that fill it get a normal success response and the
+    // submission is silently dropped — no DB write, no notifications.
+    if (sanitizeText(req.body.website)) {
+      return res.json({
+        success: true,
+        message: 'Thank you for your enquiry! We will contact you soon.'
+      });
+    }
 
     // Validation
     if (!name || !email || !phone || !startDate || !endDate) {

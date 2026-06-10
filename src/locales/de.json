@@ -12,7 +12,13 @@
     "title": "Authentisches Indien & Weltreisen",
     "subtitle": "Reisen gestaltet von Menschen, denen es wichtig ist",
     "description": "Erleben Sie das echte Indien mit lokalen Experten und authentischen Kulturerlebnissen.",
-    "cta": "Touren entdecken"
+    "cta": "Touren entdecken",
+    "destination": "Reiseziel",
+    "selectDays": "Tage wählen",
+    "getEstimate": "Angebot anfordern",
+    "traveller": "Reisender",
+    "travellers": "Reisende",
+    "done": "Fertig"
   },
   "tours": {
     "title": "Beliebte Touren",

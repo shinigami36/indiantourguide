@@ -12,7 +12,13 @@
     "title": "Authentic India & World Travel",
     "subtitle": "Travel crafted by people who care",
     "description": "Experience the real India with local experts and authentic cultural immersions.",
-    "cta": "Explore Tours"
+    "cta": "Explore Tours",
+    "destination": "Destination",
+    "selectDays": "Select Days",
+    "getEstimate": "Get Estimate",
+    "traveller": "Traveller",
+    "travellers": "Travellers",
+    "done": "Done"
   },
   "header": {
     "brandTag": "Authentic India & World Travel",
