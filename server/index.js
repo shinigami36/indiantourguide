@@ -401,22 +401,6 @@ const reviewSchema = new mongoose.Schema({
 
 const Review = mongoose.model('Review', reviewSchema);
 
-// Tour Schema
-const tourSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
-  titleKey: { type: String, required: true },
-  durationKey: { type: String, required: true },
-  locationsKey: { type: String, required: true },
-  descriptionKey: { type: String, required: true },
-  itineraryKey: { type: String, required: true },
-  includesKey: { type: String, required: true },
-  video: { type: String },
-  rating: { type: Number, default: 4.5 },
-  active: { type: Boolean, default: true }
-});
-
-const Tour = mongoose.model('Tour', tourSchema);
-
 // Routes
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Backend is running' });
@@ -695,81 +679,6 @@ app.patch('/api/enquiries/:id', requireAdminToken, requireMongo, async (req, res
   }
 });
 
-
-// Tours endpoints
-app.get('/api/tours', requireMongo, async (req, res) => {
-  try {
-    const tours = await Tour.find({ active: true });
-    res.json({ success: true, data: tours });
-  } catch (error) {
-    console.error('Error fetching tours:', error);
-    res.status(500).json({ success: false, error: 'Failed to fetch tours' });
-  }
-});
-
-app.get('/api/tours/:id', requireMongo, async (req, res) => {
-  try {
-    const tour = await Tour.findOne({ id: req.params.id, active: true });
-    if (!tour) {
-      return res.status(404).json({ success: false, error: 'Tour not found' });
-    }
-    res.json({ success: true, data: tour });
-  } catch (error) {
-    console.error('Error fetching tour:', error);
-    res.status(500).json({ success: false, error: 'Failed to fetch tour' });
-  }
-});
-
-const sanitizeTourBody = (body) => ({
-  id: sanitizeText(body.id, 80),
-  titleKey: sanitizeText(body.titleKey, 120),
-  durationKey: sanitizeText(body.durationKey, 120),
-  locationsKey: sanitizeText(body.locationsKey, 120),
-  descriptionKey: sanitizeText(body.descriptionKey, 120),
-  itineraryKey: sanitizeText(body.itineraryKey, 120),
-  includesKey: sanitizeText(body.includesKey, 120),
-  video: sanitizeText(body.video || '', 500),
-  rating: Number.isFinite(Number(body.rating)) ? Math.max(1, Math.min(5, Number(body.rating))) : 4.5,
-  active: sanitizeBoolean(body.active !== undefined ? body.active : true),
-});
-
-// Admin tours endpoints
-app.post('/api/tours', requireAdminToken, requireMongo, async (req, res) => {
-  try {
-    const tourData = sanitizeTourBody(req.body);
-    if (!tourData.id || !tourData.titleKey) {
-      return res.status(400).json({ success: false, error: 'id and titleKey are required' });
-    }
-    const tour = new Tour(tourData);
-    await tour.save();
-    res.status(201).json({ success: true, data: tour });
-  } catch (error) {
-    console.error('Error creating tour:', error);
-    if (error.code === 11000) {
-      res.status(400).json({ success: false, error: 'Tour ID already exists' });
-    } else {
-      res.status(500).json({ success: false, error: 'Failed to create tour' });
-    }
-  }
-});
-
-app.put('/api/tours/:id', requireAdminToken, requireMongo, async (req, res) => {
-  try {
-    const updates = sanitizeTourBody(req.body);
-    const tour = await Tour.findOneAndUpdate(
-      { id: req.params.id },
-      updates,
-      { new: true }
-    );
-    if (!tour) {
-      return res.status(404).json({ success: false, error: 'Tour not found' });
-    }
-    res.json({ success: true, data: tour });
-  } catch (error) {
-    console.error('Error updating tour:', error);
-    res.status(500).json({ success: false, error: 'Failed to update tour' });
-  }
-});
 
 // ── Site Reviews ─────────────────────────────────────────────────
 

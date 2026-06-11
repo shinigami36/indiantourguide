@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>indiatoursguide — admin</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; background: #f1f5f9; color: #0f172a; }
+    header { background: #0f172a; color: #fff; padding: 14px 20px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    header h1 { font-size: 15px; margin: 0 16px 0 0; font-weight: 700; }
+    header input { padding: 7px 10px; border-radius: 6px; border: none; font-size: 13px; min-width: 230px; }
+    header button, .tabbtn { padding: 7px 14px; border-radius: 6px; border: none; background: #0ea5e9; color: #fff; font-weight: 600; font-size: 13px; cursor: pointer; }
+    nav { display: flex; gap: 8px; padding: 14px 20px 0; }
+    .tabbtn { background: #e2e8f0; color: #334155; }
+    .tabbtn.active { background: #0ea5e9; color: #fff; }
+    main { padding: 16px 20px 40px; max-width: 960px; margin: 0 auto; }
+    .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+    .card h3 { margin: 0 0 2px; font-size: 14px; }
+    .meta { color: #64748b; font-size: 12px; margin-bottom: 8px; }
+    .content { font-size: 13px; line-height: 1.55; margin-bottom: 10px; white-space: pre-wrap; }
+    .stars { color: #f59e0b; letter-spacing: 1px; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .approve { background: #16a34a; } .reject { background: #d97706; } .delete { background: #dc2626; }
+    .row button { padding: 6px 14px; border: none; border-radius: 6px; color: #fff; font-weight: 600; font-size: 12px; cursor: pointer; }
+    .status-select { padding: 6px 8px; border-radius: 6px; border: 1px solid #cbd5e1; font-size: 12px; }
+    .pill { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: #e0f2fe; color: #075985; }
+    #msg { padding: 10px 20px; font-size: 13px; color: #334155; }
+    .empty { color: #64748b; font-size: 13px; padding: 24px; text-align: center; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>indiatoursguide admin</h1>
+    <input id="apiBase" placeholder="API base" />
+    <input id="token" type="password" placeholder="Admin token" />
+    <button onclick="saveAndLoad()">Connect</button>
+  </header>
+  <nav>
+    <button class="tabbtn active" id="tab-reviews" onclick="showTab('reviews')">Pending reviews</button>
+    <button class="tabbtn" id="tab-enquiries" onclick="showTab('enquiries')">Enquiries</button>
+  </nav>
+  <div id="msg"></div>
+  <main id="list"><div class="empty">Enter the API base + admin token, then Connect.</div></main>
+
+  <script>
+    // Minimal moderation console for the token-protected admin endpoints.
+    // Served as a static file (robots: noindex + robots.txt disallows /admin/).
+    // The token lives only in this browser's localStorage.
+    const $ = (id) => document.getElementById(id);
+    let tab = 'reviews';
+
+    $('apiBase').value = localStorage.getItem('itg-api') || 'https://api.indiatoursguide.com';
+    $('token').value = localStorage.getItem('itg-token') || '';
+
+    const api = () => $('apiBase').value.trim().replace(/\/$/, '');
+    const headers = () => ({ 'Content-Type': 'application/json', 'X-Admin-Token': $('token').value.trim() });
+    const msg = (text) => { $('msg').textContent = text; };
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    function saveAndLoad() {
+      localStorage.setItem('itg-api', $('apiBase').value.trim());
+      localStorage.setItem('itg-token', $('token').value.trim());
+      load();
+    }
+
+    function showTab(next) {
+      tab = next;
+      $('tab-reviews').classList.toggle('active', tab === 'reviews');
+      $('tab-enquiries').classList.toggle('active', tab === 'enquiries');
+      load();
+    }
+
+    async function call(path, options = {}) {
+      const res = await fetch(api() + path, { ...options, headers: headers() });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === false) throw new Error(data.error || ('HTTP ' + res.status));
+      return data;
+    }
+
+    async function load() {
+      msg('Loading…');
+      try {
+        if (tab === 'reviews') await loadReviews(); else await loadEnquiries();
+        msg('');
+      } catch (e) {
+        $('list').innerHTML = '';
+        msg('Error: ' + e.message);
+      }
+    }
+
+    async function loadReviews() {
+      const { data } = await call('/api/reviews/pending');
+      if (!data.length) { $('list').innerHTML = '<div class="empty">No pending reviews 🎉</div>'; return; }
+      $('list').innerHTML = data.map((r) => `
+        <div class="card">
+          <h3>${esc(r.title)} <span class="stars">${'★'.repeat(r.rating || 0)}</span></h3>
+          <div class="meta">${esc(r.name)} · ${esc(r.email)} · ${new Date(r.createdAt).toLocaleString()}</div>
+          <div class="content">${esc(r.content)}</div>
+          <div class="row">
+            <button class="approve" onclick="moderate('${r._id}', 'approved')">Approve</button>
+            <button class="reject" onclick="moderate('${r._id}', 'rejected')">Reject</button>
+            <button class="delete" onclick="removeReview('${r._id}')">Delete</button>
+          </div>
+        </div>`).join('');
+    }
+
+    async function moderate(id, status) {
+      try { await call('/api/reviews/' + id, { method: 'PATCH', body: JSON.stringify({ status }) }); load(); }
+      catch (e) { msg('Error: ' + e.message); }
+    }
+
+    async function removeReview(id) {
+      if (!confirm('Delete this review permanently?')) return;
+      try { await call('/api/reviews/' + id, { method: 'DELETE' }); load(); }
+      catch (e) { msg('Error: ' + e.message); }
+    }
+
+    const STATUSES = ['new', 'in-progress', 'contacted', 'closed'];
+
+    async function loadEnquiries() {
+      const { data } = await call('/api/enquiries');
+      if (!data.length) { $('list').innerHTML = '<div class="empty">No enquiries yet.</div>'; return; }
+      $('list').innerHTML = data.map((e) => `
+        <div class="card">
+          <h3>${esc(e.name)} <span class="pill">${esc(e.status)}</span></h3>
+          <div class="meta">${esc(e.email)} · ${esc(e.phone)} · ${esc(e.country || '—')} · ${new Date(e.createdAt).toLocaleString()}</div>
+          <div class="content">${esc(e.tourName || e.tourPackages?.join(', ') || 'General enquiry')} · ${esc(e.startDate)} → ${esc(e.endDate)} · ${e.adults} adult(s), ${e.children} child(ren) · ${e.noHotelRequired ? 'No hotel' : esc(e.hotelCategory || '—')}${e.message ? '\n' + esc(e.message) : ''}</div>
+          <div class="row">
+            <select class="status-select" onchange="setStatus('${e._id}', this.value)">
+              ${STATUSES.map((s) => `<option value="${s}" ${s === e.status ? 'selected' : ''}>${s}</option>`).join('')}
+            </select>
+          </div>
+        </div>`).join('');
+    }
+
+    async function setStatus(id, status) {
+      try { await call('/api/enquiries/' + id, { method: 'PATCH', body: JSON.stringify({ status }) }); msg('Status updated.'); }
+      catch (e) { msg('Error: ' + e.message); }
+    }
+  </script>
+</body>
+</html>

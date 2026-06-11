@@ -32,6 +32,22 @@ page views plus `enquiry_modal_open`, `enquiry_submit` and `review_submit` event
 Real URLs served by react-router: `/` (home), `/attractions`, `/international`.
 Unknown paths redirect to `/`.
 
+### Reviews snapshot
+
+`SiteReviews` renders instantly from `src/data/reviewsSnapshot.json` and then
+refreshes from the live API. Re-sync the snapshot before a deploy with:
+
+```bash
+npm run snapshot:reviews        # pulls from the production API
+```
+
+### Admin console
+
+`/admin/reviews.html` is a static, crawl-blocked moderation page: paste the
+API base + `ADMIN_API_TOKEN` to approve/reject/delete pending reviews and
+update enquiry statuses. The token is only stored in that browser's
+localStorage.
+
 ## Backend (`server/`)
 
 ```bash
@@ -39,8 +55,8 @@ cd server
 npm install
 cp .env.example .env   # then fill in real values
 npm run dev            # nodemon on :3001
-npm run seed           # legacy: seed Tour collection (admin API only)
-npm run seed:reviews   # seed 12 approved site reviews
+npm test               # API tests (validation, honeypot, admin auth)
+npm run seed:reviews   # seed 12 approved site reviews (idempotent)
 ```
 
 See `server/.env.example` for every supported key. MongoDB is optional

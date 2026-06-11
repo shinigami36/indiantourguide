@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "snapshot:reviews": "node scripts/refresh-reviews-snapshot.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

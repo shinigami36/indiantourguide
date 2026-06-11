@@ -29,8 +29,19 @@ const reviews = [
 
 (async () => {
   await mongoose.connect(process.env.MONGODB_URI);
-  await Review.insertMany(reviews.map(r => ({ ...r, status: 'approved' })));
+  // Upsert on (email, title) so re-running the seeder never duplicates —
+  // $setOnInsert leaves any existing document (and its moderation status)
+  // untouched.
+  let inserted = 0;
+  for (const r of reviews) {
+    const result = await Review.updateOne(
+      { email: r.email, title: r.title },
+      { $setOnInsert: { ...r, status: 'approved' } },
+      { upsert: true }
+    );
+    if (result.upsertedCount) inserted += 1;
+  }
   const count = await Review.countDocuments({ status: 'approved' });
-  console.log(`Done — ${count} approved reviews in DB`);
+  console.log(`Done — inserted ${inserted} new, ${count} approved reviews in DB`);
   await mongoose.disconnect();
 })();
